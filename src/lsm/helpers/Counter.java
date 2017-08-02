@@ -1,29 +1,44 @@
 package lsm.helpers;
 
 import java.util.HashMap;
+import java.util.Set;
 
 public class Counter <K> {
-    private final HashMap<K, Integer> counter;
+    private final HashMap<K, Integer> count;
 
     public Counter(){
-        counter = new HashMap<>();
+        count = new HashMap<>();
+    }
+    public Counter(K... keys){
+        this();
+        for(K key : keys) add(key);
     }
     public Counter(HashMap<K, Integer> map){
-        this.counter = map;
+        this.count = map;
+    }
+    public Counter(Counter<K> count){
+        this(new HashMap<>(count.count));
     }
 
-    void add (K key){
+    public void add(K key){
         add(key, 1);
     }
-    void remove (K key){
+    public void sub(K key){
         add(key, -1);
     }
-    void add (K key, int amount) {
-        counter.put(key, counter.getOrDefault(key, 0) + amount);
+    public void remove (K key){
+        sub(key);
+        if(get(key) <= 0)
+            count.remove(key);
+    }
+    public void add (K key, int amount) {
+        count.put(key, count.getOrDefault(key, 0) + amount);
     }
 
-    int get (K key) {
-        return counter.getOrDefault(key, 0);
+    public int get (K key) {
+        return count.getOrDefault(key, 0);
     }
-    boolean contains (K key) { return counter.containsKey(key); }
+    public HashMap<K, Integer> getMap () { return count; }
+    public Set<K> getKeys () { return count.keySet(); }
+    public boolean contains (K key) { return count.containsKey(key); }
 }

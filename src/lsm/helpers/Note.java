@@ -370,21 +370,22 @@ public class Note {
         }
         return min;
     }
-    private static Object[][][] primitive(char[][][] arr){
+
+    private static Character[][][] primitive(char[][][] arr){
         if(arr == null) return null;
-        Object[][][] res = new Object[arr.length][][];
+        Character[][][] res = new Character[arr.length][][];
         for(int i = 0; i < arr.length; i++) res[i] = primitive(arr[i]);
         return res;
     }
-    private static Object[][] primitive(char[][] arr){
+    private static Character[][] primitive(char[][] arr){
         if(arr == null) return null;
-        Object[][] res = new Object[arr.length][];
+        Character[][] res = new Character[arr.length][];
         for(int i = 0; i < arr.length; i++) res[i] = primitive(arr[i]);
         return res;
     }
-    private static Object[] primitive(char[] arr){
+    private static Character[] primitive(char[] arr){
         if(arr == null) return null;
-        Object[] res = new Object[arr.length];
+        Character[] res = new Character[arr.length];
         for(int i = 0; i < arr.length; i++) res[i] = arr[i];
         return res;
     }

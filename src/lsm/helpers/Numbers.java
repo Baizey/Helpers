@@ -14,6 +14,9 @@ public class Numbers {
     public static BigDecimal round (double num, int decimals) {
         return round(BigDecimal.valueOf(num), decimals);
     }
+    public static BigDecimal round (String num, int decimals){
+        return round(new BigDecimal(num), decimals);
+    }
     public static BigDecimal round (BigDecimal num, int decimals) {
         return num.setScale(decimals, RoundingMode.HALF_UP);
     }
