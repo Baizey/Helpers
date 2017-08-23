@@ -16,7 +16,7 @@ import java.util.HashMap;
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class Time {
     private static final String defaultIndex = "Program";
-    private static final HashMap<String, Long> starts = new HashMap<String, Long>(){{
+    private static final HashMap<String, Long> starts = new HashMap<String, Long>() {{
         put(defaultIndex, System.currentTimeMillis());
     }};
 

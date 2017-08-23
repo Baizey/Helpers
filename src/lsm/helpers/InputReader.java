@@ -19,6 +19,7 @@ public class InputReader {
             e.printStackTrace();
         }
     }
+
     /////////////////////////////////////
     // Reader functions
     /////////////////////////////////////
@@ -37,7 +38,8 @@ public class InputReader {
     private static ArrayList<String> readConsole() throws IOException {
         String line;
         //noinspection StatementWithEmptyBody
-        while ((line = consoleReader.readLine()) == null) { }
+        while ((line = consoleReader.readLine()) == null) {
+        }
         ArrayList<String> res = new ArrayList<>();
         res.add(line);
         while ((line = consoleReader.readLine()) != null)
@@ -56,10 +58,11 @@ public class InputReader {
     /////////////////////////////////////
     // Special reader functions
     /////////////////////////////////////
-    public static int[][] readAsIntMatrix () throws IOException {
+    public static int[][] readAsIntMatrix() throws IOException {
         return readAsIntMatrix(null);
     }
-    public static int[][] readAsIntMatrix (String what) throws IOException {
+
+    public static int[][] readAsIntMatrix(String what) throws IOException {
         ArrayList<String> input = read(what);
         int[][] matrix = new int[input.size()][];
         String[] t;
@@ -71,10 +74,12 @@ public class InputReader {
         }
         return matrix;
     }
-    public static double[][] readAsDoubleMatrix () throws IOException {
+
+    public static double[][] readAsDoubleMatrix() throws IOException {
         return readAsDoubleMatrix(null);
     }
-    public static double[][] readAsDoubleMatrix (String what) throws IOException {
+
+    public static double[][] readAsDoubleMatrix(String what) throws IOException {
         ArrayList<String> input = read(what);
         double[][] matrix = new double[input.size()][];
         String[] t;

@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class Note {
 
     private static final String
