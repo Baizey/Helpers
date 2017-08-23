@@ -43,7 +43,6 @@ public class Interpreter {
         try {
             while (true) {
                 Note.write("Input: ");
-                Note.writenl(interpreter.eval(InputReader.readConsole()));
             }
         } catch (IOException e) {
             e.printStackTrace();

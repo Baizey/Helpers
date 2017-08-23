@@ -32,10 +32,10 @@ public class Numbers {
     public static BigInteger gcd (long a, long b) { return BigInteger.valueOf(a).gcd(BigInteger.valueOf(b)); }
 
     public static boolean isEven (int num){
-        return (Math.abs(num) & 1) == 0;
+        return isEven((long)num);
     }
     public static boolean isEven (long num) {
-        return (Math.abs(num) & 1L) == 0;
+        return (Math.abs(num) & 1L) == 0L;
     }
     public static boolean isEven (BigInteger num) {
         int i = num.bitCount();
