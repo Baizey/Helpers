@@ -10,15 +10,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class InputReader {
-    private static BufferedReader consoleReader;
-
-    static {
-        try {
-            consoleReader = getConsoleReader();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private static final BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
     /////////////////////////////////////
     // Reader functions
@@ -40,11 +32,11 @@ public class InputReader {
         //noinspection StatementWithEmptyBody
         while ((line = consoleReader.readLine()) == null) {
         }
-        ArrayList<String> res = new ArrayList<>();
-        res.add(line);
+        ArrayList<String> lines = new ArrayList<>();
+        lines.add(line);
         while ((line = consoleReader.readLine()) != null)
-            res.add(line);
-        return res;
+            lines.add(line);
+        return lines;
     }
 
     private static ArrayList<String> readFile(String path) throws IOException {
@@ -95,16 +87,16 @@ public class InputReader {
     /////////////////////////////////////
     // Reader constructors
     /////////////////////////////////////
+    public static BufferedReader getReader() {
+        return consoleReader;
+    }
+
     public static BufferedReader getReader(String what) throws IOException {
         if (what == null)
-            return getConsoleReader();
+            return consoleReader;
         if (what.matches("^https?://.*\\..*"))
             return getWebsiteReader(what);
         return getFileReader(what);
-    }
-
-    private static BufferedReader getConsoleReader() throws IOException {
-        return new BufferedReader(new InputStreamReader(System.in));
     }
 
     private static BufferedReader getFileReader(String path) throws IOException {
@@ -122,9 +114,9 @@ public class InputReader {
     /////////////////////////////////////
 
     private static ArrayList<String> readReaderAndClose(BufferedReader reader) throws IOException {
-        ArrayList<String> res = readReader(reader);
+        ArrayList<String> lines = readReader(reader);
         reader.close();
-        return res;
+        return lines;
     }
 
     private static ArrayList<String> readReader(BufferedReader reader) throws IOException {
