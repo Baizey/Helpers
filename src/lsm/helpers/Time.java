@@ -34,13 +34,10 @@ public class Time {
 
     public static void write(String name) {
         long start = starts.getOrDefault(name, 0L);
-
-        // Should probably throw an error message?
+        // TODO: approprate exception
         if (start == 0L)
             return;
-
-        long diff = System.currentTimeMillis() - start;
-        Note.writenl(name + " took " + asSeconds(diff) + " seconds");
+        Note.writenl(name + " took " + asSeconds(getMillis(name)).toString() + " seconds");
     }
 
     public static void reset() {
@@ -52,11 +49,25 @@ public class Time {
         init(name);
     }
 
+    public static long getMillis() {
+        return getMillis(defaultIndex);
+    }
+    public static long getMillis(String name) {
+        return System.currentTimeMillis() - starts.getOrDefault(name, 0L);
+    }
+
+    public static double getSeconds() {
+        return getSeconds(defaultIndex);
+    }
+    public static double getSeconds(String name) {
+        return asSeconds(getMillis(name)).doubleValue();
+    }
+
     /**
      * @param time, time in milliseconds
      * @returns String representing time in seconds
      */
-    private static String asSeconds(long time) {
-        return BigDecimal.valueOf(time).divide(BigDecimal.valueOf(1000L), 3, RoundingMode.HALF_UP).toString();
+    private static BigDecimal asSeconds(long time) {
+        return BigDecimal.valueOf(time).divide(BigDecimal.valueOf(1000L), 3, RoundingMode.HALF_UP);
     }
 }

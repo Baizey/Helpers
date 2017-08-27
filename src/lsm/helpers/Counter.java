@@ -11,6 +11,7 @@ public class Counter<K> {
         count = new HashMap<>();
     }
 
+    @SafeVarargs //pls
     public Counter(K... keys) {
         this();
         for (K key : keys) add(key);

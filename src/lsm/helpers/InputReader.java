@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
@@ -100,7 +101,7 @@ public class InputReader {
     }
 
     private static BufferedReader getFileReader(String path) throws IOException {
-        return new BufferedReader(new FileReader(path));
+        return new BufferedReader(new FileReader(Paths.get(path).toFile()));
     }
 
     private static BufferedReader getWebsiteReader(String link) throws IOException {
