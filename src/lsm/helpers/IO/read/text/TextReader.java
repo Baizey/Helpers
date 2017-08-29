@@ -1,4 +1,4 @@
-package lsm.helpers;
+package lsm.helpers.IO.read.text;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,40 +8,24 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-@SuppressWarnings({"unused", "WeakerAccess"})
-public class InputReader {
-    private static final BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+import static lsm.helpers.IO.Utils.isWebsite;
+
+public class TextReader {
+
 
     /////////////////////////////////////
     // Reader functions
     /////////////////////////////////////
-    public static ArrayList<String> read() throws IOException {
-        return read(null);
-    }
-
-    public static ArrayList<String> read(String what) throws IOException {
-        if (what == null)
-            return readConsole();
-        if (what.matches("^https?://.*"))
-            return readWebsite(what);
-        return readFile(what);
-    }
-
-    private static ArrayList<String> readConsole() throws IOException {
-        String line;
-        //noinspection StatementWithEmptyBody
-        while ((line = consoleReader.readLine()) == null) {
-        }
-        ArrayList<String> lines = new ArrayList<>();
-        lines.add(line);
-        while ((line = consoleReader.readLine()) != null)
-            lines.add(line);
-        return lines;
+    public static ArrayList<String> read(String from) throws IOException {
+        if (isWebsite(from))
+            return readWebsite(from);
+        return readFile(from);
     }
 
     private static ArrayList<String> readFile(String path) throws IOException {
-        return readReaderAndClose(getFileReader(path));
+        return readReaderAndClose(getTextReader(path));
     }
 
     private static ArrayList<String> readWebsite(String link) throws IOException {
@@ -51,12 +35,8 @@ public class InputReader {
     /////////////////////////////////////
     // Special reader functions
     /////////////////////////////////////
-    public static int[][] readAsIntMatrix() throws IOException {
-        return readAsIntMatrix(null);
-    }
-
-    public static int[][] readAsIntMatrix(String what) throws IOException {
-        ArrayList<String> input = read(what);
+    public static int[][] readAsIntMatrix(String from) throws IOException {
+        ArrayList<String> input = read(from);
         int[][] matrix = new int[input.size()][];
         String[] t;
         for (int i = 0; i < matrix.length; i++) {
@@ -68,12 +48,8 @@ public class InputReader {
         return matrix;
     }
 
-    public static double[][] readAsDoubleMatrix() throws IOException {
-        return readAsDoubleMatrix(null);
-    }
-
-    public static double[][] readAsDoubleMatrix(String what) throws IOException {
-        ArrayList<String> input = read(what);
+    public static double[][] readAsDoubleMatrix(String from) throws IOException {
+        ArrayList<String> input = read(from);
         double[][] matrix = new double[input.size()][];
         String[] t;
         for (int i = 0; i < matrix.length; i++) {
@@ -84,31 +60,31 @@ public class InputReader {
         }
         return matrix;
     }
-
+    
     /////////////////////////////////////
     // Reader constructors
     /////////////////////////////////////
-    public static BufferedReader getReader() {
-        return consoleReader;
+    
+    public static Scanner getConsoleReader() {
+        return new Scanner(System.in);
     }
 
     public static BufferedReader getReader(String what) throws IOException {
-        if (what == null)
-            return consoleReader;
-        if (what.matches("^https?://.*\\..*"))
+        if (isWebsite(what))
             return getWebsiteReader(what);
-        return getFileReader(what);
+        return getTextReader(what);
     }
-
-    private static BufferedReader getFileReader(String path) throws IOException {
+    
+    public static BufferedReader getTextReader(String path) throws IOException {
         return new BufferedReader(new FileReader(Paths.get(path).toFile()));
     }
 
-    private static BufferedReader getWebsiteReader(String link) throws IOException {
+    public static BufferedReader getWebsiteReader(String link) throws IOException {
         URLConnection conn = new URL(link).openConnection();
         String encoding = conn.getContentEncoding() == null ? "UTF-8" : conn.getContentEncoding();
         return new BufferedReader(new InputStreamReader(conn.getInputStream(), encoding));
     }
+
 
     /////////////////////////////////////
     // Private utility functions
@@ -125,4 +101,5 @@ public class InputReader {
         reader.lines().forEach(lines::add);
         return lines;
     }
+    
 }
