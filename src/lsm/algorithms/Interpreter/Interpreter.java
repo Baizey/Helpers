@@ -1,16 +1,12 @@
 package lsm.algorithms.Interpreter;
 
-import lsm.helpers.InputReader;
+import lsm.helpers.IO.read.text.TextReader;
 import lsm.helpers.Note;
 import lsm.helpers.Numbers;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Interpreter {
     // rounding is what's display
@@ -32,7 +28,7 @@ public class Interpreter {
     @SuppressWarnings("InfiniteLoopStatement")
     public static void main (String... args) throws SyntaxException, StackOverflowError, ArithmeticException {
         Interpreter interpreter = new Interpreter();
-        String[] tests = new String[0];
+        String[] tests;
 
         tests = new String[]{"4+(-2)", "a(b,c,d)=b*c*d", "a()", "a(1)", "a(1,2)", "a(1,2,3)", "a((1+2),2)", "a(1,a(2,2,2), 3)", "(1/3)+(1/3)"};
         /*
@@ -40,13 +36,11 @@ public class Interpreter {
         */
         for (String test : tests)
             Note.writenl(test + " -> " + interpreter.eval(test));
-        try {
-            while (true) {
-                Note.write("Input: ");
-                Note.writenl(interpreter.eval(InputReader.read().get(0)));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        Scanner console = TextReader.getConsoleReader();
+        while (true) {
+            Note.write("Input: ");
+            Note.writenl(interpreter.eval(console.nextLine()));
         }
     }
     public Interpreter () { setRounding(20); }
