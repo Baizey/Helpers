@@ -1,16 +1,12 @@
-package lsm.helpers;
+package lsm.helpers.utils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
-@SuppressWarnings({"unused", "WeakerAccess"})
 public class Numbers {
-    public static void main(String... args) {
-        Time.init();
-        Time.write();
-    }
+    public static void main(String... args) { }
 
     public static BigDecimal round(double num, int decimals) {
         return round(BigDecimal.valueOf(num), decimals);

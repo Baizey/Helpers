@@ -1,56 +1,47 @@
 package lsm.helpers.crypto;
 
-import lsm.helpers.crypto.Hash;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.security.Key;
 
-import static lsm.helpers.crypto.Hash.textType;
+import static lsm.helpers.crypto.Utils.*;
 
-public class SymmetricKey {
-    private static final String symmetricCrypt = "AES";
-    private Cipher c = Cipher.getInstance(symmetricCrypt);
-    private SecretKeySpec k;
+@SuppressWarnings("WeakerAccess")
+public class SymmetricKey extends AbstractKey {
+    private static final String symmetricKeyAlgorithm = "AES";
+    private static final int keySize = 256; // 2^9
+    private Key key;
 
-    public SymmetricKey() throws UnsupportedEncodingException, InvalidKeySpecException, NoSuchAlgorithmException, NoSuchPaddingException {
-        this(Hash.generateRandom(128));
+    public SymmetricKey() throws Exception {
+        super(symmetricKeyAlgorithm);
+        KeyGenerator generator = KeyGenerator.getInstance(symmetricKeyAlgorithm);
+        generator.init(keySize);
+        this.key = generator.generateKey();
     }
 
-    public SymmetricKey(String secret) throws NoSuchPaddingException, NoSuchAlgorithmException, UnsupportedEncodingException {
-        this(secret.getBytes(textType));
+    public SymmetricKey(String key) throws Exception {
+        this(new SecretKeySpec(fromBase64(key), symmetricKeyAlgorithm));
     }
 
-    public SymmetricKey(byte[] secret) throws NoSuchPaddingException, NoSuchAlgorithmException, UnsupportedEncodingException {
-        k = new SecretKeySpec(secret, symmetricCrypt);
+    public SymmetricKey(Key key) throws Exception {
+        super(key.getAlgorithm());
+        this.key = key;
     }
 
-    public byte[] encrypt(String text) throws InvalidKeyException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException {
-        return encrypt(text.getBytes(textType));
-    }
-    public byte[] encrypt(byte[] text) throws InvalidKeyException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException {
-        c.init(Cipher.ENCRYPT_MODE, k);
-        return c.doFinal(text);
+    @Override
+    public String encrypt(String data) throws Exception {
+        return encrypt(data, key);
     }
 
-    public byte[] decrypt(String text) throws InvalidKeyException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException {
-        return decrypt(text.getBytes(textType));
-    }
-    public byte[] decrypt(byte[] text) throws InvalidKeyException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException {
-        c.init(Cipher.DECRYPT_MODE, k);
-        return c.doFinal(text);
+    @Override
+    public String decrypt(String data) throws Exception {
+        return decrypt(data, key);
     }
 
-    public String decryptToString(String text) throws InvalidKeyException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException {
-        return new String(decrypt(text), textType);
+    public Key key() {
+        return key;
     }
-    public String decryptToString(byte[] text) throws InvalidKeyException, BadPaddingException, IllegalBlockSizeException, UnsupportedEncodingException {
-        return new String(decrypt(text), textType);
+    public String keyString() throws Exception {
+        return toBase64(key.getEncoded());
     }
 }

@@ -1,5 +1,7 @@
 package lsm.helpers;
 
+import lsm.helpers.utils.Numbers;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;
@@ -9,23 +11,29 @@ import java.util.HashMap;
  * Time.init()  will take current time
  * Time.write() will write the difference since last initialize call
  * Time.reset() will attempt to write time since last init and then re-initialize
+ * Time.using(int) defines if the write() function tells in seconds, millis, micros or nano-seconds
  * A name can be given to take time on multiple things at once
  * 'Program' is default name if none is given
  */
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class Time {
+    public static final int SECONDS = 0, MILLIS = 1, MICRO = 2, NANO = 3;
+    private static int using = SECONDS;
+
+    public static void using(int unit) {
+        if (Numbers.inRange(unit, 0, 3)) Time.using = unit;
+    }
+
     private static final String defaultIndex = "Program";
-    private static final HashMap<String, Long> starts = new HashMap<String, Long>() {{
-        put(defaultIndex, System.currentTimeMillis());
-    }};
+    private static final HashMap<String, Long> starts = new HashMap<>();
 
     public static void init() {
         init(defaultIndex);
     }
 
     public static void init(String name) {
-        starts.put(name, System.currentTimeMillis());
+        starts.put(name, System.nanoTime());
     }
 
     public static void write() {
@@ -33,11 +41,9 @@ public class Time {
     }
 
     public static void write(String name) {
-        long start = starts.getOrDefault(name, 0L);
-        // TODO: approprate exception
-        if (start == 0L)
-            return;
-        Note.writenl(name + " took " + asSeconds(getMillis(name)).toString() + " seconds");
+        long time = getNanos(name);
+        if (starts.getOrDefault(name, 0L) == 0L) return;
+        System.out.println(name + " took " + asString(time));
     }
 
     public static void reset() {
@@ -49,25 +55,28 @@ public class Time {
         init(name);
     }
 
-    public static long getMillis() {
-        return getMillis(defaultIndex);
-    }
-    public static long getMillis(String name) {
-        return System.currentTimeMillis() - starts.getOrDefault(name, 0L);
+    public static long getNanos() {
+        return getNanos(defaultIndex);
     }
 
-    public static double getSeconds() {
-        return getSeconds(defaultIndex);
-    }
-    public static double getSeconds(String name) {
-        return asSeconds(getMillis(name)).doubleValue();
+    public static long getNanos(String name) {
+        return System.nanoTime() - starts.getOrDefault(name, 0L);
     }
 
-    /**
-     * @param time, time in milliseconds
-     * @returns String representing time in seconds
-     */
-    private static BigDecimal asSeconds(long time) {
-        return BigDecimal.valueOf(time).divide(BigDecimal.valueOf(1000L), 3, RoundingMode.HALF_UP);
+    private static final BigDecimal thousand = BigDecimal.valueOf(1000L), million = BigDecimal.valueOf(1000000L), billion = BigDecimal.valueOf(1000000000L);
+
+    private static String asString(long time) {
+        switch (using) {
+            case SECONDS:
+                return BigDecimal.valueOf(time).divide(billion, 3, RoundingMode.HALF_UP).toString() + " seconds";
+            case MILLIS:
+                return BigDecimal.valueOf(time).divide(million, 3, RoundingMode.HALF_UP).toString() + " milliseconds";
+            case MICRO:
+                return BigDecimal.valueOf(time).divide(thousand, 3, RoundingMode.HALF_UP).toString() + " microseconds";
+            case NANO:
+                return String.valueOf(time) + " nanoseconds";
+            default:
+                return "error";
+        }
     }
 }

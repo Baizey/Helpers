@@ -24,11 +24,11 @@ public class TextReader {
         return readFile(from);
     }
 
-    private static ArrayList<String> readFile(String path) throws IOException {
+    public static ArrayList<String> readFile(String path) throws IOException {
         return readReaderAndClose(getTextReader(path));
     }
 
-    private static ArrayList<String> readWebsite(String link) throws IOException {
+    public static ArrayList<String> readWebsite(String link) throws IOException {
         return readReaderAndClose(getWebsiteReader(link));
     }
 
