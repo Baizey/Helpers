@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 import static lsm.helpers.IO.Utils.isWebsite;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 public class TextReader {
 
 
@@ -81,10 +82,10 @@ public class TextReader {
 
     public static BufferedReader getWebsiteReader(String link) throws IOException {
         URLConnection conn = new URL(link).openConnection();
+        conn.setRequestProperty("User-Agent", "Mozilla");
         String encoding = conn.getContentEncoding() == null ? "UTF-8" : conn.getContentEncoding();
         return new BufferedReader(new InputStreamReader(conn.getInputStream(), encoding));
     }
-
 
     /////////////////////////////////////
     // Private utility functions

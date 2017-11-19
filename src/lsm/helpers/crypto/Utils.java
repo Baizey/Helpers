@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.HashSet;
 
 public class Utils {
 
@@ -23,6 +24,9 @@ public class Utils {
 
     public static String joinStrings(String... strings) {
         return joinStrings(separator, strings);
+    }
+    public static String joinStrings(char separator, HashSet<String> strings) {
+        return joinStrings(separator, strings.toArray(new String[strings.size()]));
     }
     public static String joinStrings(char separator, String... strings) {
         return String.join(String.valueOf(separator), strings);

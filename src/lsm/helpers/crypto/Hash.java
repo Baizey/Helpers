@@ -21,19 +21,19 @@ public class Hash {
         catch (NoSuchAlgorithmException e) { e.printStackTrace(); }
     }
 
-    public static String hash(String password) throws Exception {
+    public static String hash(String toHash) throws Exception {
         byte[] salt = randomBytes(saltSize);
-        byte[] hash = secret.generateSecret(new PBEKeySpec(password.toCharArray(), salt, iterations, hashSize * 8)).getEncoded();
+        byte[] hash = secret.generateSecret(new PBEKeySpec(toHash.toCharArray(), salt, iterations, hashSize * 8)).getEncoded();
         return joinStrings(String.valueOf(iterations), toBase64(salt), toBase64(hash));
     }
 
-    public static boolean validate(String password, String fullHash) throws Exception {
+    public static boolean validate(String toTest, String fullHash) throws Exception {
         String[] parts = splitStrings(fullHash);
         int iterations = Integer.parseInt(parts[0]);
         byte[] salt = fromBase64(parts[1]);
         byte[] hash = fromBase64(parts[2]);
 
-        byte[] test = secret.generateSecret(new PBEKeySpec(password.toCharArray(), salt, iterations, hash.length * 8)).getEncoded();
+        byte[] test = secret.generateSecret(new PBEKeySpec(toTest.toCharArray(), salt, iterations, hash.length * 8)).getEncoded();
 
         int diff = hash.length ^ test.length;
         int min = Math.min(hash.length, test.length);

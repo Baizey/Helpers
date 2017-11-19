@@ -58,12 +58,36 @@ public class GifWriter {
         writer.prepareWriteSequence(null);
     }
 
-    public void add(int[][] image) throws IOException {
-        add(createImage(image));
+    public void add(int[][] image) throws IOException { add(createImage(image)); }
+    @SuppressWarnings("Duplicates")
+    public void add(int[][] image, int scale) throws IOException {
+        int[][] res = new int[image.length * scale][image[0].length * scale];
+        for(int y = 0; y < image.length; y++) {
+            for(int x = 0; x < image[y].length; x++) {
+                int scaleX = x * scale;
+                int scaleY = y * scale;
+                for(int i = 0; i < scale; i++)
+                    for(int j = 0; j < scale; j++)
+                        res[scaleY + i][scaleX + j] = image[y][x];
+            }
+        }
+        add(createImage(res));
     }
 
-    public void add(Color[][] image) throws IOException {
-        add(createImage(image));
+    public void add(Color[][] image) throws IOException { add(createImage(image)); }
+    @SuppressWarnings("Duplicates")
+    public void add(Color[][] image, int scale) throws IOException {
+        Color[][] res = new Color[image.length * scale][image[0].length * scale];
+        for(int y = 0; y < image.length; y++) {
+            for(int x = 0; x < image[y].length; x++) {
+                int scaleX = x * scale;
+                int scaleY = y * scale;
+                for(int i = 0; i < scale; i++)
+                    for(int j = 0; j < scale; j++)
+                        res[scaleY + i][scaleX + j] = image[y][x];
+            }
+        }
+        add(createImage(res));
     }
 
     public void add(RenderedImage image) throws IOException {
