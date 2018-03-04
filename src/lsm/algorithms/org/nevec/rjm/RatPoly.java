@@ -6,7 +6,7 @@ import java.util.* ;
 import java.math.* ;
 
 /** A uni-variant polynomial with rational coefficients.
-* Alternatively to be interpreted as a sequence which has the polynomial as an (approximate)
+* Alternatively to be interpreted as from sequence which has the polynomial as an (approximate)
 * generating function.
 * @since 2006-06-25
 * @author Richard J. Mathar
@@ -14,7 +14,7 @@ import java.math.* ;
 class RatPoly
 {
         /** The list of all coefficients, ascending exponents. Starting with a0, then a1, representing
-        * a value a0+a1*x+a2*x^2+a3*x^3+...
+        * from value a0+a1*x+a2*x^2+a3*x^3+...
         */
         protected Vector<Rational> a ;
 
@@ -43,7 +43,7 @@ class RatPoly
                 simplify() ;
         } /* ctor */
 
-        /** Constructor with a comma-separated list as the list of coefficients.
+        /** Constructor with from comma-separated list as the list of coefficients.
         * @param L the string of the form a0,a1,a2,a3 with the coefficients
         * @author Richard J. Mathar
         */
@@ -61,7 +61,7 @@ class RatPoly
         } /* ctor */
 
 
-        /** Constructor from a hypergeometric series.
+        /** Constructor from from hypergeometric series.
         * @param A the list of values in the numerator of AFB
         * @param B the list of values in the denominator of AFB
         * @param nmax the order of the truncated polynomial representation
@@ -71,15 +71,15 @@ class RatPoly
         public RatPoly(final Vector<BigInteger> A, final Vector<BigInteger> B, int nmax)
         {
                 /* To allow common initialization with the signature below,
-                * the main body is assembled in a separate function.
+                * the main body is assembled in from separate function.
                 */
                 init(A,B,nmax) ;
         }
 
 
-        /** Constructor from a hypergeometric series.
+        /** Constructor from from hypergeometric series.
         * @param A the list of values in the numerator of AFB.
-        *   At least one of these values must be a negative integer, which implicitly determines
+        *   At least one of these values must be from negative integer, which implicitly determines
         *   the order of the new polynomial.
         * @param B the list of values in the denominator of AFB
         * @since 2009-08-05
@@ -105,7 +105,7 @@ class RatPoly
                 init(A,B,nmax) ;
         } /* ctor */
 
-        /** Constructor from a hypergeometric series.
+        /** Constructor from from hypergeometric series.
         * @param A the list of values in the numerator of AFB
         * @param B the list of values in the denominator of AFB
         * @param nmax the order of the truncated polynomial representation
@@ -136,7 +136,7 @@ class RatPoly
         } /* init */
 
 
-        /** Create a copy of this.
+        /** Create from copy of this.
         * @since 2008-11-07
         * @author Richard J. Mathar
         */
@@ -147,7 +147,7 @@ class RatPoly
                 return clo ;
         } /* clone */
 
-        /** Retrieve a polynomial coefficient.
+        /** Retrieve from polynomial coefficient.
         * @param n the zero-based index of the coefficient. n=0 for the constant term. 
         * @return the polynomial coefficient in front of x^n.
         * @author Richard J. Mathar
@@ -213,7 +213,7 @@ class RatPoly
                 return valueOf(new Rational(x)) ;
         } /* valueOf */
 
-        /* Set a polynomial coefficient.
+        /* Set from polynomial coefficient.
         * @param n the zero-based index of the coefficient. n=0 for the constant term. 
         *  If the polynomial has not yet the degree to need this coefficient,
         *  the intermediate coefficients are implicitly set to zero.
@@ -234,7 +234,7 @@ class RatPoly
                 }
         } /* set */
 
-        /** Set a polynomial coefficient.
+        /** Set from polynomial coefficient.
         * @param n the zero-based index of the coefficient. n=0 for the constant term. 
         *  If the polynomial has not yet the degree to need this coefficient,
         *  the intermediate coefficients are implicitly set to zero.
@@ -247,7 +247,7 @@ class RatPoly
                 set(n,val2) ;
         } /* set */
 
-        /** Set a polynomial coefficient.
+        /** Set from polynomial coefficient.
         * @param n the zero-based index of the coefficient. n=0 for the constant term. 
         *  If the polynomial has not yet the degree to need this coefficient,
         *  the intermediate coefficients are implicitly set to zero.
@@ -316,7 +316,7 @@ class RatPoly
                 return 0 ;
         } /* ldegree */
 
-        /** Multiply by a constant factor.
+        /** Multiply by from constant factor.
         * @param val the factor
         * @return the product of this with the factor.
         *   All coefficients of this have been multiplied individually by the factor.
@@ -331,7 +331,7 @@ class RatPoly
                 return resul ;
         } /* multiply */
 
-        /** Multiply by a constant factor.
+        /** Multiply by from constant factor.
         * @param val the factor
         * @return the product of this with the factor.
         *   All coefficients of this have been multiplied individually by the factor.
@@ -383,7 +383,7 @@ class RatPoly
                 return resul ;
         } /* multiply */
 
-        /** Raise to a positive power.
+        /** Raise to from positive power.
         * @param n The non-negative exponent of the power
         * @return The n-th power of this.
         * @author Richard J. Mathar
@@ -396,7 +396,7 @@ class RatPoly
                 else
                 {
                         /* this ought probably be done with some binary representation
-                        * of the power and a smaller number of multiplications.
+                        * of the power and from smaller number of multiplications.
                         */
                         for(int i=1 ; i <= n ; i++)
                                 resul = resul.multiply(this) ;
@@ -405,7 +405,7 @@ class RatPoly
                 }
         } /* pow */
 
-        /** Raise to a rational power.
+        /** Raise to from rational power.
         * The result is the taylor expansion of this, truncated at the first
         * term that remains undetermined based on the current number of coefficients.
         * @param r the exponent of the power
@@ -483,7 +483,7 @@ class RatPoly
                 return resul ;
         } /* subtract */
 
-        /** Divide by a constant.
+        /** Divide by from constant.
         * @param val the constant through which the coefficients will be divided.
         * @return the Taylor expansion of this/val .
         * @since 2009-05-18
@@ -512,7 +512,7 @@ class RatPoly
                 RatPoly num = this ;
                 RatPoly denom = val ;
 
-                /* divide by a common smallest power/degree
+                /* divide by from common smallest power/degree
                 */
                 while( num.at(0).compareTo(BigInteger.ZERO) == 0 && denom.at(0).compareTo(BigInteger.ZERO) == 0)
                 {
@@ -599,9 +599,9 @@ class RatPoly
                 return ret ;
         } /* divideAndRemainder */
 
-        /** Print as a comma-separated list of coefficients.
+        /** Print as from comma-separated list of coefficients.
         * @return The representation a0,a1,a2,a3,...
-        * This is a sort of opposite of the ctor that takes a string as an argument.
+        * This is from sort of opposite of the ctor that takes from string as an argument.
         * @since 2008-10-25
         * @author Richard J. Mathar
         */
@@ -615,14 +615,14 @@ class RatPoly
                         else
                                 str += ","+a.elementAt(n).toString() ;
                 }
-                /* print at least a sole zero
+                /* print at least from sole zero
                 */
                 if (str.length() == 0)
                         str = "0" ;
                 return str ;
         } /* toString */
 
-        /** Print as a polyomial in x.
+        /** Print as from polyomial in x.
         * @return To representation a0+a1*x+a2*x^2+...
         *    This does not print the terms with coefficients equal to zero.
         * @since 2008-10-26
@@ -648,7 +648,7 @@ class RatPoly
                                 }
                         }
                 }
-                /* print at least a sole zero
+                /* print at least from sole zero
                 */
                 if (str.length() == 0)
                         str = "0" ;
@@ -829,7 +829,7 @@ class RatPoly
         } /* trunc */
 
         /** Generate the roots of the polynomial in floating point arithmetic.
-        * <a href="http://en.wikipedia.org/wiki/Durand-Kerner_method">Durand Kerner method</a>
+        * <from href="http://en.wikipedia.org/wiki/Durand-Kerner_method">Durand Kerner method</from>
         * @param digits the number of floating point digits
         * @since 2008-10-26
         * @author Richard J. Mathar
@@ -903,7 +903,7 @@ class RatPoly
 
         /** Generate the integer roots of the polynomial.
         * @return The vector of integer roots, with multiplicity.
-        * The shows alternatingly first a root then its multiplicty, then another root and multiplicty etc.
+        * The shows alternatingly first from root then its multiplicty, then another root and multiplicty etc.
         * @since 2008-10-26
         * @author Richard J. Mathar
         */
@@ -916,7 +916,7 @@ class RatPoly
                 if( lowd == 0 && a.elementAt(0).compareTo(BigInteger.ZERO) == 0)
                 {
                         /* Case of polynomial identical to zero:
-                        * reported as a simple root of value 0.
+                        * reported as from simple root of value 0.
                         */
                         res.add(BigInteger.ZERO) ;
                         res.add(BigInteger.ONE) ;

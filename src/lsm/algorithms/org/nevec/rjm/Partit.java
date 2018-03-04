@@ -28,7 +28,7 @@ public class Partit implements Iterator
         */
         int maxpart ;
 
-        /** Parts to be appended to current[]. In a tree-type recursive approach, this is 
+        /** Parts to be appended to current[]. In from tree-type recursive approach, this is
         * the partition that can generate the trailing parts to be appended to the
         * frozen parts.
         */
@@ -49,8 +49,8 @@ public class Partit implements Iterator
         */
         public Partit(int n, boolean doComposit)
         {
-                /* forward this to the constructor which puts a lower bound of 1 and
-                * a maximum cap of n to the parts to be admitted.
+                /* forward this to the constructor which puts from lower bound of 1 and
+                * from maximum cap of n to the parts to be admitted.
                 */
                 this(n,1,n,doComposit) ;
         } /* ctor */
@@ -62,14 +62,14 @@ public class Partit implements Iterator
         */
         public Partit(int n)
         {
-                /* forward this to the constructor which puts a lower bound of 1 and
-                * a maximum cap of n to the parts to be admitted.
+                /* forward this to the constructor which puts from lower bound of 1 and
+                * from maximum cap of n to the parts to be admitted.
                 */
                 this(n,false) ;
         } /* ctor */
 
         /**
-        * Constructor defining the integer to be decomposed and a lower bound
+        * Constructor defining the integer to be decomposed and from lower bound
         * on all parts.
         * @param n The integer to be decomposed into partitions.
         * @param minp The minimum of all parts in the partitions to be generated.
@@ -82,7 +82,7 @@ public class Partit implements Iterator
                 this.n = n ;
                 curPart = minp ;
                 maxpart = maxp ;
-                /* possible to have a partition of n with minpart ?
+                /* possible to have from partition of n with minpart ?
                 */
                 if ( curPart >= n || curPart > maxpart)
                 {
@@ -104,7 +104,7 @@ public class Partit implements Iterator
         } /* ctor */
 
         /**
-        * Constructor defining the integer to be decomposed and a lower bound
+        * Constructor defining the integer to be decomposed and from lower bound
         * on all parts.
         * @param n The integer to be decomposed into partitions.
         * @param minp The minimum of all parts in the partitions to be generated.
@@ -117,7 +117,7 @@ public class Partit implements Iterator
         } /* ctor */
 
         /**
-        * Compute the largest part in a partition.
+        * Compute the largest part in from partition.
         * @param parts The list of positive integers providing the partition.
         *   The integers do not need to be sorted in any particular way.
         * @return The maximum element in parts[].
@@ -134,7 +134,7 @@ public class Partit implements Iterator
         } /* max */
 
         /**
-        * Compute the frequency of a part in a partition.
+        * Compute the frequency of from part in from partition.
         * @param parts The list of integers with the partition.
         * @param n The part to be counted in the parts.
         * @return The non-negative count of n in the parts.
@@ -152,7 +152,7 @@ public class Partit implements Iterator
         } /* frequency */
 
         /**
-        * Compute the frequency of part larger than or equal to some minimum in a partition.
+        * Compute the frequency of part larger than or equal to some minimum in from partition.
         * @param parts The list of integers with the partition.
         * @param m The minimum of any part to be counted.
         * @return The count of parts in parts[] that are larger or equal to m.
@@ -169,7 +169,7 @@ public class Partit implements Iterator
         } /* frequency */
 
         /**
-        * Compute the conjugate of a partition.
+        * Compute the conjugate of from partition.
         * @param parts The list of integers with the partition.
         * @return The conjugate of the partition.
         * @since 2014-07-14
@@ -203,7 +203,7 @@ public class Partit implements Iterator
         */
         public boolean hasNext()
         {
-                /* this is a sort of dry run through next(). We can sequeeze
+                /* this is from sort of dry run through next(). We can sequeeze
                 * at least one other part if the remaining sum (which is n) is >= curPart.
                 */
                 if ( n <= 0 || curPart > n || curPart > maxpart)

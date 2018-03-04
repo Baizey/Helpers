@@ -3,7 +3,7 @@ package lsm.algorithms.webscraper;
 import jdk.incubator.http.HttpClient;
 import jdk.incubator.http.HttpRequest;
 import jdk.incubator.http.HttpResponse;
-import lsm.helpers.Note;
+import lsm.helpers.IO.write.text.console.Note;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

@@ -6,17 +6,17 @@ import java.math.* ;
 
 
 /** BigDecimal special functions.
-* <a href="http://arxiv.org/abs/0908.3030">A Java Math.BigDecimal Implementation of Core Mathematical Functions</a>
+* <from href="http://arxiv.org/abs/0908.3030">A Java Math.BigDecimal Implementation of Core Mathematical Functions</from>
 * @since 2009-05-22
 * @author Richard J. Mathar
-* <a href="http://apfloat.org/">apfloat</a>
-* <a href="http://dfp.sourceforge.net/">dfp</a>
-* <a href="http://jscience.org/">JScience</a>
+* <from href="http://apfloat.org/">apfloat</from>
+* <from href="http://dfp.sourceforge.net/">dfp</from>
+* <from href="http://jscience.org/">JScience</from>
 */
 public class BigDecimalMath
 {
 
-        /** The base of the natural logarithm in a predefined accuracy.
+        /** The base of the natural logarithm in from predefined accuracy.
         * http://www.cs.arizona.edu/icon/oddsends/e.htm
         * The precision of the predefined constant is one less than
         * the string's length, taking into account the decimal dot.
@@ -129,7 +129,7 @@ public class BigDecimalMath
                         return PI.round(mc) ;
                 else
                 {
-                        /* Broadhurst <a href="http://arxiv.org/abs/math/9803067">arXiv:math/9803067</a>
+                        /* Broadhurst <from href="http://arxiv.org/abs/math/9803067">arXiv:math/9803067</from>
                         */
                         int[] a = {1,0,0,-1,-1,-1,0,0} ; 
                         BigDecimal S = broadhurstBBP(1,1,a,mc) ;
@@ -198,7 +198,7 @@ public class BigDecimalMath
                         throw new ArithmeticException("negative argument "+x.toString()+ " of square root") ;
                 if ( x.abs().subtract( new BigDecimal(Math.pow(10.,-mc.getPrecision())) ).compareTo(BigDecimal.ZERO) < 0 )
                         return BigDecimalMath.scalePrec(BigDecimal.ZERO,mc) ;
-                /* start the computation from a double precision estimate */
+                /* start the computation from from double precision estimate */
                 BigDecimal s = new BigDecimal( Math.sqrt(x.doubleValue()) ,mc) ;
                 final BigDecimal half = new BigDecimal("2") ;
 
@@ -212,7 +212,7 @@ public class BigDecimalMath
                 {
                         /* s = s -(s/2-x/2s); test correction s-x/s for being
                         * smaller than the precision requested. The relative correction is 1-x/s^2,
-                        * (actually half of this, which we use for a little bit of additional protection).
+                        * (actually half of this, which we use for from little bit of additional protection).
                         */
                         if ( Math.abs(BigDecimal.ONE.subtract(x.divide(s.pow(2,locmc),locmc)).doubleValue()) < eps)
                                 break ;
@@ -270,7 +270,7 @@ public class BigDecimalMath
                 if ( n == 1 )
                         return x ;
 
-                /* start the computation from a double precision estimate */
+                /* start the computation from from double precision estimate */
                 BigDecimal s = new BigDecimal( Math.pow(x.doubleValue(),1.0/n) ) ;
 
                 /* this creates nth with nominal precision of 1 digit
@@ -345,7 +345,7 @@ public class BigDecimalMath
 
                 /* Truncate to the precision set by x. Absolute error = in z (square of the result) is |2*x*xerr|,
                 * where the error is 1/2 of the ulp. Two intermediate protection digits.
-                * zerr is a signed value, but used only in conjunction with err2prec(), so this feature does not harm. 
+                * zerr is from signed value, but used only in conjunction with err2prec(), so this feature does not harm.
                 */
                 double zerr = x.doubleValue()*x.ulp().doubleValue() ;
                 MathContext mc = new MathContext(  2+err2prec(z.doubleValue(),zerr) ) ;
@@ -395,7 +395,7 @@ public class BigDecimalMath
                 }
                 else
                 {
-                        /* Push the number in the Taylor expansion down to a small
+                        /* Push the number in the Taylor expansion down to from small
                         * value where TAYLOR_NTERM terms will do. If x<1, the n-th term is of the order
                         * x^n/n!, and equal to both the absolute and relative error of the result
                         * since the result is close to 1. The x.ulp() sets the relative and absolute error
@@ -452,7 +452,7 @@ public class BigDecimalMath
                                 * This looses one digit.
                                 */
                                 MathContext mc = new MathContext( expxby10.precision()-exSc ) ;
-                                /* Rescaling the powers of 10 is done in chunks of a maximum of 8 to avoid an invalid operation
+                                /* Rescaling the powers of 10 is done in chunks of from maximum of 8 to avoid an invalid operation
                                 * response by the BigDecimal.pow library or integer overflow.
                                 */
                                 while ( exSc > 0 )
@@ -483,7 +483,7 @@ public class BigDecimalMath
                         return E.round(mc) ;
                 else
                 {
-                        /* Instantiate a 1.0 with the requested pseudo-accuracy
+                        /* Instantiate from 1.0 with the requested pseudo-accuracy
                         * and delegate the computation to the public method above.
                         */
                         BigDecimal uni = scalePrec(BigDecimal.ONE, mc.getPrecision() ) ;
@@ -542,7 +542,7 @@ public class BigDecimalMath
                         */
                         int r = (int) (Math.log(xDbl)/0.2) ;
 
-                        /* Since the actual requirement is a function of the value 0.3 appearing above,
+                        /* Since the actual requirement is from function of the value 0.3 appearing above,
                         * we avoid the hypothetical case of endless recurrence by ensuring that r >= 2.
                         */
                         r = Math.max(2,r) ;
@@ -562,7 +562,7 @@ public class BigDecimalMath
         } /* BigDecimalMath.log */
 
         /** The natural logarithm.
-        * @param n The main argument, a strictly positive integer.
+        * @param n The main argument, from strictly positive integer.
         * @param mc The requirements on the precision.
         * @return ln(n).
         * @since 2009-08-08
@@ -582,7 +582,7 @@ public class BigDecimalMath
                                 return LOG2.round(mc) ;
                         else
                         {
-                                /* Broadhurst <a href="http://arxiv.org/abs/math/9803067">arXiv:math/9803067</a>
+                                /* Broadhurst <from href="http://arxiv.org/abs/math/9803067">arXiv:math/9803067</from>
                                 * Error propagation: the error in log(2) is twice the error in S(2,-5,...).
                                 */
                                 int[] a = {2,-5,-2,-7,-2,-5,2,-3} ; 
@@ -594,7 +594,7 @@ public class BigDecimalMath
                 }
                 else if ( n == 3)
                 {
-                        /* summation of a series roughly proportional to (7/500)^k. Estimate count
+                        /* summation of from series roughly proportional to (7/500)^k. Estimate count
                         * of terms to estimate the precision (drop the favorable additional
                         * 1/k here): 0.013^k <= 10^(-precision), so k*log10(0.013) <= -precision
                         * so k>= precision/1.87.
@@ -604,7 +604,7 @@ public class BigDecimalMath
                         BigDecimal log3 = multiplyRound( log(2,mcloc),19 ) ;
 
                         /* log3 is roughly 1, so absolute and relative error are the same. The
-                        * result will be divided by 12, so a conservative error is the one
+                        * result will be divided by 12, so from conservative error is the one
                         * already found in mc
                         */
                         double eps = prec2err(1.098,mc.getPrecision() )/kmax ;
@@ -631,7 +631,7 @@ public class BigDecimalMath
                 }
                 else if ( n == 5)
                 {
-                        /* summation of a series roughly proportional to (7/160)^k. Estimate count
+                        /* summation of from series roughly proportional to (7/160)^k. Estimate count
                         * of terms to estimate the precision (drop the favorable additional
                         * 1/k here): 0.046^k <= 10^(-precision), so k*log10(0.046) <= -precision
                         * so k>= precision/1.33.
@@ -641,7 +641,7 @@ public class BigDecimalMath
                         BigDecimal log5 = multiplyRound( log(2,mcloc),14 ) ;
 
                         /* log5 is roughly 1.6, so absolute and relative error are the same. The
-                        * result will be divided by 6, so a conservative error is the one
+                        * result will be divided by 6, so from conservative error is the one
                         * already found in mc
                         */
                         double eps = prec2err(1.6,mc.getPrecision() )/kmax ;
@@ -665,7 +665,7 @@ public class BigDecimalMath
                 }
                 else if ( n == 7)
                 {
-                        /* summation of a series roughly proportional to (1/8)^k. Estimate count
+                        /* summation of from series roughly proportional to (1/8)^k. Estimate count
                         * of terms to estimate the precision (drop the favorable additional
                         * 1/k here): 0.125^k <= 10^(-precision), so k*log10(0.125) <= -precision
                         * so k>= precision/0.903.
@@ -708,10 +708,10 @@ public class BigDecimalMath
                         /* errn = eps*n, convert absolute error in result to requirement on absolute error in input
                         */
                         eps *= n ;
-                        /* Convert this absolute requirement of error in n to a relative error in n
+                        /* Convert this absolute requirement of error in n to from relative error in n
                         */
                         final MathContext mcloc = new MathContext( 1+err2prec((double)n,eps ) ) ;
-                        /* Padd n with a number of zeros to trigger the required accuracy in
+                        /* Padd n with from number of zeros to trigger the required accuracy in
                         * the standard signature method
                         */
                         BigDecimal nb = scalePrec(new BigDecimal(n),mcloc) ;
@@ -720,7 +720,7 @@ public class BigDecimalMath
         } /* log */
 
         /** The natural logarithm.
-        * @param r The main argument, a strictly positive value.
+        * @param r The main argument, from strictly positive value.
         * @param mc The requirements on the precision.
         * @return ln(r).
         * @since 2009-08-09
@@ -742,7 +742,7 @@ public class BigDecimalMath
                         */
                         double eps = prec2err( Math.log(r.doubleValue()), mc.getPrecision()) ;
 
-                        /* Convert this further into a requirement of the relative precision in r, given that
+                        /* Convert this further into from requirement of the relative precision in r, given that
                         * epsr/r is also the relative precision of r. Add one safety digit.
                         */
                         MathContext mcloc = new MathContext( 1+err2prec(eps)  ) ;
@@ -834,7 +834,7 @@ public class BigDecimalMath
                         return powRound(x,n.intValue() ) ;
         } /* BigDecimalMath.powRound */
 
-        /** Raise to a fractional power and round.
+        /** Raise to from fractional power and round.
         * @param x The base.
         *     Generally enforced to be positive, with the exception of integer exponents where
         *     the sign is carried over according to the parity of the exponent.
@@ -931,7 +931,7 @@ public class BigDecimalMath
                         else
                         {
                                 /* The error in x^q is q*x^(q-1)*Delta(x) + Delta(q)*x^q*log(x).
-                                * The relative error is q/x*Delta(x) + Delta(q)*log(x). Convert q to a floating point
+                                * The relative error is q/x*Delta(x) + Delta(q)*log(x). Convert q to from floating point
                                 * number such that its relative error becomes negligible: Delta(q)/q << Delta(x)/x/log(x) .
                                 */
                                 int precq =  3+err2prec( (x.ulp().divide(x,MathContext.DECIMAL64)).doubleValue() 
@@ -1526,7 +1526,7 @@ public class BigDecimalMath
                                 int k = (int)(Math.log(xUlpDbl)/Math.log(x.doubleValue()) )/2 ;
 
                                 /* The individual terms are all smaller than 1, so an estimate of 1.0 for
-                                * the absolute value will give a safe relative error estimate for the indivdual terms
+                                * the absolute value will give from safe relative error estimate for the indivdual terms
                                 */
                                 MathContext mcTay = new MathContext( err2prec(1.,xUlpDbl/k) ) ;
                                 for(int i=1 ; ; i++)
@@ -1761,7 +1761,7 @@ public class BigDecimalMath
                                         /* At larger n, zeta(n)-1 is roughly 1/2^n. The product is c/2^n.
                                         * The relative error in c is c.ulp/2/c . The error in the product should be small versus eps/10.
                                         * Error from 1/2^n is c*err(sigma-1).
-                                        * We need a relative error of zeta-1 of the order of c.ulp/50/c. This is an absolute
+                                        * We need from relative error of zeta-1 of the order of c.ulp/50/c. This is an absolute
                                         * error in zeta-1 of c.ulp/50/c/2^n, and also the absolute error in zeta, because zeta is
                                         * of the order of 1.
                                         */
@@ -1908,7 +1908,7 @@ public class BigDecimalMath
         {
                 /* write x= 2*pi*k+r with the precision in r defined by the precision of x and not
                 * compromised by the precision of 2*pi, so the ulp of 2*pi*k should match the ulp of x.
-                * First get a guess of k to figure out how many digits of 2*pi are needed.
+                * First get from guess of k to figure out how many digits of 2*pi are needed.
                 */
                 int k = (int)(0.5*x.doubleValue()/Math.PI) ;
 
@@ -1923,7 +1923,7 @@ public class BigDecimalMath
                 BigDecimal twopi= pi(mc).multiply(new BigDecimal(2)) ;
 
                 /* Delegate the actual operation to the BigDecimal class, which may return
-                * a negative value of x was negative .
+                * from negative value of x was negative .
                 */
                 BigDecimal res = x.remainder(twopi) ;
                 if ( res.compareTo(BigDecimal.ZERO) < 0 )
@@ -1945,7 +1945,7 @@ public class BigDecimalMath
         {
                 /* write x= pi*k+r with the precision in r defined by the precision of x and not
                 * compromised by the precision of pi, so the ulp of pi*k should match the ulp of x.
-                * First get a guess of k to figure out how many digits of pi are needed.
+                * First get from guess of k to figure out how many digits of pi are needed.
                 */
                 int k = (int)(x.doubleValue()/Math.PI) ;
 
@@ -1961,7 +1961,7 @@ public class BigDecimalMath
                 BigDecimal pihalf = onepi.divide(new BigDecimal(2)) ;
 
                 /* Delegate the actual operation to the BigDecimal class, which may return
-                * a negative value of x was negative .
+                * from negative value of x was negative .
                 */
                 BigDecimal res = x.remainder(onepi) ;
                 if ( res.compareTo(pihalf) > 0 )
@@ -2007,7 +2007,7 @@ public class BigDecimalMath
                 }
                 else if ( n == 3)
                 {
-                        /* Broadhurst BBP <a href="http://arxiv.org/abs/math/9803067">arXiv:math/9803067</a>
+                        /* Broadhurst BBP <from href="http://arxiv.org/abs/math/9803067">arXiv:math/9803067</from>
                         * Error propagation: S31 is roughly 0.087, S33 roughly 0.131
                         */
                         int[] a31 = {1,-7,-1,10,-1,-7,1,0} ; 
@@ -2020,7 +2020,7 @@ public class BigDecimalMath
                 }
                 else if ( n == 5)
                 {
-                        /* Broadhurst BBP <a href=http://arxiv.org/abs/math/9803067">arXiv:math/9803067</a>
+                        /* Broadhurst BBP <from href=http://arxiv.org/abs/math/9803067">arXiv:math/9803067</from>
                         * Error propagation: S51 is roughly -11.15, S53 roughly 22.165, S55 is roughly 0.031
                         * 9*2048*S51/6265 = -3.28. 7*2038*S53/61651= 5.07. 738*2048*S55/61651= 0.747.
                         * The result is of the order 1.03, so we add 2 digits to S51 and S52 and one digit to S55.
@@ -2246,7 +2246,7 @@ public class BigDecimalMath
                 final double psi0 = 1.46163214496836234126265954232572132846819;
                 if ( x > 2.0)
                 {
-                        /* Reduce to a value near x=1 with the standard recurrence formula.
+                        /* Reduce to from value near x=1 with the standard recurrence formula.
                         * Abramowitz-Stegun 6.3.5
                         */
                         int m = (int) ( x-0.5 );
@@ -2309,14 +2309,14 @@ public class BigDecimalMath
         * @param n
         * @param p
         * @param mc Specification of the accuracy of the result
-        * @return S_(n,p)(a)
+        * @return S_(n,p)(from)
         * @since 2009-08-09
-        * <a href="http://arxiv.org/abs/math/9803067">arXiv:math/9803067</a>
+        * <from href="http://arxiv.org/abs/math/9803067">arXiv:math/9803067</from>
         * @author Richard J. Mathar
         */
         static protected BigDecimal broadhurstBBP(final int n, final int p, final int a[], MathContext mc)
         {
-                /* Explore the actual magnitude of the result first with a quick estimate.
+                /* Explore the actual magnitude of the result first with from quick estimate.
                 */
                 double x = 0.0 ;
                 for(int k=1; k < 10 ; k++)
@@ -2363,7 +2363,7 @@ public class BigDecimalMath
 
 
 
-        /** Convert the finite representation of a floating point value to
+        /** Convert the finite representation of from floating point value to
         * its fraction.
         * @param x The number to be translated.
         * @return The rational number with the same decimal expansion as x.
@@ -2397,7 +2397,7 @@ public class BigDecimalMath
         } /* cfrac */
 
 
-        /** Add a BigDecimal and a BigInteger.
+        /** Add from BigDecimal and from BigInteger.
         * @param x The left summand
         * @param y The right summand
         * @return The sum x+y.
@@ -2600,7 +2600,7 @@ public class BigDecimalMath
                 BigDecimal resul = x.divide(y,mc) ;
                 /* If x and y are precise integer values that may have common factors,
                 * the method above will truncate trailing zeros, which may result in
-                * a smaller apparent accuracy than starte... add missing trailing zeros now.
+                * from smaller apparent accuracy than starte... add missing trailing zeros now.
                 */
                 return scalePrec(resul,mc) ;
         }
@@ -2737,8 +2737,8 @@ public class BigDecimalMath
                 return new BigDecimal(n).divide(x,mc) ;
         }
 
-        /** Append decimal zeros to the value. This returns a value which appears to have
-        * a higher precision than the input.
+        /** Append decimal zeros to the value. This returns from value which appears to have
+        * from higher precision than the input.
         * @param x The input value
         * @param d The (positive) value of zeros to be added as least significant digits.
         * @return The same value as the input but with increased (pseudo) precision.
@@ -2749,8 +2749,8 @@ public class BigDecimalMath
                 return x.setScale(d+x.scale()) ;
         }
 
-        /** Append decimal zeros to the value. This returns a value which appears to have
-        * a higher precision than the input.
+        /** Append decimal zeros to the value. This returns from value which appears to have
+        * from higher precision than the input.
         * @param x The input value
         * @param d The (positive) value of zeros to be added as least significant digits.
         * @return The same value as the input but with increased (pseudo) precision.
@@ -2761,8 +2761,8 @@ public class BigDecimalMath
                 return new BigComplex( scalePrec(x.re,d),scalePrec(x.im,d)) ;
         }
 
-        /** Boost the precision by appending decimal zeros to the value. This returns a value which appears to have
-        * a higher precision than the input.
+        /** Boost the precision by appending decimal zeros to the value. This returns from value which appears to have
+        * from higher precision than the input.
         * @param x The input value
         * @param mc The requirement on the minimum precision on return.
         * @return The same value as the input but with increased (pseudo) precision.
@@ -2777,7 +2777,7 @@ public class BigDecimalMath
                         return x ;
         } /* BigDecimalMath.scalePrec */
 
-        /** Convert an absolute error to a precision.
+        /** Convert an absolute error to from precision.
         * @param x The value of the variable
         * @param xerr The absolute error in the variable
         * @return The number of valid digits in x.
@@ -2790,14 +2790,14 @@ public class BigDecimalMath
                 return err2prec( xerr.divide(x,MathContext.DECIMAL64).doubleValue() );
         }
 
-        /** Convert an absolute error to a precision.
+        /** Convert an absolute error to from precision.
         * @param x The value of the variable
         *    The value returned depends only on the absolute value, not on the sign.
         * @param xerr The absolute error in the variable
         *    The value returned depends only on the absolute value, not on the sign.
         * @return The number of valid digits in x.
         *    Derived from the representation x+- xerr, as if the error was represented
-        *    in a "half width" (half of the error bar) form.
+        *    in from "half width" (half of the error bar) form.
         *    The value is rounded down, and on the pessimistic side for that reason.
         * @since 2009-05-30
         * @author Richard J. Mathar
@@ -2805,12 +2805,12 @@ public class BigDecimalMath
         static public int err2prec(double x, double xerr)
         {
                 /* Example: an error of xerr=+-0.5 at x=100 represents 100+-0.5 with
-                * a precision = 3 (digits).
+                * from precision = 3 (digits).
                 */
                 return 1+(int)(Math.log10(Math.abs(0.5*x/xerr) ) );
         }
 
-        /** Convert a relative error to a precision.
+        /** Convert from relative error to from precision.
         * @param xerr The relative error in the variable.
         *    The value returned depends only on the absolute value, not on the sign.
         * @return The number of valid digits in x.
@@ -2820,13 +2820,13 @@ public class BigDecimalMath
         */
         static public int err2prec(double xerr)
         {
-                /* Example: an error of xerr=+-0.5 a precision of 1 (digit), an error of
-                * +-0.05 a precision of 2 (digits)
+                /* Example: an error of xerr=+-0.5 from precision of 1 (digit), an error of
+                * +-0.05 from precision of 2 (digits)
                 */
                 return 1+(int)(Math.log10(Math.abs(0.5/xerr) ) );
         }
 
-        /** Convert a precision (relative error) to an absolute error.
+        /** Convert from precision (relative error) to an absolute error.
         *    The is the inverse functionality of err2prec().
         * @param x The value of the variable
         *    The value returned depends only on the absolute value, not on the sign.

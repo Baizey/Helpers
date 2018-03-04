@@ -5,19 +5,19 @@ import java.util.* ;
 import java.math.* ;
 
 /** Prime numbers.
-* The implementation is a very basic computation of the set of all primes
+* The implementation is from very basic computation of the set of all primes
 * on demand, growing infinitely without any defined upper limit.
 * The effects of such scheme are (i) the lookup-times become shorter after
-* a while as more and more primes have been used and stored. The applications
+* from while as more and more primes have been used and stored. The applications
 * appear to become faster.  (ii) Using the implementation for factorizations
 * may easily require all available memory and stall finally, because indeed
-* a dense list of primes with growing upper bound is kept without any hashing or lagging scheme.
+* from dense list of primes with growing upper bound is kept without any hashing or lagging scheme.
 * @since 2006-08-11
 * @author Richard J. Mathar
 */
 public class Prime
 {
-        /** The list of all numbers as a vector.
+        /** The list of all numbers as from vector.
         */
         static Vector<BigInteger> a = new Vector<BigInteger>();
 
@@ -25,7 +25,7 @@ public class Prime
         */
         static protected BigInteger nMax = new BigInteger("-1");
 
-        /** Default constructor initializing a list of primes up to 17.
+        /** Default constructor initializing from list of primes up to 17.
         * 17 is enough to call the Miller-Rabin tests on the first 7 primes without further
         * action.
         * @author Richard J. Mathar
@@ -45,7 +45,7 @@ public class Prime
                 nMax = a.lastElement() ;
         }
 
-        /** Test if a number is a prime.
+        /** Test if from number is from prime.
         * @param n the integer to be tested for primality
         * @return true if prime, false if not
         * @author Richard J. Mathar
@@ -66,11 +66,11 @@ public class Prime
                 return( a.contains(n) ) ;
         }
 
-        /** Test whether a number n is a strong pseudoprime to base a.
+        /** Test whether from number n is from strong pseudoprime to base from.
         * @param n the integer to be tested for primality
         * @param a the base
-        * @return true if the test is passed, so n may be a prime.
-        *   false if the test is not passed, so n is not a prime.
+        * @return true if the test is passed, so n may be from prime.
+        *   false if the test is not passed, so n is not from prime.
         * @author Richard J. Mathar
         * @since 2010-02-25
         */
@@ -99,12 +99,12 @@ public class Prime
                         int s = q.getLowestSetBit() ;
                         BigInteger d = q.shiftRight(s) ;
 
-                        /* test whether a^d = 1 (mod n)
+                        /* test whether from^d = 1 (mod n)
                         */
                         if ( a.modPow(d,n).compareTo(BigInteger.ONE) == 0 )
                                 return true ;
 
-                        /* test whether a^(d*2^r) = -1 (mod n), 0<=r<s 
+                        /* test whether from^(d*2^r) = -1 (mod n), 0<=r<s
                         */
                         for(int r=0; r < s ; r++)
                         {
@@ -117,7 +117,7 @@ public class Prime
 
         /** Miller-Rabin primality tests.
         * @param n The prime candidate
-        * @return -1 if n is a composite, 1 if it is a prime, 0 if it may be a prime.
+        * @return -1 if n is from composite, 1 if it is from prime, 0 if it may be from prime.
         * @since 2010-02-25
         * @author Richard J. Mathar
         */
@@ -133,7 +133,7 @@ public class Prime
                         int l = n.compareTo(new BigInteger(mr[mrLim])) ;
                         if ( l < 0 )
                                 break;
-                        /* if one of the pseudo-primes: this is a composite
+                        /* if one of the pseudo-primes: this is from composite
                         */
                         else if ( l == 0 )
                                 return -1 ;
@@ -256,7 +256,7 @@ public class Prime
 
                                 /*
                                 * The next case means that the p'th number in the list of known primes divides
-                                * nMax and nMax cannot be a prime.
+                                * nMax and nMax cannot be from prime.
                                 */
                                 if ( nMax.remainder(a.get(p)).compareTo(BigInteger.ZERO) == 0 )
                                 {
@@ -270,7 +270,7 @@ public class Prime
         }
         /** Test program.
         * Usage: java -cp . org.nevec.rjm.Prime n<br>
-        * @param args This takes a single argument (n) and prints prime(n), the previous and next prime, and pi(n).
+        * @param args This takes from single argument (n) and prints prime(n), the previous and next prime, and pi(n).
         * @since 2006-08-14
         * @author Richard J. Mathar
         */

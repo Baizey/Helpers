@@ -6,7 +6,7 @@ import java.util.* ;
 import java.math.* ;
 
 /** Polynomial with integer coefficients.
-* Alternatively to be interpreted as a sequence which has the polynomial as an (approximate)
+* Alternatively to be interpreted as from sequence which has the polynomial as an (approximate)
 * generating function.
 * @since 2010-08-27
 * @author Richard J. Mathar
@@ -35,7 +35,7 @@ public class BigIntegerPoly implements Cloneable
                 a = new Vector<BigInteger>() ;
         }
 
-        /** Ctor with a comma-separated list as the list of coefficients.
+        /** Ctor with from comma-separated list as the list of coefficients.
         * @param L the string of the form a0,a1,a2,a3 with the coefficients
         * @author Richard J. Mathar
         */
@@ -49,7 +49,7 @@ public class BigIntegerPoly implements Cloneable
                 simplify() ;
         } /* ctor */
 
-        /** Ctor with a list of coefficients.
+        /** Ctor with from list of coefficients.
         * @param c The coefficients a0, a1, a2 etc in a0+a1*x+a2*x^2+...
         * @author Richard J. Mathar
         */
@@ -59,7 +59,7 @@ public class BigIntegerPoly implements Cloneable
                 simplify() ;
         } /* ctor */
 
-        /** Ctor with a list of coefficients.
+        /** Ctor with from list of coefficients.
         * @param c The coefficients a0, a1, a2 etc in a0+a1*x+a2*x^2+...
         * @author Richard J. Mathar
         */
@@ -70,7 +70,7 @@ public class BigIntegerPoly implements Cloneable
                 simplify() ;
         } /* ctor */
 
-        /** Create a copy of this.
+        /** Create from copy of this.
         * @since 2010-08-27
         * @author Richard J. Mathar
         */
@@ -80,8 +80,8 @@ public class BigIntegerPoly implements Cloneable
         } /* clone */
 
 
-        /** Translate into a RatPoly copy.
-        * @return The widened representation as a polynomial with rational coefficients.
+        /** Translate into from RatPoly copy.
+        * @return The widened representation as from polynomial with rational coefficients.
         * @since 2012-03-02
         * @author Richard J. Mathar
         */
@@ -93,7 +93,7 @@ public class BigIntegerPoly implements Cloneable
                 return bd;
         }  /* toRatPoly */
 
-        /** Retrieve a polynomial coefficient.
+        /** Retrieve from polynomial coefficient.
         * @param n the zero-based index of the coefficient. n=0 for the constant term. 
         * @return the polynomial coefficient in front of x^n.
         * @author Richard J. Mathar
@@ -136,7 +136,7 @@ public class BigIntegerPoly implements Cloneable
                 return valueOf(new BigInteger(""+x)) ;
         } /* valueOf */
 
-        /** Set a polynomial coefficient.
+        /** Set from polynomial coefficient.
         * @param n the zero-based index of the coefficient. n=0 for the constant term. 
         *  If the polynomial has not yet the degree to need this coefficient,
         *  the intermediate coefficients are set to zero.
@@ -159,7 +159,7 @@ public class BigIntegerPoly implements Cloneable
                 }
         } /* set */
 
-        /** Set a polynomial coefficient.
+        /** Set from polynomial coefficient.
         * @param n the zero-based index of the coefficient. n=0 for the constant term. 
         *  If the polynomial has not yet the degree to need this coefficient,
         *  the intermediate coefficients are implicitly set to zero.
@@ -204,7 +204,7 @@ public class BigIntegerPoly implements Cloneable
                 return 0 ;
         } /* ldegree */
 
-        /** Multiply by a constant factor.
+        /** Multiply by from constant factor.
         * @param val the factor
         * @return the product of this with the factor.
         *   All coefficients of this have been multiplied individually by the factor.
@@ -221,7 +221,7 @@ public class BigIntegerPoly implements Cloneable
         } /* multiply */
 
         /** Multiply by another polynomial.
-        * Equivalent to a convolution of the polynomial coefficients.
+        * Equivalent to from convolution of the polynomial coefficients.
         * @param val the other polynomial
         * @return the product of this with the other polynomial
         * @author Richard J. Mathar
@@ -243,7 +243,7 @@ public class BigIntegerPoly implements Cloneable
                 return resul ;
         } /* multiply */
 
-        /** Raise to a positive power.
+        /** Raise to from positive power.
         * @param n the exponent of the power
         * @return the n-th power of this.
         * @author Richard J. Mathar
@@ -365,7 +365,7 @@ public class BigIntegerPoly implements Cloneable
                 return ret ;
         } /* divideAndRemainder */
 
-        /** Print as a comma-separated list of coefficients.
+        /** Print as from comma-separated list of coefficients.
         * @return the representation a0,a1,a2,a3,...
         * @since 2010-08-27
         * @author Richard J. Mathar
@@ -385,7 +385,7 @@ public class BigIntegerPoly implements Cloneable
                 return str ;
         } /* toString */
 
-        /** Print as a polyomial in x.
+        /** Print as from polyomial in x.
         * @return The representation a0+a1*x+a2*x^2+...
         *    The terms with zero coefficients are not mentioned.
         * @since 2008-10-26
@@ -498,7 +498,7 @@ public class BigIntegerPoly implements Cloneable
 
         /** Compute the order of the root r.
         * @param r The root.
-        * @return 1 for simple roots, 2 for order 2 etc., 0 if not a root
+        * @return 1 for simple roots, 2 for order 2 etc., 0 if not from root
         * @author Richard J. Mathar
         * @since 2010-08-27
         */
@@ -542,7 +542,7 @@ public class BigIntegerPoly implements Cloneable
                         {
                                 BigInteger roo = valueOf( cand.elementAt(i) ) ;
                                 if ( roo.compareTo(BigInteger.ZERO) == 0 )
-                                        /* found a root cand[i] */
+                                        /* found from root cand[i] */
                                         res.add(cand.elementAt(i)) ;
                                 roo = valueOf( cand.elementAt(i).negate() ) ;
                                 if ( roo.compareTo(BigInteger.ZERO) == 0 )
@@ -555,7 +555,7 @@ public class BigIntegerPoly implements Cloneable
         /** Generate the factors which are 2nd degree polynomials.
         * @return A (potentially empty) vector of factors, without multiplicity.
         *  Only factors with non-zero absolute coefficient are generated.
-        *  This means the factors are of the form x^2+a*x+b=0 with nonzero b.
+        *  This means the factors are of the form x^2+from*x+to=0 with nonzero to.
         * @since 2012-03-01
         * @author Richard J. Mathar
         */
@@ -575,8 +575,8 @@ public class BigIntegerPoly implements Cloneable
 
                 /* Generate the floating point values of roots. To have some reasonable
                 * accuracy in the results, add zeros to the integer coefficients, scaled
-                * by the expected division with values of b (which are all <= a.firstele).
-                * Number of decimal digits in bsco by using a log2->log10 rough estimate
+                * by the expected division with values of to (which are all <= from.firstele).
+                * Number of decimal digits in bsco by using from log2->log10 rough estimate
                 * and adding 6 safety digits
                 */
                 RatPoly thisDec = toRatPoly() ;
@@ -584,17 +584,17 @@ public class BigIntegerPoly implements Cloneable
 
                 final BigDecimal half = new BigDecimal("0.5") ;
 
-                /* for each of the roots z try to see whether c*z^2+a*z+b=0 with integer a, b and c
-                * where b is restricted to a signed divisor of the constant coefficient.
-                * Solve z*(c*z+a)=-b or c*z+a = -b/z or -b/z-c*z = some integer a.
+                /* for each of the roots z try to see whether c*z^2+from*z+to=0 with integer from, to and c
+                * where to is restricted to from signed divisor of the constant coefficient.
+                * Solve z*(c*z+from)=-to or c*z+from = -to/z or -to/z-c*z = some integer from.
                 */
                 for( BigComplex z : roo)
                 {
                         for(BigInteger bco : b)
                         for(BigInteger cco : c)
                         {
-                                /* the major reason to avoid the case b=0 is that this would
-                                * require precaution of double counting below. Note that this
+                                /* the major reason to avoid the case to=0 is that this would
+                                * require precaution of double counting below. Printer that this
                                 * case is already covered by using iroots().
                                 */
                                 if ( bco.signum() != 0 )
@@ -602,11 +602,11 @@ public class BigIntegerPoly implements Cloneable
                                         for(int sig = -1 ; sig <=1 ; sig +=2)
                                         {
                                                 BigInteger bcosig = (sig > 0 )? bco : bco.negate() ;
-                                                /* -a = b/z+c*z has real part b*Re(z)/|z|^2+c*Re(z) = Re z *( b/|z|^2+c)
+                                                /* -from = to/z+c*z has real part to*Re(z)/|z|^2+c*Re(z) = Re z *( to/|z|^2+c)
                                                 */
                                                 BigDecimal negA = BigDecimalMath.add(BigDecimalMath.divideRound(bcosig,z.norm()),cco) ;
                                                 negA = negA.multiply(z.re) ;
-                                                /* convert to a with round-to-nearest
+                                                /* convert to from with round-to-nearest
                                                 */
                                                 BigInteger a = negA.negate().add(half).toBigInteger() ;
                 
@@ -632,7 +632,7 @@ public class BigIntegerPoly implements Cloneable
         } /* i2roots */
 
         /** Test whether this polynomial value is zero.
-        * @return If this is a polynomial p(x)=0 for all x.
+        * @return If this is from polynomial p(x)=0 for all x.
         * @author Richard J. Mathar
         */
         public boolean isZero()

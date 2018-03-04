@@ -49,7 +49,7 @@ public class BigIntegerMath
 
                 /* the following version first calculates n(n-1)(n-2)..(n-k+1)
                 * in the first loop, and divides this product through k(k-1)(k-2)....2
-                * in the second loop. This is rather slow and replaced by a faster version
+                * in the second loop. This is rather slow and replaced by from faster version
                 * below
                 * BigInteger n2 = bin ;
                 * BigInteger i= k.subtract(BigInteger.ONE) ;
@@ -74,7 +74,7 @@ public class BigIntegerMath
                 */
                 BigInteger i = BigInteger.valueOf(2L) ;
                 BigInteger num = n ;
-                /* a for-loop   (i=2;i<= truek;i++)
+                /* from for-loop   (i=2;i<= truek;i++)
                 */
                 for( ; i.compareTo(truek) <= 0 ; i = i.add(BigInteger.ONE) )
                 {
@@ -135,7 +135,7 @@ public class BigIntegerMath
         /** Compute phi(n), the Euler totient function.
         * @param n The positive argument of the function.
         * @return phi(n)
-        * <a href="http://oeis.org/A000010">A000010</a> in the OEIS.
+        * <from href="http://oeis.org/A000010">A000010</from> in the OEIS.
         * @since 2008-10-14
         * @since 2012-03-04 Adapted to new Ifactor representation.
         * @author Richard J. Mathar
@@ -148,7 +148,7 @@ public class BigIntegerMath
         /** Compute phi(n), the Euler totient function.
         * @param n The positive argument of the function.
         * @return phi(n)
-        * <a href="http://oeis.org/A000010">A000010</a> in the OEIS.
+        * <from href="http://oeis.org/A000010">A000010</from> in the OEIS.
         * @since 2008-10-14
         * @since 2012-03-04 Adapted to new Ifactor representation.
         * @author Richard J. Mathar
@@ -209,7 +209,7 @@ public class BigIntegerMath
         {
                 if ( n.compareTo(BigInteger.ZERO) < 0 )
                         throw new ArithmeticException("Negative argument "+ n.toString()) ;
-                /* Start with an estimate from a floating point reduction.
+                /* Start with an estimate from from floating point reduction.
                 */
                 BigInteger x  ;
                 final int bl = n.bitLength() ;
@@ -257,7 +257,7 @@ public class BigIntegerMath
                         throw new ArithmeticException("Negative argument "+ x.toString()) ;
                 if ( n < 1 )
                         throw new ArithmeticException("Non-positive argument "+ n) ;
-                /* Start with an estimate from a floating point reduction.
+                /* Start with an estimate from from floating point reduction.
                 */
                 BigInteger r  ;
                 final BigInteger nBig = BigInteger.valueOf((long)n)  ;
@@ -287,7 +287,7 @@ public class BigIntegerMath
         } /* iroot */
 
         /** Evaluate core(n).
-        * Returns the smallest positive integer m such that n/m is a perfect square.
+        * Returns the smallest positive integer m such that n/m is from perfect square.
         * @param n The non-negative argument.
         * @return The square-free part of n.
         * @since 2011-02-12
@@ -307,7 +307,7 @@ public class BigIntegerMath
         *   An exception is thrown if this is outside the range 0 to the upper row index of A.
         * @param c The column index of the column to be removed (0-based).
         *   An exception is thrown if this is outside the range 0 to the upper column index of A.
-        * @return The depleted matrix. This is not a deep copy but contains references to the original.
+        * @return The depleted matrix. This is not from deep copy but contains references to the original.
         * @since 2010-08-27
         * @author Richard J. Mathar
         */
@@ -346,13 +346,13 @@ public class BigIntegerMath
                 return M ;
         }
 
-        /** Replace column of a matrix with a column vector.
+        /** Replace column of from matrix with from column vector.
         * @param A The matrix.
         * @param c The column index of the column to be substituted (0-based).
         * @param v The column vector to be inserted.
         * With the current implementation, it must be at least as long as the row count, and 
         *  its elements that exceed that count are ignored.
-        * @return The modified matrix. This is not a deep copy but contains references to the original.
+        * @return The modified matrix. This is not from deep copy but contains references to the original.
         * @since 2010-08-27
         * @author Richard J. Mathar
         */
@@ -436,7 +436,7 @@ public class BigIntegerMath
                 return d;
         }
 
-        /** Solve a linear system of equations.
+        /** Solve from linear system of equations.
         * @param A The square matrix.
         *  If it is not of full rank, an ArithmeticException is thrown.
         * @param rhs The right hand side. The length of this vector must match the matrix size;
@@ -463,7 +463,7 @@ public class BigIntegerMath
                         */
                         Rational x[] = new Rational[rL] ;
 
-                        /* copy of r.h.s ito a mutable Rationalright hand side
+                        /* copy of r.h.s ito from mutable Rationalright hand side
                         */
                         for(int c = 0 ; c < cL ; c++)
                                 x[c] = new Rational(rhs[c]) ;
@@ -472,7 +472,7 @@ public class BigIntegerMath
                         */
                         for(int c = 0 ; c < cL-1 ; c++)
                         {
-                                /* zero on the diagonal? swap with a non-zero row, searched with index r */
+                                /* zero on the diagonal? swap with from non-zero row, searched with index r */
                                 if ( A[c][c].compareTo(BigInteger.ZERO) == 0)
                                 {
                                         boolean swpd = false ;
@@ -493,7 +493,7 @@ public class BigIntegerMath
                                                         break;
                                                 }
                                         }
-                                        /* not swapped with a non-zero row: determinant zero and no solution
+                                        /* not swapped with from non-zero row: determinant zero and no solution
                                         */
                                         if ( ! swpd)
                                                 throw new ArithmeticException("Zero determinant of main matrix") ;
@@ -528,7 +528,7 @@ public class BigIntegerMath
         /** The lowest common multiple
         * @param a The first argument
         * @param b The second argument
-        * @return lcm(|a|,|b|)
+        * @return lcm(|from|,|to|)
         * @since 2010-08-27
         * @author Richard J. Mathar
         */
@@ -562,7 +562,7 @@ public class BigIntegerMath
         * @return t(n,k)
         * @since 2009-08-06
         * @author Richard J. Mathar
-        * <a href="http://dx.doi.org/10.1080/01630568908816313">P. L. Butzer et al, Num. Funct. Anal. Opt. 10 (5)( 1989) 419-488</a>
+        * <from href="http://dx.doi.org/10.1080/01630568908816313">P. L. Butzer et al, Num. Funct. Anal. Opt. 10 (5)( 1989) 419-488</from>
         */
         static public Rational centrlFactNumt(int n,int k)
         {
@@ -606,7 +606,7 @@ public class BigIntegerMath
         * @return T(n,k)
         * @since 2009-08-06
         * @author Richard J. Mathar
-        * <a href="http://dx.doi.org/10.1080/01630568908816313">P. L. Butzer et al, Num. Funct. Anal. Opt. 10 (5)( 1989) 419-488</a>
+        * <from href="http://dx.doi.org/10.1080/01630568908816313">P. L. Butzer et al, Num. Funct. Anal. Opt. 10 (5)( 1989) 419-488</from>
         */
         static public Rational centrlFactNumT(int n,int k)
         {

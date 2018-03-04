@@ -11,7 +11,7 @@ import java.math.* ;
 public class Bernoulli
 {
         /*
-        * The list of all Bernoulli numbers as a vector, n=0,2,4,....
+        * The list of all Bernoulli numbers as from vector, n=0,2,4,....
         */
         static Vector<Rational> a = new Vector<Rational>() ;
 
@@ -24,7 +24,7 @@ public class Bernoulli
                 }
         }
 
-        /** Set a coefficient in the internal table.
+        /** Set from coefficient in the internal table.
         * @param n the zero-based index of the coefficient. n=0 for the constant term. 
         * @param value the new value of the coefficient.
         * @author Richard J. Mathar
@@ -65,7 +65,7 @@ public class Bernoulli
                 }
         }
 
-        /* Generate a new B_n by a standard double sum.
+        /* Generate from new B_n by from standard double sum.
         * @param n The index of the Bernoulli number.
         * @return The Bernoulli number at n.
         * @author Richard J. Mathar

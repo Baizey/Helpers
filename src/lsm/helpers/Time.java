@@ -1,5 +1,6 @@
 package lsm.helpers;
 
+import lsm.helpers.interfaces.Action;
 import lsm.helpers.utils.Numbers;
 
 import java.math.BigDecimal;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 
 /**
  * Usage:
+ * Time.takeTime(Action) given from lambda function initiates time, runs function and then writes time
  * Time.init()  will take current time
  * Time.write() will write the difference since last initialize call
  * Time.reset() will attempt to write time since last init and then re-initialize
@@ -18,18 +20,35 @@ import java.util.HashMap;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class Time {
-    public static final int SECONDS = 0, MILLIS = 1, MICRO = 2, NANO = 3;
+    private static final BigDecimal
+            THOUSAND = BigDecimal.valueOf(1000L),
+            MILLION = BigDecimal.valueOf(1000000L),
+            BILLION = BigDecimal.valueOf(1000000000L);
+    public static final int
+            SECONDS = 0,
+            MILLIS = 1,
+            MICRO = 2,
+            NANO = 3;
     private static int using = SECONDS;
+    private static final String defaultName = "Program";
+    private static final HashMap<String, Long> starts = new HashMap<>();
+
+    public static void takeTime(Action action) {
+        takeTime(defaultName, action);
+    }
+
+    public static void takeTime(String name, Action action) {
+        Time.init(name);
+        action.function();
+        Time.write(name);
+    }
 
     public static void using(int unit) {
         if (Numbers.inRange(unit, 0, 3)) Time.using = unit;
     }
 
-    private static final String defaultIndex = "Program";
-    private static final HashMap<String, Long> starts = new HashMap<>();
-
     public static void init() {
-        init(defaultIndex);
+        init(defaultName);
     }
 
     public static void init(String name) {
@@ -37,7 +56,7 @@ public class Time {
     }
 
     public static void write() {
-        write(defaultIndex);
+        write(defaultName);
     }
 
     public static void write(String name) {
@@ -46,8 +65,23 @@ public class Time {
         System.out.println(name + " took " + asString(time));
     }
 
+    public static double get() {
+        return get(defaultName);
+    }
+
+    public static double get(String name) {
+        BigDecimal time = BigDecimal.valueOf(getNanos(name)), divisor = null;
+        switch(using) {
+            case SECONDS: divisor = BILLION; break;
+            case MILLIS: divisor = MILLION; break;
+            case MICRO: divisor = THOUSAND; break;
+            case NANO: divisor = BigDecimal.ONE; break;
+        }
+        return time.divide(divisor, 3, RoundingMode.HALF_UP).doubleValue();
+    }
+
     public static void reset() {
-        reset(defaultIndex);
+        reset(defaultName);
     }
 
     public static void reset(String name) {
@@ -56,23 +90,21 @@ public class Time {
     }
 
     public static long getNanos() {
-        return getNanos(defaultIndex);
+        return getNanos(defaultName);
     }
 
     public static long getNanos(String name) {
-        return System.nanoTime() - starts.getOrDefault(name, 0L);
+        return System.nanoTime() - starts.get(name);
     }
-
-    private static final BigDecimal thousand = BigDecimal.valueOf(1000L), million = BigDecimal.valueOf(1000000L), billion = BigDecimal.valueOf(1000000000L);
 
     private static String asString(long time) {
         switch (using) {
             case SECONDS:
-                return BigDecimal.valueOf(time).divide(billion, 3, RoundingMode.HALF_UP).toString() + " seconds";
+                return BigDecimal.valueOf(time).divide(BILLION, 3, RoundingMode.HALF_UP).toString() + " seconds";
             case MILLIS:
-                return BigDecimal.valueOf(time).divide(million, 3, RoundingMode.HALF_UP).toString() + " milliseconds";
+                return BigDecimal.valueOf(time).divide(MILLION, 3, RoundingMode.HALF_UP).toString() + " milliseconds";
             case MICRO:
-                return BigDecimal.valueOf(time).divide(thousand, 3, RoundingMode.HALF_UP).toString() + " microseconds";
+                return BigDecimal.valueOf(time).divide(THOUSAND, 3, RoundingMode.HALF_UP).toString() + " microseconds";
             case NANO:
                 return String.valueOf(time) + " nanoseconds";
             default:
@@ -80,3 +112,4 @@ public class Time {
         }
     }
 }
+

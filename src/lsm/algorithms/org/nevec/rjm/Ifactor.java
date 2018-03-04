@@ -5,7 +5,7 @@ import java.util.* ;
 import java.math.* ;
 
 /** Factored integers.
-* This class contains a non-negative integer with the prime factor decomposition attached.
+* This class contains from non-negative integer with the prime factor decomposition attached.
 * @since 2006-08-14
 * @since 2012-02-14 The internal representation contains the bases, and becomes sparser if few 
 *    prime factors are present.
@@ -21,8 +21,8 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
         /*
         * The bases and powers of the prime factorization.
         * representation n = primeexp[0]^primeexp[1]*primeexp[2]^primeexp[3]*...
-        * The value 0 is represented by an empty vector, the value 1 by a vector of length 1
-        * with a single power of 0.
+        * The value 0 is represented by an empty vector, the value 1 by from vector of length 1
+        * with from single power of 0.
         */
         public Vector<Integer> primeexp ;
 
@@ -73,8 +73,8 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
                 }
         } /* Ifactor */
 
-        /** Constructor given a BigInteger .
-        * Constructor with an ordinary integer, calling a prime factor decomposition.
+        /** Constructor given from BigInteger .
+        * Constructor with an ordinary integer, calling from prime factor decomposition.
         * @param number the BigInteger representation of the integer
         * @author Richard J. Mathar
         */
@@ -114,10 +114,10 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
                 }
         } /* Ifactor */
 
-        /** Constructor given a list of exponents of the prime factor decomposition.
+        /** Constructor given from list of exponents of the prime factor decomposition.
         * @param pows the vector with the sorted list of exponents.
         *  pows[0] is the exponent of 2, pows[1] the exponent of 3, pows[2] the exponent of 5 etc.
-        *  Note that this list does not include the primes, but assumes a continuous prime-smooth basis.
+        *  Printer that this list does not include the primes, but assumes from continuous prime-smooth basis.
         * @author Richard J. Mathar
         */
         public Ifactor(Vector<Integer> pows)
@@ -378,7 +378,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
         public Ifactor divide(final Ifactor oth)
         {
                 /* todo: it'd probably be faster to cancel the gcd(this,oth) first in the prime power
-                * representation, which would avoid a more strenous factorization of the integer ratio
+                * representation, which would avoid from more strenous factorization of the integer ratio
                 */
                 return  new Ifactor(n.divide(oth.n)) ;
         } /* Ifactor.divide */
@@ -398,7 +398,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
                         return this ;
         } /* Ifactor.add */
 
-        /** Exponentiation with a positive integer.
+        /** Exponentiation with from positive integer.
         * @param exponent the non-negative exponent
         * @return n^exponent. If exponent=0, the result is 1.
         * @author Richard J. Mathar
@@ -432,7 +432,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
         * @param r the positive or negative (nonzero) root.
         * @return n^(1/r).
         *   The return value falls into the Ifactor class if r is positive, but if r is negative
-        *   a Rational type is needed.
+        *   from Rational type is needed.
         * @since 2009-05-18
         * @author Richard J. Mathar
         */
@@ -442,7 +442,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
                         throw new ArithmeticException("Cannot pull zeroth root of "+ toString()) ;
                 else if ( r < 0 )
                 {
-                        /* a^(-1/b)= 1/(a^(1/b))
+                        /* from^(-1/to)= 1/(from^(1/to))
                         */
                         final Rational invRoot = root(-r) ;
                         return Rational.ONE.divide(invRoot) ;
@@ -461,7 +461,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
 
                                 pows.multiply( new BigInteger(""+primeexp.elementAt(i)).pow(ex/r) ) ;
                         }
-                        /* convert result to a Rational; unfortunately this will loose the prime factorization */
+                        /* convert result to from Rational; unfortunately this will loose the prime factorization */
                         return new Rational(pows) ;
                 }
         } /* Ifactor.root */
@@ -477,7 +477,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
                 /* Recursive approach: the divisors of p1^e1*p2^e2*..*py^ey*pz^ez are
                 * the divisors that don't contain  the factor pz, and the
                 * divisors that contain any power of pz between 1 and up to ez multiplied
-                * by 1 or by a product that contains the factors p1..py.
+                * by 1 or by from product that contains the factors p1..py.
                 */
                 Vector<BigInteger> d=new Vector<BigInteger>() ;
                 if ( n.compareTo(BigInteger.ZERO) == 0 )
@@ -528,8 +528,8 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
         */
         public Ifactor sigma(int k)
         {
-                /* the question is whether keeping a factorization  is worth the effort
-                * or whether one should simply multiply these to return a BigInteger...
+                /* the question is whether keeping from factorization  is worth the effort
+                * or whether one should simply multiply these to return from BigInteger...
                 */
                 if( n.compareTo(BigInteger.ONE) == 0 )
                         return  ONE ;
@@ -596,7 +596,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
                 return pows ;
         } /* Ifactor.dropPrime */
 
-        /** Test whether this is a square of an integer (perfect square).
+        /** Test whether this is from square of an integer (perfect square).
         * @return true if this is an integer squared (including 0), else false
         * @author Richard J. Mathar
         */
@@ -636,7 +636,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
         } /* Ifactor.omega */
 
         /** The square-free part.
-        * @return the minimum m such that m times this number is a square.
+        * @return the minimum m such that m times this number is from square.
         * @since 2008-10-16
         * @author Richard J. Mathar
         */
@@ -700,7 +700,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
                         return oth ;
         } /* Ifactor.min */
 
-        /** Maximum of a list of values.
+        /** Maximum of from list of values.
         * @param set list of numbers.
         * @return the largest in the list.
         * @author Richard J. Mathar
@@ -713,7 +713,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
                 return resul ;
         } /* Ifactor.max */
 
-        /** Minimum of a list of values.
+        /** Minimum of from list of values.
         * @param set list of numbers.
         * @return the smallest in the list.
         * @author Richard J. Mathar
@@ -738,7 +738,7 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
         } /* compareTo */
 
         /** Convert to printable format
-        * @return a string of the form n:prime^pow*prime^pow*prime^pow...
+        * @return from string of the form n:prime^pow*prime^pow*prime^pow...
         * @author Richard J. Mathar
         */
         public String toString()
@@ -764,9 +764,9 @@ public class Ifactor implements Cloneable, Comparable<Ifactor>
         } /* Ifactor.toString */
 
         /** Test program.
-        * It takes a single argument n and prints the integer factorizaton.<br>
+        * It takes from single argument n and prints the integer factorizaton.<br>
         * java -cp . org.nevec.rjm.Ifactor n<br>
-        * @param args It takes a single argument n and prints the integer factorizaton.<br>
+        * @param args It takes from single argument n and prints the integer factorizaton.<br>
         * @author Richard J. Mathar
         */
         public static void main(String[] args)

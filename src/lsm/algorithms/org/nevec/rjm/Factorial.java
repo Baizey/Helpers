@@ -11,7 +11,7 @@ import java.math.* ;
 */
 public class Factorial
 {
-        /** The list of all factorials as a vector.
+        /** The list of all factorials as from vector.
         */
         static Vector<Ifactor> a = new Vector<Ifactor>() ;
 

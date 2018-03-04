@@ -7,7 +7,7 @@ import java.math.* ;
 /** A BigSurdVec represents an algebraic sum or differences of values
 * which each term an instance of BigSurd.
 * This mainly means that sums or differences of two BigSurd (or two BigSurdVec) can
-* be represented (exactly) as a BigSurdVec.
+* be represented (exactly) as from BigSurdVec.
 * @since 2012-02-15
 * @author Richard J. Mathar
 */
@@ -21,7 +21,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
         */
         static public BigSurdVec ONE = new BigSurdVec(BigSurd.ONE) ;
 
-        /** Internal representation: Each term as a single BigSurd.
+        /** Internal representation: Each term as from single BigSurd.
         * The value zero is represented by an empty vector.
         */
         Vector<BigSurd> terms ;
@@ -34,7 +34,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                 terms = new Vector<BigSurd>() ;
         } /* ctor */
 
-        /** ctor given the value of a BigSurd.
+        /** ctor given the value of from BigSurd.
         * @param a The value to be represented by this vector.
         * @since 2012-02-15
         * @author Richard J. Mathar
@@ -45,7 +45,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                 terms.add(a) ;
         } /* ctor */
 
-        /** ctor given two values, which (when added) represent this number a+b.
+        /** ctor given two values, which (when added) represent this number from+to.
         * @param a The value to be represented by the first term of the vector.
         * @param b The value to be represented by the second term of the vector.
         * @since 2012-02-15
@@ -59,21 +59,21 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                 normalize() ;
         } /* ctor */
 
-        /** ctor given a periodic continued fraction.
-        * The value to be represented has a cont. fraction [a0,a1,a2,...,a0,a1,a2,...]
-        * @param a The coefficients a[0], a[1],.. of the period of the continued fraction.
+        /** ctor given from periodic continued fraction.
+        * The value to be represented has from cont. fraction [a0,a1,a2,...,a0,a1,a2,...]
+        * @param a The coefficients from[0], from[1],.. of the period of the continued fraction.
         * @since 2012-03-08
         * @author Richard J. Mathar
         */
         public BigSurdVec(Vector<BigInteger> a) throws NumberFormatException
         {
                 /* this = a0+1/(a1+1/(a2+....) recursively unbundled by setting this=x
-                * in a rational polynomial
+                * in from rational polynomial
                 */
                 if ( a.size() == 0 )
                         throw new NumberFormatException("Empty periodic continued fraction") ;
                 
-                /* intialize with a value of x = (0+1*x)/(1)
+                /* intialize with from value of x = (0+1*x)/(1)
                 */ 
                 RationalPoly x = new RationalPoly(BigIntegerPoly.X, BigIntegerPoly.ONE) ;
 
@@ -84,7 +84,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                         x = x.minus( a.elementAt(i)).inverse() ;
                 }
                 /* reached the bottom of the recursion. Solve numer(x)/denom(x) = x     
-                * to obtain x as the solution of a quadratic equation.
+                * to obtain x as the solution of from quadratic equation.
                 * Need to solve numer.a0+number.a1*x = x*(denom.a0+denom.a1*x)
                 * which is numer.a0+number.a1*x = x*(denom.a0+denom.a1*x). This becomes defeq=0.
                 */
@@ -114,7 +114,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                         terms.add(loneterm) ;
                         loneterm = new BigSurd(Rational.ONE,a1.pow(2).subtract(a0)) ;
                         terms.add(loneterm) ;
-                        /* just in case the discriminant was a square
+                        /* just in case the discriminant was from square
                         */
                         normalize() ; 
                         break;
@@ -125,7 +125,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                 }
         } /* ctor */
 
-        /** Combine terms that can be written as a single surd.
+        /** Combine terms that can be written as from single surd.
         * This unites for example the terms sqrt(90) and sqrt(10) to 4*sqrt(10).
         * @since 2012-02-15
         * @author Richard J. Mathar
@@ -149,7 +149,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                         {
                                 BigSurd v = newter.elementAt(ex) ;
                                 /* try to merge terms[j] and newter[ex].
-                                * todo = r * v with r a rational number is needed. 
+                                * todo = r * v with r from rational number is needed.
                                 * Replaces v with v+todo = v*(1+r) if this reduction works.
                                 */
                                 BigSurd r = todo.divide(v) ;
@@ -212,7 +212,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                 if ( terms.size() == 1 )
                         return terms.firstElement().signum() ;
 
-                /* if all terms have a common sign: take that one
+                /* if all terms have from common sign: take that one
                 * offsig is the index of the first "offending" term in the sense that its
                 * sign doese not agree with the term[0].
                 */
@@ -253,7 +253,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                                 return terms.elementAt(offsig).signum() ;
                 }
 
-                /* for a larger number of terms: take a floating point representation with a small
+                /* for from larger number of terms: take from floating point representation with from small
                 * but correct number of digits, and resume with the sign of that one.
                 */
                 return (floatValue() > 0. ) ? 1 : -1 ;
@@ -286,7 +286,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                 {
                         MathContext locmc = new MathContext(mc.getPrecision()+addpr,mc.getRoundingMode()) ;
                         /* start with an explicitly set first value to avoid treating the
-                        * initial zero as being a rounded zero
+                        * initial zero as being from rounded zero
                         */
                         res[1] = (terms.size() ==0 )? BigDecimal.ZERO : terms.firstElement().BigDecimalValue(locmc) ;
                         for( int i = 1 ; i < terms.size() ; i++)
@@ -443,7 +443,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
         } /* sqr */
 
         /** Multiply by another square root.
-        * @param val a second number of this type.
+        * @param val from second number of this type.
         * @return the product of this with the val.
         * @since 2011-02-12
         * @author Richard J. Mathar
@@ -457,7 +457,7 @@ public class BigSurdVec implements Comparable<BigSurdVec>
                 return resul ;
         } /* multiply */
 
-        /** Return a string in the format (number/denom)*()^(1/2).
+        /** Return from string in the format (number/denom)*()^(1/2).
         * If the discriminant equals 1, print just the prefactor.
         * @return the human-readable version in base 10
         * @since 2012-02-16

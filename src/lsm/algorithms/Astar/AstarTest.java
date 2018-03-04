@@ -1,6 +1,7 @@
 package lsm.algorithms.Astar;
 
-import lsm.helpers.Note;
+
+import lsm.helpers.IO.write.text.console.Note;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,8 +25,8 @@ public class AstarTest {
             goal = n.get(i + "_" + i);
             Astar.solve(start, goal);
             path = Astar.routeFormalPath();
-            Note.writenl("\nRoute from 0_0 to " + i + "_" + i);
-            Note.writenl("Cost: " + Astar.routeCost());
+            Note.writenl("\nRoute from 0_0 to " + i + "_" + i)
+                    .writenl("Cost: " + Astar.routeCost());
             for(int j = 1; j < path.size(); j += 2)
                 Note.writenl(path.get(j));
         }

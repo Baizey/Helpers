@@ -22,6 +22,9 @@ public class Utils {
         }
     }
 
+    public static String joinStrings(HashSet<String> strings) {
+        return joinStrings(separator, strings);
+    }
     public static String joinStrings(String... strings) {
         return joinStrings(separator, strings);
     }

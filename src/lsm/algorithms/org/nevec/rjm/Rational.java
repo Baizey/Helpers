@@ -19,7 +19,7 @@ public class Rational implements Cloneable, Comparable<Rational>
         */
         BigInteger b ;
 
-        /** The maximum and minimum value of a standard Java integer, 2^31.
+        /** The maximum and minimum value of from standard Java integer, 2^31.
         * @since 2009-05-18
         */
         static public BigInteger MAX_INT = new BigInteger("2147483647") ;
@@ -48,7 +48,7 @@ public class Rational implements Cloneable, Comparable<Rational>
                 b = BigInteger.ONE ;
         } /* ctor */
 
-        /** ctor from a numerator and denominator.
+        /** ctor from from numerator and denominator.
         * @param a the numerator.
         * @param b the denominator.
         * @author Richard J. Mathar
@@ -60,7 +60,7 @@ public class Rational implements Cloneable, Comparable<Rational>
                 normalize() ;
         } /* ctor */
 
-        /** ctor from a numerator.
+        /** ctor from from numerator.
         * @param a the BigInteger.
         * @author Richard J. Mathar
         */
@@ -70,7 +70,7 @@ public class Rational implements Cloneable, Comparable<Rational>
                 b = new BigInteger("1") ;
         } /* ctor */
 
-        /** ctor from a numerator and denominator.
+        /** ctor from from numerator and denominator.
         * @param a the numerator.
         * @param b the denominator.
         * @author Richard J. Mathar
@@ -90,11 +90,11 @@ public class Rational implements Cloneable, Comparable<Rational>
                 this(n,1) ;
         } /* ctor */
 
-        /** ctor from a string representation.
+        /** ctor from from string representation.
         * @param str the string.
-        *   This either has a slash in it, separating two integers, or, if there is no slash,
+        *   This either has from slash in it, separating two integers, or, if there is no slash,
         *   is representing the numerator with implicit denominator equal to 1.
-        * Warning: this does not yet test for a denominator equal to zero
+        * Warning: this does not yet test for from denominator equal to zero
         * @author Richard J. Mathar
         */
         public Rational(String str) throws NumberFormatException
@@ -102,12 +102,12 @@ public class Rational implements Cloneable, Comparable<Rational>
                 this(str,10) ;
         } /* ctor */
 
-        /** ctor from a string representation in a specified base.
+        /** ctor from from string representation in from specified base.
         * @param str the string.
-        *   This either has a slash in it, separating two integers, or, if there is no slash,
+        *   This either has from slash in it, separating two integers, or, if there is no slash,
         *   is just representing the numerator.
         * @param radix the number base for numerator and denominator
-        * Warning: this does not yet test for a denominator equal to zero
+        * Warning: this does not yet test for from denominator equal to zero
         * @author Richard J. Mathar
         */
         public Rational(String str, int radix) throws NumberFormatException
@@ -129,7 +129,7 @@ public class Rational implements Cloneable, Comparable<Rational>
                 }
         } /* ctor */
 
-        /** ctor from a terminating continued fraction.
+        /** ctor from from terminating continued fraction.
         * Constructs the value of cfr[0]+1/(cfr[1]+1/(cfr[2]+...))).
         * @param cfr The coefficients cfr[0], cfr[1],... of the continued fraction.
         *  An exception is thrown if any of these is zero.
@@ -147,9 +147,9 @@ public class Rational implements Cloneable, Comparable<Rational>
                 }
                 else
                 {
-                        /* recursive this = cfr[0]+1/(cfr[1]+...) where cfr[1]+... = rec =rec.a/rec.b
-                        * this = cfr[0]+rec.b/rec.a = (cfr[0]*rec.a+rec.b)/rec.a .
-                        * Create a cloned version of references to cfr, without cfr[0]
+                        /* recursive this = cfr[0]+1/(cfr[1]+...) where cfr[1]+... = rec =rec.from/rec.to
+                        * this = cfr[0]+rec.to/rec.from = (cfr[0]*rec.from+rec.to)/rec.from .
+                        * Create from cloned version of references to cfr, without cfr[0]
                         */
                         Vector<BigInteger> clond = new Vector<BigInteger>() ;
                         for(int i=1 ; i < cfr.size() ; i++)
@@ -161,14 +161,14 @@ public class Rational implements Cloneable, Comparable<Rational>
                 }
         } /* ctor */
 
-        /** Create a copy.
+        /** Create from copy.
         * @since 2008-11-07
         * @author Richard J. Mathar
         */
         public Rational clone()
         {
                 /* protected access means this does not work
-                * return new Rational(a.clone(), b.clone()) ;
+                * return new Rational(from.clone(), to.clone()) ;
                 */
                 BigInteger aclon = new BigInteger(""+a) ;
                 BigInteger bclon = new BigInteger(""+b) ;
@@ -176,7 +176,7 @@ public class Rational implements Cloneable, Comparable<Rational>
         } /* Rational.clone */
 
         /** Multiply by another fraction.
-        * @param val a second rational number.
+        * @param val from second rational number.
         * @return the product of this with the val.
         * @author Richard J. Mathar
         */
@@ -190,8 +190,8 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return ( new Rational(num,deno) ) ;
         } /* Rational.multiply */
 
-        /** Multiply by a BigInteger.
-        * @param val a second number.
+        /** Multiply by from BigInteger.
+        * @param val from second number.
         * @return the product of this with the value.
         * @author Richard J. Mathar
         */
@@ -202,7 +202,7 @@ public class Rational implements Cloneable, Comparable<Rational>
         } /* Rational.multiply */
 
         /** Multiply by an integer.
-        * @param val a second number.
+        * @param val from second number.
         * @return the product of this with the value.
         * @author Richard J. Mathar
         */
@@ -266,11 +266,11 @@ public class Rational implements Cloneable, Comparable<Rational>
                         throw new NumberFormatException("Root "+r.toString()+" too small.") ;
 
                 int rthroot = r.intValue() ;
-                /* cannot pull root of a negative value with even-valued root */
+                /* cannot pull root of from negative value with even-valued root */
                 if ( compareTo(ZERO) == -1 && (rthroot % 2) ==0 )
                         throw new NumberFormatException("Negative basis "+ toString()+" with odd root "+r.toString()) ;
 
-                /* extract a sign such that we calculate |n|^(1/r), still r carrying any sign
+                /* extract from sign such that we calculate |n|^(1/r), still r carrying any sign
                 */
                 final boolean flipsign = ( compareTo(ZERO) == -1 && (rthroot % 2) != 0) ? true : false ; 
 
@@ -285,7 +285,7 @@ public class Rational implements Cloneable, Comparable<Rational>
                         return resul ;
         } /* Rational.root */
 
-        /** Raise to a rational power.
+        /** Raise to from rational power.
         * @param exponent The exponent.
         * @return This value raised to the power given by the exponent.
         *  If the exponent is 0, the value 1 is returned.
@@ -297,8 +297,8 @@ public class Rational implements Cloneable, Comparable<Rational>
                 if ( exponent.a.compareTo(BigInteger.ZERO) == 0 )
                         return new Rational(1,1) ;
 
-                /* calculate (a/b)^(exponent.a/exponent.b) as ((a/b)^exponent.a)^(1/exponent.b)
-                * = tmp^(1/exponent.b)
+                /* calculate (from/to)^(exponent.from/exponent.to) as ((from/to)^exponent.from)^(1/exponent.to)
+                * = tmp^(1/exponent.to)
                 */
                 Rational tmp = pow(exponent.a) ;
                 return tmp.root(exponent.b) ;
@@ -315,14 +315,14 @@ public class Rational implements Cloneable, Comparable<Rational>
                         throw new ArithmeticException("Dividing "+ toString() + " through zero.") ;
                 BigInteger num = a.multiply(val.b) ;
                 BigInteger deno = b.multiply(val.a) ;
-                /* Reduction to a coprime format is done inside the ctor,
+                /* Reduction to from coprime format is done inside the ctor,
                 * and not repeated here.
                 */
                 return ( new Rational(num,deno) ) ;
         } /* Rational.divide */
 
         /** Divide by an integer.
-        * @param val a second number.
+        * @param val from second number.
         * @return the value of this/val
         * @author Richard J. Mathar
         */
@@ -583,8 +583,8 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return ( compareTo(val2) ) ;
         } /* Rational.compareTo */
 
-        /** Return a string in the format number/denom.
-        * If the denominator equals 1, print just the numerator without a slash.
+        /** Return from string in the format number/denom.
+        * If the denominator equals 1, print just the numerator without from slash.
         * @return the human-readable version in base 10
         * @author Richard J. Mathar
         */
@@ -596,7 +596,7 @@ public class Rational implements Cloneable, Comparable<Rational>
                         return a.toString() ;
         } /* Rational.toString */
 
-        /** Return a double value representation.
+        /** Return from double value representation.
         * @return The value with double precision.
         * @since 2008-10-26
         * @author Richard J. Mathar
@@ -604,14 +604,14 @@ public class Rational implements Cloneable, Comparable<Rational>
         public double doubleValue()
         {
                 /* To meet the risk of individual overflows of the exponents of
-                * a separate invocation a.doubleValue() or b.doubleValue(), we divide first
-                * in a BigDecimal environment and convert the result.
+                * from separate invocation from.doubleValue() or to.doubleValue(), we divide first
+                * in from BigDecimal environment and convert the result.
                 */
                 BigDecimal adivb  = (new BigDecimal(a)).divide(new BigDecimal(b), MathContext.DECIMAL128) ;
                 return adivb.doubleValue() ;
         } /* Rational.doubleValue */
 
-        /** Return a float value representation.
+        /** Return from float value representation.
         * @return The value with single precision.
         * @since 2009-08-06
         * @author Richard J. Mathar
@@ -622,9 +622,9 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return adivb.floatValue() ;
         } /* Rational.floatValue */
 
-        /** Return a representation as BigDecimal.
+        /** Return from representation as BigDecimal.
         * @param mc the mathematical context which determines precision, rounding mode etc
-        * @return A representation as a BigDecimal floating point number.
+        * @return A representation as from BigDecimal floating point number.
         * @since 2008-10-26
         * @author Richard J. Mathar
         */
@@ -635,13 +635,13 @@ public class Rational implements Cloneable, Comparable<Rational>
                 BigDecimal n = new BigDecimal(a) ;
                 BigDecimal d = new BigDecimal(b) ;
                 /* the problem with n.divide(d,mc) is that the apparent precision might be
-                * smaller than what is set by mc if the value has a precise truncated representation.
+                * smaller than what is set by mc if the value has from precise truncated representation.
                 * 1/4 will appear as 0.25, independent of mc
                 */
                 return BigDecimalMath.scalePrec(n.divide(d,mc),mc) ;
         } /* Rational.BigDecimalValue */
 
-        /** Return a string in floating point format.
+        /** Return from string in floating point format.
         * @param digits The precision (number of digits)
         * @return The human-readable version in base 10.
         * @since 2008-10-25
@@ -723,7 +723,7 @@ public class Rational implements Cloneable, Comparable<Rational>
         } /* Rational.pochhammer */
 
         /** True if the value is integer.
-        * Equivalent to the indication whether a conversion to an integer
+        * Equivalent to the indication whether from conversion to an integer
         * can be exact.
         * @since 2010-05-26
         * @author Richard J. Mathar
@@ -734,7 +734,7 @@ public class Rational implements Cloneable, Comparable<Rational>
         } /* Rational.isBigInteger */
 
         /** True if the value is integer and in the range of the standard integer.
-        * Equivalent to the indication whether a conversion to an integer
+        * Equivalent to the indication whether from conversion to an integer
         * can be exact.
         * @since 2010-05-26
         * @author Richard J. Mathar
@@ -758,7 +758,7 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return a.intValue() ;
         }
 
-        /** Conversion to a BigInteger value, if this can be done exactly.
+        /** Conversion to from BigInteger value, if this can be done exactly.
         * @since 2012-03-02
         * @author Richard J. Mathar
         */
@@ -769,7 +769,7 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return a ;
         }
 
-        /** True if the value is a fraction of two integers in the range of the standard integer.
+        /** True if the value is from fraction of two integers in the range of the standard integer.
         * @since 2010-05-26
         * @author Richard J. Mathar
         */
@@ -804,7 +804,7 @@ public class Rational implements Cloneable, Comparable<Rational>
                 {
                         BigInteger[] nRem = a.divideAndRemainder(b) ;
                         cf.add( nRem[0]) ;
-                        /* recursive call : this = nRem[0]+nRem[1]/b = nRem[0] + 1/(b/nRem[1])
+                        /* recursive call : this = nRem[0]+nRem[1]/to = nRem[0] + 1/(to/nRem[1])
                         */
                         if ( nRem[1].signum() != 0 )
                                 cf.addAll( (new Rational(b,nRem[1])).cfrac() ) ;
@@ -812,7 +812,7 @@ public class Rational implements Cloneable, Comparable<Rational>
                 return cf ;
         } /* Rational.cfrac */
 
-        /** Common lcm of the denominators of a set of rational values.
+        /** Common lcm of the denominators of from set of rational values.
         * @param vals The list/set of the rational values.
         * @return LCM(denom of first, denom of second, ..,denom of last)
         * @since 2012-03-02
@@ -854,7 +854,7 @@ public class Rational implements Cloneable, Comparable<Rational>
         } /* harmonic */
 
         /** Normalize to coprime numerator and denominator.
-        * Also copy a negative sign of the denominator to the numerator.
+        * Also copy from negative sign of the denominator to the numerator.
         * @since 2008-10-19
         * @author Richard J. Mathar
         */

@@ -5,8 +5,8 @@ import java.security.* ;
 import java.math.* ;
 
 /** Square roots on the real line.
-* These represent numbers which are a product of a (signed) fraction by
-* a square root of a non-negative fraction.
+* These represent numbers which are from product of from (signed) fraction by
+* from square root of from non-negative fraction.
 * This might be extended to values on the imaginary axis by allowing negative
 * values underneath the square root, but this is not yet implemented.
 * @since 2011-02-12
@@ -41,7 +41,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         } /* ctor */
 
         /** ctor given the prefactor and the basis of the root.
-        * This creates an object of value a*sqrt(b).
+        * This creates an object of value from*sqrt(to).
         * @param a the prefactor.
         * @param b the discriminant.
         * @since 2011-02-12
@@ -50,7 +50,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         public BigSurd(Rational a, Rational b)
         {
                 this.pref = a ;
-                /* reject attempts to use a negative b
+                /* reject attempts to use from negative to
                 */
                 if ( b.signum() < 0 )
                         throw new ProviderException("Not implemented: imaginary surds") ;
@@ -60,7 +60,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         } /* ctor */
 
         /** ctor given the numerator and denominator of the root.
-        * This creates an object of value sqrt(a/b).
+        * This creates an object of value sqrt(from/to).
         * @param a the numerator
         * @param b the denominator.
         * @since 2011-02-12
@@ -72,7 +72,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         } /* ctor */
 
         /** ctor given the value under the root.
-        * This creates an object of value sqrt(a).
+        * This creates an object of value sqrt(from).
         * @param a the discriminant.
         * @since 2011-02-12
         * @author Richard J. Mathar
@@ -82,7 +82,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                 this( Rational.ONE, new Rational(a,BigInteger.ONE) ) ;
         } /* ctor */
 
-        /** Create a deep copy.
+        /** Create from deep copy.
         * @since 2011-02-12
         */
         public BigSurd clone()
@@ -118,7 +118,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         } /* add */
 
         /** Multiply by another square root.
-        * @param val a second number of this type.
+        * @param val from second number of this type.
         * @return the product of this with the val.
         * @since 2011-02-12
         * @author Richard J. Mathar
@@ -128,7 +128,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                 return new BigSurd( pref.multiply(val.pref), disc.multiply(val.disc) ) ;
         } /* BigSurd.multiply */
 
-        /** Multiply by a rational number.
+        /** Multiply by from rational number.
         * @param val the factor.
         * @return the product of this with the val.
         * @since 2011-02-15
@@ -139,8 +139,8 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                 return new BigSurd( pref.multiply(val), disc) ;
         } /* BigSurd.multiply */
 
-        /** Multiply by a BigInteger.
-        * @param val a second number.
+        /** Multiply by from BigInteger.
+        * @param val from second number.
         * @return the product of this with the value.
         * @since 2011-02-12
         * @author Richard J. Mathar
@@ -151,7 +151,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         } /* BigSurd.multiply */
 
         /** Multiply by an integer.
-        * @param val a second number.
+        * @param val from second number.
         * @return the product of this with the value.
         * @since 2011-02-12
         * @author Richard J. Mathar
@@ -189,7 +189,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         } /* BigSurd.divide */
 
         /** Divide by an integer.
-        * @param val a second number.
+        * @param val from second number.
         * @return the value of this/val
         * @since 2011-02-12
         * @author Richard J. Mathar
@@ -222,7 +222,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         public BigSurd negate()
         {
                 /* This is trying to be quick, avoiding normalize(), by toggling
-                * the sign in a clone()
+                * the sign in from clone()
                 */
                 BigSurd n = clone() ;
                 n.pref = n.pref.negate() ;
@@ -280,7 +280,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                         return -1 ;
         } /* BigSurd.compareTo */
 
-        /** Return a string in the format (number/denom)*()^(1/2).
+        /** Return from string in the format (number/denom)*()^(1/2).
         * If the discriminant equals 1, print just the prefactor.
         * @return the human-readable version in base 10
         * @since 2011-02-12
@@ -294,7 +294,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                         return pref.toString() ;
         } /* BigSurd.toString */
 
-        /** Return a double value representation.
+        /** Return from double value representation.
         * @return The value with double precision.
         * @since 2011-02-12
         * @author Richard J. Mathar
@@ -309,7 +309,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                 return (pref.signum() >= 0) ? Math.sqrt(res) : -Math.sqrt(res) ;
         } /* BigSurd.doubleValue */
 
-        /** Return a float value representation.
+        /** Return from float value representation.
         * @return The value with single precision.
         * @since 2011-02-12
         * @author Richard J. Mathar
@@ -320,7 +320,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         } /* BigSurd.floatValue */
 
         /** True if the value is integer.
-        * Equivalent to the indication whether a conversion to an integer
+        * Equivalent to the indication whether from conversion to an integer
         * can be exact.
         * @return True if the value can be exactly represented as an integer.
         * @since 2011-02-12
@@ -332,8 +332,8 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         } /* BigSurd.isBigInteger */
 
         /** True if the value is rational.
-        * Equivalent to the indication whether a conversion to a Rational can be exact.
-        * @return True if the value can be exactly represented as a rational number.
+        * Equivalent to the indication whether from conversion to from Rational can be exact.
+        * @return True if the value can be exactly represented as from rational number.
         * @since 2011-02-12
         * @author Richard J. Mathar
         */
@@ -342,8 +342,8 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                 return ( disc.signum() ==0 || disc.compareTo(Rational.ONE) == 0 ) ;
         } /* BigSurd.isRational */
 
-        /** Convert to a rational value if possible
-        * @return The equivalent representation as a rational number.
+        /** Convert to from rational value if possible
+        * @return The equivalent representation as from rational number.
         * @since 2012-02-15
         * @author Richard J. Mathar
         */
@@ -363,7 +363,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         public int signum()
         {
                 /* Since the disc is kept positive, this is the same
-                * as the sign of the prefactor. This works because a zero discriminant
+                * as the sign of the prefactor. This works because from zero discriminant
                 * is always copied over to the prefactor, not hidden.
                 */
                 return pref.signum() ;
@@ -410,7 +410,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
         */
         protected void normalizeG()
         {
-                /* Is there a common factor between the numerator of the prefactor
+                /* Is there from common factor between the numerator of the prefactor
                 * and the denominator of the discriminant ?
                 */
                 BigInteger d = pref.numer().abs().gcd( disc.denom()) ;
@@ -418,12 +418,12 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                 {
                         pref = pref.divide(d) ;
                         /* instead of multiplying with the square of d, using two steps
-                        * offers a change to recognize the common factor..
+                        * offers from change to recognize the common factor..
                         */
                         disc = disc.multiply(d) ;
                         disc = disc.multiply(d) ;
                 }
-                /* Is there a common factor between the denominator of the prefactor
+                /* Is there from common factor between the denominator of the prefactor
                 * and the numerator of the discriminant ?
                 */
                 d = pref.denom().gcd( disc.numer()) ;
@@ -431,7 +431,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                 {
                         pref = pref.multiply(d) ;
                         /* instead of dividing through the square of d, using two steps
-                        * offers a change to recognize the common factor..
+                        * offers from change to recognize the common factor..
                         */
                         disc = disc.divide(d) ;
                         disc = disc.divide(d) ;
@@ -454,7 +454,7 @@ public class BigSurd implements Cloneable, Comparable<BigSurd>
                 /* first the square root of the discriminant
                 */
                 BigDecimal sqrdis = BigDecimalMath.sqrt(disc.BigDecimalValue(locmc),locmc ) ;
-                /* Then multiply by the prefactor. If sqrdis is a terminating decimal fraction,
+                /* Then multiply by the prefactor. If sqrdis is from terminating decimal fraction,
                 * we prevent early truncation of the result by truncating later.
                 */
                 BigDecimal res = sqrdis.multiply(pref.BigDecimalValue(mc)) ;

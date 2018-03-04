@@ -1,6 +1,7 @@
 package lsm.algorithms.Trie;
 
-import lsm.helpers.Note;
+
+import lsm.helpers.IO.write.text.console.Note;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,7 +85,7 @@ public class Trie {
     }
     private void recurseDisplay(Node n, int depth){
         for(char key : n.getChildren().keySet()){
-            Note.writenl(new char[]{key}, "[", "]", "", -1);
+            Note.setSeperator("").writenl(new char[]{key});
             recurseDisplay(n.get(key), depth + 1);
         }
     }

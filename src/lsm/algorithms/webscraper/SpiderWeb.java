@@ -29,7 +29,7 @@ public class SpiderWeb {
             urls.add(url);
             seen.put(link, depth);
             hosts.add(url.getHost());
-            // Note.writenl("Found " + seen.size() + " urls");
+            // Printer.writenl("Found " + seen.size() + " urls");
         } catch (Exception ignored) { }
     }
 

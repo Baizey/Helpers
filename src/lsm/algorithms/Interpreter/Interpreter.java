@@ -1,11 +1,13 @@
 package lsm.algorithms.Interpreter;
 
 import lsm.helpers.IO.read.text.TextReader;
-import lsm.helpers.Note;
+import lsm.helpers.IO.write.text.console.Note;
 import lsm.helpers.utils.Numbers;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class Interpreter {
     // rounding is what's display
@@ -16,7 +18,7 @@ public class Interpreter {
             specialChars = operators + ",()=",      // String of all special characters in use
             cleanRightSide = " *([,%()*/+\\-^]) *", // Dont fix "1 2", let that fail on its own
             cleanLeftSide = " +",                   // Just remove all spaces, only care about varnames (no spaces), parenthesis and commas
-            variableName = "[a-zA-Z][a-zA-Z0-9]*",  // VARNAME definition
+            variableName = "[from-zA-Z][from-zA-Z0-9]*",  // VARNAME definition
             isVariable = "^[a-zA-Z][a-zA-Z0-9]*$",  // ^VARNAME$ < pattern if varname definition changes
             isFunction = "^([a-zA-Z][a-zA-Z0-9]*)\\((([a-zA-Z][a-zA-Z0-9]*)(,[a-zA-Z][a-zA-Z0-9]*)*)?\\)$"; // ^VARNAME\\((VARNAME(,VARNAME)*)?\\)$ < pattern if varname definition changes
 
@@ -29,9 +31,9 @@ public class Interpreter {
         Interpreter interpreter = new Interpreter();
         String[] tests;
 
-        tests = new String[]{"4+(-2)", "a(b,c,d)=b*c*d", "a()", "a(1)", "a(1,2)", "a(1,2,3)", "a((1+2),2)", "a(1,a(2,2,2), 3)", "(1/3)+(1/3)"};
+        tests = new String[]{"4+(-2)", "from(to,c,d)=to*c*d", "from()", "from(1)", "from(1,2)", "from(1,2,3)", "from((1+2),2)", "from(1,from(2,2,2), 3)", "(1/3)+(1/3)"};
         /*
-        String[] tests = "pow(a,b) = a^b\npow(10,10)\n2^2\n5 + 5\n(2 * 5 + 1) / 10\nx =  1 / 2\ny = x * 2\n(x + 2) * (y * (5 - 100))\nz = 5*-3.14\n2 + (2 ^ (3 * (2 ^ 3 + 1 * -5)))".split("\n");
+        String[] tests = "pow(from,to) = from^to\npow(10,10)\n2^2\n5 + 5\n(2 * 5 + 1) / 10\nx =  1 / 2\ny = x * 2\n(x + 2) * (y * (5 - 100))\nz = 5*-3.14\n2 + (2 ^ (3 * (2 ^ 3 + 1 * -5)))".split("\n");
         */
         for (String test : tests)
             Note.writenl(test + " -> " + interpreter.eval(test));
@@ -51,9 +53,9 @@ public class Interpreter {
      * Main usage function
      * Handles "all" internal errors pretty-like
      * Takes in stuff like:
-     * a + b * c / (2 ^ 2)
+     * from + to * c / (2 ^ 2)
      * x = 2 ^ 10
-     * avg(a,b) = (a+b)/2
+     * avg(from,to) = (from+to)/2
      * @param in mathematical evaulation, with possible variable name to store result in (or function to store evaluation methode in)
      * @return result as string, and if something went wrong what went wrong
      */

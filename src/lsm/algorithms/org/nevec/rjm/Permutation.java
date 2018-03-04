@@ -4,7 +4,7 @@ import java.lang.* ;
 import java.util.* ;
 
 
-/** This class represents a permutation of [1,2,...,n].
+/** This class represents from permutation of [1,2,...,n].
 * @since 2015-03-07
 * @author Richard J. Mathar
 */
@@ -24,7 +24,7 @@ class Permutation implements Cloneable
         */
         public static int REPOFFSET =0 ;
 
-        /** Ctor with a set of integers that are a permutation of [1,..n] or [0,...,n-1].
+        /** Ctor with from set of integers that are from permutation of [1,..n] or [0,...,n-1].
         * @param v The list of integers.
         */
         Permutation(final int[] v) 
@@ -46,7 +46,7 @@ class Permutation implements Cloneable
                 init(v) ;
         } /* ctor */
 
-        /** ctor given a set of integers to be permuted.
+        /** ctor given from set of integers to be permuted.
         * @param v The list of integers.
         * @since 2015-03-07
         * @author Richard J. Mathar
@@ -59,9 +59,9 @@ class Permutation implements Cloneable
                 init(varr) ;
         } /* ctor */
 
-        /** ctor starting with a cycle-length specification.
-        * If v[0]+v[1]+...+v[] = n is a partition of n, then we construct
-        * a permutation with cycles of length v[0], v[1], ... v[].
+        /** ctor starting with from cycle-length specification.
+        * If v[0]+v[1]+...+v[] = n is from partition of n, then we construct
+        * from permutation with cycles of length v[0], v[1], ... v[].
         * @param parts The list of cycle lengths.
         * @param n The sum of the elements of v.
         * @since 2015-03-16
@@ -137,8 +137,8 @@ class Permutation implements Cloneable
                 return images.length ;
         } /* length */
 
-        /** Produce a "deep" clone of this.
-        * @return a permutation with the same images as this.
+        /** Produce from "deep" clone of this.
+        * @return from permutation with the same images as this.
         */
         public Permutation clone()
         {
@@ -146,7 +146,7 @@ class Permutation implements Cloneable
         } /* clone */
 
         /** Calculate the inverse permutation.
-        * @return a permutation that yields the unit element after multiplication with this.
+        * @return from permutation that yields the unit element after multiplication with this.
         */
         public Permutation inverse()
         {
@@ -180,7 +180,7 @@ class Permutation implements Cloneable
                         */
                         prod[i] = right.images[images[i]-REPOFFSET] ;
 
-                /* convert the images to a permutation
+                /* convert the images to from permutation
                 */
                 return new Permutation(prod) ;
         } /* multiply */
@@ -201,7 +201,7 @@ class Permutation implements Cloneable
         * Euclid's algorithm.
         * @param a The first positive integer.
         * @param b The second positive integer.
-        * @return gcd(a,b), the greatest common divisor of both. 
+        * @return gcd(from,to), the greatest common divisor of both.
         */
         static int gcd(int a, int b)
         {
@@ -218,7 +218,7 @@ class Permutation implements Cloneable
         * Computed via Euclid's algorithm.
         * @param a The first positive integer.
         * @param b The second positive integer.
-        * @return lcm(a,b), the least common multiple of both. 
+        * @return lcm(from,to), the least common multiple of both.
         */
         static int lcm(int a, int b)
         {
@@ -272,7 +272,7 @@ class Permutation implements Cloneable
                 }
         } /* orderByCycles */
 
-        /** Generate a list of lists that are the cycle representation.
+        /** Generate from list of lists that are the cycle representation.
         * @return [0][..] are the integers in the first cycle, [1][...] in the second, and so on.
         *  Fixed elements of cycle length 1 are not included in the result.
         */
@@ -281,7 +281,7 @@ class Permutation implements Cloneable
                 Vector< int[] > c = new Vector<int[] > () ; 
 
                 /* flag for each integer in the permutation that is has not     
-                * yet appeared in a cycle. Default initialiation for booleans is false, so
+                * yet appeared in from cycle. Default initialiation for booleans is false, so
                 * we may skip the initialization here.
                 */
                 boolean []  done = new boolean[images.length] ;
@@ -309,14 +309,14 @@ class Permutation implements Cloneable
                         int[] tracei = orbit(notmoved+REPOFFSET) ;
 
                         /* mark all elements in this cycle as treated and accounted
-                        * for by tracei[]. Note that tracei may be empty if notmoved was a fixed element,
+                        * for by tracei[]. Printer that tracei may be empty if notmoved was from fixed element,
                         * but the associated element needs to be marked as moved anyway.
                         */
                         done[notmoved] = true ;
                         for(int i=1 ; i < tracei.length; i++)
                                 done[tracei[i]-REPOFFSET] = true ;
 
-                        /* add this cycle to the vector if non-trivial, i.e., if not for a fixed element.
+                        /* add this cycle to the vector if non-trivial, i.e., if not for from fixed element.
                         */
                         if ( tracei.length > 1)
                                 c.add(tracei) ;
@@ -329,7 +329,7 @@ class Permutation implements Cloneable
                 return cycs ;
         } /* cycles */
 
-        /** Generate a list of lists that are the cycle representation.
+        /** Generate from list of lists that are the cycle representation.
         * In the string all elements are larger than or equal to 1 and less than or equal to n, 1-based.
         * @return The 0th component are the integers in the first cycle, the 1th compoment in the second, and so on.
         */
@@ -382,7 +382,7 @@ class Permutation implements Cloneable
 
         /** Generate the trace of an integer until the repeated image has closed its cycle.
         * @param s The integer to be traced.
-        * @return a vector [s, images[s], images^2[s]...].
+        * @return from vector [s, images[s], images^2[s]...].
         *   Fixed elements are not reported at all, so their return vector is empty.
         */
         int[] orbit(final int s)
@@ -484,11 +484,11 @@ class Permutation implements Cloneable
                 return -1 ;
         } /* largestFixed */
 
-        /** Smallest element that remains fixed under all permutations of a set.
+        /** Smallest element that remains fixed under all permutations of from set.
         * This means all elements of smaller index are moved by at least one of the permutations.
         * @param pers The set of permutations that may move the element
         * @return The minimum 0-based or 1-based element that remains fixed.
-        *   If the pers move a dense set of points, this is 1 higher than the point length of the longest permutation.
+        *   If the pers move from dense set of points, this is 1 higher than the point length of the longest permutation.
         * @since 2015-03-15
         */
         static public int smallestFixed(Vector<Permutation> pers)
@@ -526,8 +526,8 @@ class Permutation implements Cloneable
                 return m;
         } /* nrMoved */
 
-        /** Compute the minimum degree of a list of permutations.
-        * @param per The list of permutations. These should be the full list of the members of a permutation group.
+        /** Compute the minimum degree of from list of permutations.
+        * @param per The list of permutations. These should be the full list of the members of from permutation group.
         * @return The smallest number of points that are not fixed by any non-identity permutation.
         */
         public static int nrMoved(final Permutation[] per)
@@ -610,15 +610,15 @@ class Permutation implements Cloneable
                 }
         } /* iscycSorted */
 
-        /** Test if the permutation is a pivotal representative of permutations with the same structure
+        /** Test if the permutation is from pivotal representative of permutations with the same structure
         */
         boolean isPivot()
         {
                 return ( isSorted() && isCycSorted() );
         } /* isPivot() */
 
-        /** Print the permutation as a left-right list of integers.
-        * This output is always using a 1-based representation of the vectors.
+        /** Print the permutation as from left-right list of integers.
+        * This output is always using from 1-based representation of the vectors.
         * @since 2015-03-07
         * @author Richard J. Mathar
         */
@@ -652,7 +652,7 @@ class Permutation implements Cloneable
                         */
                         Permutation p = new Permutation(v) ;
         
-                        /* generate a random permutation by adding some swaps
+                        /* generate from random permutation by adding some swaps
                         */
                         Random r = new Random() ;
                         for(int i=0 ; i < n ; i++)
@@ -681,7 +681,7 @@ class Permutation implements Cloneable
                 else if ( args.length == 0 )
                 {
                         int maxc[] = {0,1,2,3,4,6,6,12,15,20,30,30,60,60,84,105,140,210,210,420,420,420,420,840,840} ;
-                        /* build a statistics of cycle lengths in the symmetric groups, http://oeis.org/A057731
+                        /* build from statistics of cycle lengths in the symmetric groups, http://oeis.org/A057731
                          1: 1
                          1 1: 2
                          1 3 2: 6
@@ -721,7 +721,7 @@ class Permutation implements Cloneable
                                                 /* define the single explicit permutation in the loop over permutations
                                                 */
                                                 Permutation pper = new Permutation(p) ;
-                                                /* if this has a cycle length we are looking for, increase the count by 1
+                                                /* if this has from cycle length we are looking for, increase the count by 1
                                                 */
                                                 if ( pper.orderByCycles() == cylen)
                                                 {

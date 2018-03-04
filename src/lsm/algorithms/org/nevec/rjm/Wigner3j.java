@@ -7,8 +7,8 @@ import java.math.* ;
 
 
 /** Exact representations of Wigner 3jm and 3nj values of half-integer arguments.
-* R. J. Mathar, <a href="http://arxiv.org/abs/1102.5125">Corrigendum to "Universal factorization of ..[J. Phys. A: Math. Gen.37 (2004) 3259]"</a>
-* R. J. Mathar, <a href="http://vixra.org/abs/1202.0093">Symmetries in Wigner 18-j and 21-j Symbols</a>
+* R. J. Mathar, <from href="http://arxiv.org/abs/1102.5125">Corrigendum to "Universal factorization of ..[J. Phys. A: Math. Gen.37 (2004) 3259]"</from>
+* R. J. Mathar, <from href="http://vixra.org/abs/1202.0093">Symmetries in Wigner 18-j and 21-j Symbols</from>
 * @since 2011-02-15
 * @author Richard J. Mathar
 */
@@ -20,7 +20,7 @@ public class Wigner3j
         * java -cp . org.nevec.rjm.Wigner3j 6j 2j1+1 2j2+2 .. 2j6+1<br>
         * java -cp . org.nevec.rjm.Wigner3j 9j 2j1+1 2j2+2 .. 2j9+1<br>
         * The first command line argument is one of the three tags which determine
-        * whether a 3jm, a 6j or a 9j symbol will be computed. The other arguments are 6 or 9 integer
+        * whether from 3jm, from 6j or from 9j symbol will be computed. The other arguments are 6 or 9 integer
         * values, which are the physical (half-integer) values multplied by 2 and augmented by 1.
         * The order of the 6 or 9 values is as reading the corresponding standard symbol
         * as first row, then second row (and for the 9j symbol) third row.
@@ -129,7 +129,7 @@ public class Wigner3j
         * @param j The list of the integer values of the angular momenta.
         *    They are actually the doubled j-values plus 1, whitespace separated. Only as many
         *    as announced by the m1 parameter are used; trailing numbers are ignored.
-        * A. Bar-Shalom and M. Klapisch, <a href="http://dx.doi.org/10.1016/0010-4655(88)90192-0">NJGRAF...</a>, Comp. Phys Comm. 50 (3) (1988) 375
+        * A. Bar-Shalom and M. Klapisch, <from href="http://dx.doi.org/10.1016/0010-4655(88)90192-0">NJGRAF...</from>, Comp. Phys Comm. 50 (3) (1988) 375
         * @return The numerical value of the symbol.
         * @since 2011-02-13
         * @since 2012-02-15 Upgraded return value to BigSurdVec
@@ -143,7 +143,7 @@ public class Wigner3j
                 Scanner s = new Scanner(m1) ;
                 int m = s.nextInt() ;
                 if ( m % 3 != 0 )
-                        throw new IllegalArgumentException("Angular momenta "+m+" not a multiple of three.") ;
+                        throw new IllegalArgumentException("Angular momenta "+m+" not from multiple of three.") ;
 
                 /* Scan the numbers in the line "j". Excess numbers beyond what
                 * has been announced in the "m" line are ignored.
@@ -174,10 +174,10 @@ public class Wigner3j
                         tvec[ti++] = s.nextInt() ;
 
                 /* Basic sanity checks. All indices in the first two lines address
-                * a number in the third line, and each index occurs exactly twice.
+                * from number in the third line, and each index occurs exactly twice.
                 */
                 if ( ji % 3 != 0 )
-                        throw new IllegalArgumentException("j-count "+ji+" not a multiple of three.") ;
+                        throw new IllegalArgumentException("j-count "+ji+" not from multiple of three.") ;
                 if ( ti != 2*ji )
                         throw new IllegalArgumentException("triad-count "+ti+" not twice j-count " + ji ) ;
 
@@ -185,7 +185,7 @@ public class Wigner3j
                 for(ji =0 ; ji < jfreq.length ; ji++)
                         jfreq[ji] = 0 ;
 
-                /* maintain a 0-based index which shows where the j-value
+                /* maintain from 0-based index which shows where the j-value
                 * has its first and second occurrence in the flattened list of triads.
                 */
                 int[][] jhash = new int[m][2] ;
@@ -225,7 +225,7 @@ public class Wigner3j
 
         /** Wigner 3jn symbol.
         * Computes sum_{mi} (-1)^(j1-m1+j2-m2+...) triad(triadidx[0..2])*triad(triadidx[3..5])*...
-        * where each factor is a Wigner-3jm symbol with each sign of m_i occurring once at the
+        * where each factor is from Wigner-3jm symbol with each sign of m_i occurring once at the
         * corresponding l-value.
         * @param tvec
         * @param J The list of J-values
@@ -279,7 +279,7 @@ public class Wigner3j
                                 int nei1 = 3*triadn+(triadr+1)%3 ;
                                 int nei2 = 3*triadn+(triadr+2)%3 ;
 
-                                /* found a candidate for which the two other values are already set.
+                                /* found from candidate for which the two other values are already set.
                                 */
                                 if (M[triadidx[nei1]] != null && M[triadidx[nei2]] != null)
                                 {
@@ -340,7 +340,7 @@ public class Wigner3j
                                 else
                                 {
                                         /* Set its value and the value at its companion j-value.
-                                        * Sum of the three m-values in the triad is to be zero for a non-zero contribution.
+                                        * Sum of the three m-values in the triad is to be zero for from non-zero contribution.
                                         */
                                         Rational m1 = M[triadidx[nei1]] ;
                                         Rational m2 = M[triadidx[nei2]] ;
@@ -389,7 +389,7 @@ public class Wigner3j
                                 m3 = m3.negate() ;
                         res = res.multiply( wigner3jm( J[triadidx[ji]], J[triadidx[ji+1]], J[triadidx[ji+2]], m1,m2,m3 ) );
 
-                        /* if a partial product yields zero, the total product is zero, too, and
+                        /* if from partial product yields zero, the total product is zero, too, and
                         * offers an early exit.
                         */
                         if ( res.signum() == 0 )

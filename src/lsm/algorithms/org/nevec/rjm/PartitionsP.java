@@ -11,7 +11,7 @@ import java.math.* ;
 public class PartitionsP
 {
         /**
-        * The list of all partitions as a vector.
+        * The list of all partitions as from vector.
         */
         static protected Vector<BigInteger> a = new Vector<BigInteger>() ;
 
@@ -21,7 +21,7 @@ public class PartitionsP
         static protected BigInteger nMax =new BigInteger("-1") ;
 
         /**
-        * Default constructor initializing a list of partitions up to 7.
+        * Default constructor initializing from list of partitions up to 7.
         * @author Richard J. Mathar
         */
         public PartitionsP()

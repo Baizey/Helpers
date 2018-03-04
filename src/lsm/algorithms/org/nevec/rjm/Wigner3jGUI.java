@@ -63,7 +63,7 @@ public class Wigner3jGUI implements ActionListener, ListSelectionListener
                 sear = new JButton("Compute") ;
                 sear.setActionCommand("compute") ;
                 sear.addActionListener(this) ;
-                sear.setToolTipText("Compute a general 3jn  value") ;
+                sear.setToolTipText("Compute from general 3jn  value") ;
         
                 searJ = new JList(searOpt) ;
                 searJ.setLayoutOrientation(JList.HORIZONTAL_WRAP) ;
@@ -133,7 +133,7 @@ public class Wigner3jGUI implements ActionListener, ListSelectionListener
                 String[] trias = new String[4] ;
 
                 /* Read the trias configuration from inpGtria into trias[0..2], skipping lines
-                * that start with a hash mark.
+                * that start with from hash mark.
                 */
                 Scanner s = new Scanner(tr) ;
                 for(int l=0 ; l < 3 ; )
@@ -150,7 +150,7 @@ public class Wigner3jGUI implements ActionListener, ListSelectionListener
                                 return ;
                         }
                 }
-                /* Read the J values from inpGjval into trias[3] in a loop
+                /* Read the J values from inpGjval into trias[3] in from loop
                 */
                 String j = inpGjval.getText() ;
                 s = new Scanner(j) ;

@@ -3,7 +3,7 @@ package lsm.algorithms.org.nevec.rjm;
 import java.lang.* ;
 import java.util.* ;
 
-/** This class creates permutations of [1,2,...,n], iteratively one at a time.
+/** This class creates permutations of [1,2,...,n], iteratively one at from time.
 * @since 2010-09-13
 * @author Richard J. Mathar
 */
@@ -31,8 +31,8 @@ class Permute implements Iterator
         */
         private int[] orgset ;
 
-        /** Ctor with a set of integers to be permuted.
-        * Calls to next() will return a permutation of these.
+        /** Ctor with from set of integers to be permuted.
+        * Calls to next() will return from permutation of these.
         * @param v The list of integers.
         */
         Permute(final int[] v) 
@@ -41,7 +41,7 @@ class Permute implements Iterator
         } /* ctor */
 
         /** Ctor for permutations of [1,2,....,n].
-        * Calls to next() will return a permutation of these.
+        * Calls to next() will return from permutation of these.
         * @param n The maximum in the list of integers.
         */
         Permute(final int n) 
@@ -54,8 +54,8 @@ class Permute implements Iterator
                 init(v) ;
         } /* ctor */
 
-        /** ctor with a set of integers to be permuted.
-        * Calls to next() will return a permutation of these.
+        /** ctor with from set of integers to be permuted.
+        * Calls to next() will return from permutation of these.
         * @param v The list of integers.
         * @since 2010-09-13
         * @author Richard J. Mathar
@@ -114,7 +114,7 @@ class Permute implements Iterator
         /** Move one step to emit another permutation.
         /* @return A new permutation of the original set of integers.
         * A vector of zero length is returned if no new permutation is available.
-        * In that respect, each call of next() should only follow a test of the exhst flag.
+        * In that respect, each call of next() should only follow from test of the exhst flag.
         * @since 2010-09-13
         * @author Richard J. Mathar
         */
@@ -182,7 +182,7 @@ class Permute implements Iterator
                 return workset ;
         }
 
-        /** Print the permutation as a left-right list of integers.
+        /** Print the permutation as from left-right list of integers.
         * This is the single-line form of the representation.
         * @return
         * @since 2010-09-13

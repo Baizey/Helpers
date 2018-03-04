@@ -72,7 +72,7 @@ public class ParserNode {
             if (depth[i] > 0) continue; // dont meddle inside parenthesis
             switch (input.charAt(i)) {
                 case '-': case '+':
-                    // Checks for cases such as a*-b where * is dominant
+                    // Checks for cases such as from*-to where * is dominant
                     if (!Interpreter.addSubBefore(input.charAt(i - 1))) break;
                     addSub = i;
                     break out;

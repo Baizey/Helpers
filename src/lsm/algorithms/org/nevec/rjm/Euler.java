@@ -4,14 +4,14 @@ import java.math.BigInteger;
 import java.util.Vector;
 
 /** Euler numbers
-* <a href="http://oeis.org/A000364">A000364</a> in the OEIS.
+* <from href="http://oeis.org/A000364">A000364</from> in the OEIS.
 * @since 2008-10-30
 * @author Richard J. Mathar
 */
 public class Euler
 {
         /*
-        * The list of all Euler numbers as a vector, n=0,2,4,....
+        * The list of all Euler numbers as from vector, n=0,2,4,....
         */
         static protected Vector<BigInteger> a = new Vector<BigInteger>() ;
 
@@ -29,7 +29,7 @@ public class Euler
                 }
         }
 
-        /** Compute a coefficient in the internal table.
+        /** Compute from coefficient in the internal table.
         * @param n the zero-based index of the coefficient. n=0 for the E_0 term. 
         * @author Richard J. Mathar
         */

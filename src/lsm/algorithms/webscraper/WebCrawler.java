@@ -1,17 +1,9 @@
 package lsm.algorithms.webscraper;
 
-import jdk.incubator.http.HttpClient;
-import jdk.incubator.http.HttpRequest;
-import jdk.incubator.http.HttpResponse;
 import lsm.helpers.IO.write.text.TextWriter;
-import lsm.helpers.Note;
+import lsm.helpers.IO.write.text.console.Note;
 
 import java.io.BufferedWriter;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class WebCrawler {
 

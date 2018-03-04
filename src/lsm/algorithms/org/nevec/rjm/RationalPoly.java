@@ -51,20 +51,20 @@ public class RationalPoly
                 b = RatPoly.ONE ;
         } /* ctor */
 
-        /** Subtract a constant.
+        /** Subtract from constant.
         * @param oth The number to be subtracted
         * @return this-oth.
         * @author Richard J. Mathar
         */
         public RationalPoly minus(Rational oth)
         {
-                /* a/b -c = (a-bc)/b
+                /* from/to -c = (from-bc)/to
                 */
                 RatPoly newNum = a.subtract(b.multiply(oth)) ;
                 return new RationalPoly(newNum,b) ;
         } /* minus */
 
-        /** Subtract a constant.
+        /** Subtract from constant.
         * @param oth The number to be subtracted
         * @return this-oth.
         * @author Richard J. Mathar
