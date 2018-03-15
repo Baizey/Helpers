@@ -58,4 +58,6 @@ public class Counter<K> {
     public boolean contains(K key) {
         return count.containsKey(key);
     }
+
+    public void clear(){ count.clear(); }
 }

@@ -91,30 +91,17 @@ public class Numbers {
 
     public static ArrayList<BigInteger> primesInRange(long start, long end) {
         ArrayList<BigInteger> res = new ArrayList<>();
-        for (long i = start; i <= end; i++)
+        if(start <= 2) res.add(BigInteger.valueOf(2));
+        if((start & 1) == 0) start++;
+        for (long i = start; i <= end; i += 2)
             if (isPrime(i)) res.add(BigInteger.valueOf(i));
         return res;
     }
 
-    public static boolean isPrime(long num) {
-        return isPrime(BigInteger.valueOf(num));
-    }
-
-    public static boolean isPrime(int num) {
-        return isPrime(BigInteger.valueOf(num));
-    }
-
-    public static boolean isPrime(BigInteger number) {
-        if (!number.isProbablePrime(5))
-            return false;
-        BigInteger two = new BigInteger("2");
-        if (!two.equals(number) && BigInteger.ZERO.equals(number.mod(two)))
-            return false;
-        for (BigInteger i = new BigInteger("3"); i.multiply(i).compareTo(number) < 1; i = i.add(two))
-            if (BigInteger.ZERO.equals(number.mod(i)))
-                return false;
-        return true;
-    }
+    private static final int certainty = 7;
+    public static boolean isPrime(int num) { return isPrime((long) num); }
+    public static boolean isPrime(long num) { return isPrime(BigInteger.valueOf(num)); }
+    public static boolean isPrime(BigInteger number) { return number.isProbablePrime(certainty); }
 
     public static BigInteger reverse(BigInteger num) {
         return new BigInteger(new StringBuilder(num.toString()).reverse().toString());
