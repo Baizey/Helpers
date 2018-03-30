@@ -2,6 +2,8 @@ package lsm.helpers.utils;
 
 import lsm.helpers.IO.write.text.console.Note;
 
+import java.util.Arrays;
+
 
 @SuppressWarnings("WeakerAccess")
 public class ArrayUtils {
@@ -18,6 +20,10 @@ public class ArrayUtils {
             if (identifier.identify(array[i]))
                 return i;
         return -1;
+    }
+
+    public static int getIndexBy(int[] array, Comparator<Integer> comparator) {
+        return getIndexBy(Arrays.stream(array).boxed().toArray(Integer[]::new), comparator);
     }
 
     public static <T> int getIndexBy(T[] array, Comparator<T> comparator) {

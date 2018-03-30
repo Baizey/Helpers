@@ -99,9 +99,12 @@ public class Numbers {
     }
 
     private static final int certainty = 7;
-    public static boolean isPrime(int num) { return isPrime((long) num); }
-    public static boolean isPrime(long num) { return isPrime(BigInteger.valueOf(num)); }
+    public static boolean isPrime(int num) { return isPrime((long) num, certainty); }
+    public static boolean isPrime(int num, int certainty) { return isPrime((long) num, certainty); }
+    public static boolean isPrime(long num) { return isPrime(BigInteger.valueOf(num), certainty); }
+    public static boolean isPrime(long num, int certainty) { return isPrime(BigInteger.valueOf(num), certainty); }
     public static boolean isPrime(BigInteger number) { return number.isProbablePrime(certainty); }
+    public static boolean isPrime(BigInteger number, int certainty) { return number.isProbablePrime(certainty); }
 
     public static BigInteger reverse(BigInteger num) {
         return new BigInteger(new StringBuilder(num.toString()).reverse().toString());
