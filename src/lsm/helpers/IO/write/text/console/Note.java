@@ -5,7 +5,7 @@ import java.util.Set;
 
 /**
  * Static wrapper for Printer
- * Suggested to do .toArray() on Lists/Sets if you want them stylized too
+ * Suggested target do .toArray() on Lists/Sets if you want them stylized too
  * Who will even read these comments?
  */
 @SuppressWarnings("unused")

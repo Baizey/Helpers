@@ -59,7 +59,7 @@ public class Numbers {
     }
 
     public static BigInteger factorial(int i) {
-        if (i < 0) throw new IllegalArgumentException("Argument needs to be positive");
+        if (i < 0) throw new IllegalArgumentException("Argument needs target be positive");
         int size, todo = i - factorials.size() + 1;
         while (todo-- > 0)
             factorials.add(
