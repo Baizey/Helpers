@@ -1,93 +1,117 @@
 package lsm.algorithms.Trie;
 
+import lsm.helpers.Permutations;
 
-import lsm.helpers.IO.write.text.console.Note;
-
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
-public class Trie {
-    private char[] order;
-    private boolean sort = true;
-    private Node root = new Node();
-    private HashMap<Character, Integer> orderpos = new HashMap<>();
+/**
+ * @param <Step>  each step in the trie, fx a character, so ['a', 'b', 'c'] is a list of steps
+ * @param <Thing> some possibly non-array version of the steps, fx a string so that "abc" is a 'Thing' of steps
+ */
+public class Trie<Step, Thing> {
 
-    // Default sorting is off and no order is set
-    public Trie(){ this(false); }
-    // If bool is given, order is set and sort is left true
-    public Trie(boolean sort){
-        this(sort, new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'});
-    }
-    // If order is given, sort is left true
-    public Trie(char[] order){
-        this.order = order;
-        for(int i = 0; i < order.length; i++)
-            orderpos.put(order[i], i);
+    private final Node<Step, Thing> root = new Node<>();
+    private final Itemizer<Step, Thing> itemizer;
+
+    /**
+     * @param itemizer lambda function to turn a 'thing' into an array of steps
+     */
+    public Trie(Itemizer<Step, Thing> itemizer) {
+        this.itemizer = itemizer;
     }
 
-    public Trie(boolean sort, char[] order){
-        this(order);
-        this.sort = sort;
+    public static <Step, Thing> Trie of(Itemizer<Step, Thing> itemizer, Collection<Thing> things) {
+        return new Trie<>(itemizer) {{
+            addAll(things);
+        }};
     }
 
-    // Only works properly when sort is false
-    // And then it only finds 'letters' + something
-    public ArrayList<String> findWordsContaining(String letters){
-        ArrayList<String> words = new ArrayList<>();
-        Node root = findNode(letters);
-        if(root == null) return words;
-        ArrayList<Node> queue = new ArrayList<>(); queue.add(root);
-        while(queue.size() > 0){
-            root = queue.get(0);
-            queue.remove(0);
-            if(root.hasWords())
-                words.addAll(root.getWords());
-            for(Object a : root.getChildren().keySet())
-                queue.add(root.get((char)a));
+    public void addAll(Collection<Thing> things) {
+        addAll(false, things);
+    }
+
+    public void addAll(boolean allPermutations, Collection<Thing> things) {
+        for (var thing : things)
+            add(allPermutations, thing);
+    }
+
+    public void add(Thing thing) {
+        add(false, thing);
+    }
+
+    public void add(boolean allPermutations, Thing thing) {
+        add(itemizer.split(thing), thing, allPermutations);
+    }
+
+    public Node get(Thing thing) {
+        return get(itemizer.split(thing));
+    }
+
+    private void add(Step[] steps, Thing thing, boolean allPermutations) {
+        if (!allPermutations)
+            root.add(steps, thing);
+        else
+            Permutations.stream(steps).forEach(p -> root.add(p, thing));
+    }
+
+    private Node get(Step[] steps) {
+        return root.get(steps);
+    }
+
+    public Node getRoot() {
+        return root;
+    }
+
+    public Itemizer<Step, Thing> getItemizer() {
+        return itemizer;
+    }
+
+}
+
+class Node<Step, Thing> {
+
+    private final HashMap<Step, Node<Step, Thing>> children = new HashMap<>();
+    private int thingsFromThisNode = 0;
+    private Thing thing = null;
+
+    public void add(Step[] steps, Thing thing) {
+        var goal = get(steps);
+        if (goal != null && goal.thing != null)
+            return;
+
+        var at = this;
+        at.thingsFromThisNode++;
+        for (var step : steps) {
+            at.children.putIfAbsent(step, new Node<>());
+            at = at.children.get(step);
+            at.thingsFromThisNode++;
         }
-        return words;
+        at.thing = thing;
     }
-    public void addWord(String word){
-        addWord(word, root);
-    }
-    public void addWord(String word, Node at){
-        String sort = sortWord(word);
-        for(char a : sort.toCharArray())
-            at = at.add(a);
-        at.setWord(word);
-    }
-    public Node findNode(String word){
-        String sort = sortWord(word);
-        Node at = root;
-        for(char a : sort.toCharArray()){
-            at = at.get(a);
-            if(at == null) return null;
-        }
+
+    public Node get(Step[] steps) {
+        var at = this;
+        for (Step step : steps)
+            if (at == null) return null;
+            else at = at.children.get(step);
         return at;
     }
 
-    private String sortWord(String word){
-        if(!sort) return word;
-        String sorted = "";
-        int[] count = new int[order.length];
-        for (char a : word.toCharArray())
-            if(orderpos.containsKey(a))
-                count[orderpos.get(a)]++;
-        for(int i = 0; i < order.length; i++)
-            for (int j = 0; j < count[i]; j++)
-                sorted += order[i];
-        return sorted;
+    public HashMap<Step, Node<Step, Thing>> get() {
+        return children;
     }
-    public Node root(){ return root; }
 
-    public void displayTree(){
-        recurseDisplay(root, 0);
+    public Thing getThing() {
+        return thing;
     }
-    private void recurseDisplay(Node n, int depth){
-        for(char key : n.getChildren().keySet()){
-            Note.setSeperator("").writenl(new char[]{key});
-            recurseDisplay(n.get(key), depth + 1);
-        }
+
+    /**
+     * @return count of things from this node (including itself, if it has a thing)
+     */
+    public int getThingsFromThisNode() {
+        return thingsFromThisNode;
     }
+
 }
 

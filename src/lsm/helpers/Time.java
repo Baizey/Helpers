@@ -37,11 +37,11 @@ public class Time {
     private static final String defaultName = "Program";
     private static final HashMap<String, Timestamp> starts = new HashMap<>();
 
-    public static void takeTime(Action action) {
+    public static void takeTime(Action action) throws Exception {
         takeTime(defaultName, action);
     }
 
-    public static void takeTime(String name, Action action) {
+    public static void takeTime(String name, Action action) throws Exception {
         Time.init(name);
         action.function();
         Time.write(name);
@@ -61,6 +61,15 @@ public class Time {
 
     public static void write() {
         write(defaultName);
+    }
+
+    public static double get() { return get(defaultName); }
+    public static double get(String name) {
+        long end = System.nanoTime();
+        Timestamp stamp = starts.getOrDefault(name, null);
+        if (stamp != null)
+            return stamp.asValue(end, using);
+        return -1D;
     }
 
     public static void write(String name) {
@@ -91,6 +100,12 @@ class Timestamp {
 
     Timestamp(long start) {
         this.start = start;
+    }
+
+    public double asValue(long end, int displayMode) {
+        BigDecimal time = BigDecimal.valueOf(end - start);
+        BigDecimal divisor = getDivisor(time, displayMode);
+        return time.divide(divisor, 3, RoundingMode.HALF_UP).doubleValue();
     }
 
     public String asDisplay(long end, int displayMode) {

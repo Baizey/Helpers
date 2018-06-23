@@ -1,63 +1,78 @@
 package lsm.helpers;
 
+import lsm.helpers.interfaces.KeyAlter;
+import lsm.helpers.interfaces.Rule;
+
 import java.util.HashMap;
-import java.util.Set;
+import java.util.Map;
+import java.util.stream.Stream;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
-public class Counter<K> {
-    private final HashMap<K, Integer> count;
+public class Counter<K> extends HashMap<K, Integer> {
+    private final Rule<K> rule;
+    private final KeyAlter<K> keyAlter;
+
+    public static <K> Counter<K> of(K... keys) {
+        HashMap<Integer, Integer> map;
+        return new Counter<K>().add(keys);
+    }
+
+    public static <K> Counter<K> of(Rule<K> rule, K... keys) {
+        return new Counter<>(rule).add(keys);
+    }
+
+    public static <K> Counter<K> of(KeyAlter<K> change, K... keys) {
+        return new Counter<>(change).add(keys);
+    }
+
+    public static <K> Counter<K> of(Rule<K> rule, KeyAlter<K> change, K... keys) {
+        return new Counter<>(change, rule).add(keys);
+    }
 
     public Counter() {
-        count = new HashMap<>();
+        this(a -> a, a -> 1);
     }
 
-    @SafeVarargs //pls
-    public Counter(K... keys) {
-        this();
-        for (K key : keys) add(key);
+    public Counter(Rule<K> rule) {
+        this(a -> a, rule);
     }
 
-    public Counter(HashMap<K, Integer> map) {
-        this.count = map;
+    public Counter(KeyAlter<K> change) {
+        this(change, a -> 1);
     }
 
-    public Counter(Counter<K> count) {
-        this(new HashMap<>(count.count));
+    public Counter(KeyAlter<K> change, Rule<K> rule) {
+        super();
+        this.rule = rule;
+        this.keyAlter = change;
     }
 
-    public void add(K key) {
-        add(key, 1);
+    public Counter<K> setAs(Counter<K> other) {
+        other.forEach(this::put);
+        return this;
     }
 
-    public void sub(K key) {
-        add(key, -1);
+    public Counter<K> add(K... keys) {
+        for (K key : keys)
+            change(keyAlter.alter(key), rule.handle(key));
+        return this;
     }
 
-    public void remove(K key) {
-        sub(key);
-        if (get(key) <= 0)
-            count.remove(key);
+    public Counter<K> sub(K... keys) {
+        for (K key : keys)
+            change(keyAlter.alter(key), -rule.handle(key));
+        return this;
     }
 
-    public void add(K key, int amount) {
-        count.put(key, count.getOrDefault(key, 0) + amount);
+    public void change(K key, Integer amount) {
+        put(key, getOrDefault(key, 0) + amount);
     }
 
-    public int get(K key) {
-        return count.getOrDefault(key, 0);
+    public Integer get(Object key) {
+        return getOrDefault(keyAlter.alter((K) key), 0);
     }
 
-    public HashMap<K, Integer> getMap() {
-        return count;
+    public Stream<Map.Entry<K, Integer>> stream() {
+        return entrySet().stream();
     }
-
-    public Set<K> getKeys() {
-        return count.keySet();
-    }
-
-    public boolean contains(K key) {
-        return count.containsKey(key);
-    }
-
-    public void clear(){ count.clear(); }
 }

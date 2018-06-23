@@ -20,10 +20,10 @@ public class SymmetricKeyTest {
     public void testMsg() throws Exception {
         SymmetricKey key = new SymmetricKey();
         String test = makeString(10);
-        Assert.assertTrue(test, test.equals(key.decrypt(key.encrypt(test))));
+        Assert.assertEquals(test, test, key.decrypt(key.encrypt(test)));
         test = makeString(2000);
-        Assert.assertTrue(test, test.equals(key.decrypt(key.encrypt(test))));
+        Assert.assertEquals(test, test, key.decrypt(key.encrypt(test)));
         test = makeString(1000000);
-        Assert.assertTrue(test, test.equals(key.decrypt(key.encrypt(test))));
+        Assert.assertEquals(test, test, key.decrypt(key.encrypt(test)));
     }
 }

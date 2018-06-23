@@ -52,12 +52,12 @@ public class Permutations<T> implements Iterator<T[]> {
     public boolean hasNext() {
         if (next != null) return true;
 
-        int i = IntStream.range(0, length).boxed()
+        var i = IntStream.range(0, length).boxed()
                 .filter(index -> dirs[index] != 0)
                 .max(Comparator.comparingInt(index -> perm[index])).orElse(-1);
         if (i < 0) return false;
 
-        int j = i + dirs[i];
+        var j = i + dirs[i];
         swap(i, j, dirs);
         swap(i, j, perm);
         swap(i, j, array);

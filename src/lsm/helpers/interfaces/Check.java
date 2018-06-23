@@ -1,4 +1,4 @@
-package lsm.helpers.utils;
+package lsm.helpers.interfaces;
 
 public interface Check<T> {
 

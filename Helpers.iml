@@ -17,6 +17,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Helpers" level="project" />
+    <orderEntry type="library" name="NatureInspiredAlgorithms" level="project" />
   </component>
 </module>
