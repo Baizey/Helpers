@@ -4,7 +4,6 @@ import lsm.helpers.IO.write.text.console.Note;
 import lsm.helpers.interfaces.Action;
 import lsm.helpers.utils.Numbers;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 
 /**
@@ -18,15 +17,9 @@ import java.util.HashMap;
  * 'Program' is default name if none is given
  */
 
-@SuppressWarnings({"unused", "WeakerAccess"})
 public class Time {
-    private static final BigDecimal
-            THOUSAND = BigDecimal.valueOf(1000L),
-            MILLION = BigDecimal.valueOf(1000000L),
-            BILLION = BigDecimal.valueOf(1000000000L);
     public static final int
-            AUTO = -3,
-            HOURS = -2,
+            AUTO = -2,
             MINUTES = -1,
             SECONDS = 0,
             MILLIS = 1,
@@ -34,7 +27,7 @@ public class Time {
             NANO = 3;
     private static int using = SECONDS;
     private static final String defaultName = "Program";
-    private static final HashMap<String, Timestamp> starts = new HashMap<>();
+    private static final HashMap<String, Timestamp> times = new HashMap<>();
 
     public static void takeTime(Action action) throws Exception {
         takeTime(defaultName, action);
@@ -47,7 +40,8 @@ public class Time {
     }
 
     public static void using(int unit) {
-        if (Numbers.inRange(unit, -3, 3)) Time.using = unit;
+        if (Numbers.inRange(unit, AUTO, NANO))
+            Time.using = unit;
     }
 
     public static void init() {
@@ -55,17 +49,20 @@ public class Time {
     }
 
     public static void init(String name) {
-        starts.put(name, new Timestamp(System.nanoTime()));
+        times.put(name, new Timestamp(System.nanoTime()));
     }
 
     public static void write() {
         write(defaultName);
     }
 
-    public static double get() { return get(defaultName); }
+    public static double get() {
+        return get(defaultName);
+    }
+
     public static double get(String name) {
         long end = System.nanoTime();
-        Timestamp stamp = starts.getOrDefault(name, null);
+        Timestamp stamp = times.getOrDefault(name, null);
         if (stamp != null)
             return stamp.asValue(end, using);
         return -1D;
@@ -73,7 +70,7 @@ public class Time {
 
     public static void write(String name) {
         long end = System.nanoTime();
-        Timestamp stamp = starts.getOrDefault(name, null);
+        Timestamp stamp = times.getOrDefault(name, null);
         if (stamp != null)
             Note.write(name).write(" took ").writenl(stamp.asDisplay(end, using));
     }

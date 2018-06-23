@@ -1,5 +1,5 @@
 package lsm.helpers.interfaces;
 
 public interface Action {
-    public void function() throws Exception;
+    public void act() throws Exception;
 }

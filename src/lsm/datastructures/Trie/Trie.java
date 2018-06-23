@@ -1,4 +1,4 @@
-package lsm.datastructures.Trie;
+package lsm.datastructures.trie;
 
 import lsm.datastructures.permutation.Permutations;
 
