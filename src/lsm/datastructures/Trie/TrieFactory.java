@@ -1,4 +1,4 @@
-package lsm.datastructures.Trie;
+package lsm.datastructures.trie;
 
 public class TrieFactory {
 
