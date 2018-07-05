@@ -10,23 +10,24 @@ public class Timestamp {
             MILLION = BigDecimal.valueOf(1000000L),
             BILLION = BigDecimal.valueOf(1000000000L),
             BILLION60 = BigDecimal.valueOf(60000000000L);
-    private long start;
 
-    Timestamp(long start) {
-        this.start = start;
+    private final long startTime;
+
+    Timestamp(long startTime) {
+        this.startTime = startTime;
     }
 
-    public double asValue(long end, int displayMode) {
-        BigDecimal time = BigDecimal.valueOf(end - start);
-        BigDecimal divisor = getDivisor(time, displayMode);
+    public double asValue(long endTime, int displayMode) {
+        var time = BigDecimal.valueOf(endTime - startTime);
+        var divisor = getDivisor(time, displayMode);
         return time.divide(divisor, 3, RoundingMode.HALF_UP).doubleValue();
     }
 
-    public String asDisplay(long end, int displayMode) {
-        BigDecimal time = BigDecimal.valueOf(end - start);
-        BigDecimal divisor = getDivisor(time, displayMode);
+    public String asDisplay(long endTime, int displayMode) {
+        var time = BigDecimal.valueOf(endTime - startTime);
+        var divisor = getDivisor(time, displayMode);
         time = time.divide(divisor, 3, RoundingMode.HALF_UP);
-        switch (divisor.toString()) {
+        switch (divisor.toPlainString()) {
             default: return null;
             case "1": return time + " nanoseconds";
             case "1000": return time + " microseconds";

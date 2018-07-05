@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -37,8 +36,8 @@ public class TextReader {
     // Special reader functions
     /////////////////////////////////////
     public static int[][] readAsIntMatrix(String from) throws IOException {
-        ArrayList<String> input = read(from);
-        int[][] matrix = new int[input.size()][];
+        var input = read(from);
+        var matrix = new int[input.size()][];
         String[] t;
         for (int i = 0; i < matrix.length; i++) {
             t = input.get(i).replaceAll("\\D+", " ").trim().split(" ");
@@ -50,8 +49,8 @@ public class TextReader {
     }
 
     public static double[][] readAsDoubleMatrix(String from) throws IOException {
-        ArrayList<String> input = read(from);
-        double[][] matrix = new double[input.size()][];
+        var input = read(from);
+        var matrix = new double[input.size()][];
         String[] t;
         for (int i = 0; i < matrix.length; i++) {
             t = input.get(i).replaceAll("[^0-9.]+", " ").trim().split(" ");
@@ -65,7 +64,6 @@ public class TextReader {
     /////////////////////////////////////
     // Reader constructors
     /////////////////////////////////////
-    
     public static Scanner getConsoleReader() {
         return new Scanner(System.in);
     }
@@ -81,24 +79,23 @@ public class TextReader {
     }
 
     public static BufferedReader getWebsiteReader(String link) throws IOException {
-        URLConnection conn = new URL(link).openConnection();
+        var conn = new URL(link).openConnection();
         conn.setRequestProperty("User-Agent", "Mozilla");
-        String encoding = conn.getContentEncoding() == null ? "UTF-8" : conn.getContentEncoding();
+        var encoding = conn.getContentEncoding() == null ? "UTF-8" : conn.getContentEncoding();
         return new BufferedReader(new InputStreamReader(conn.getInputStream(), encoding));
     }
 
     /////////////////////////////////////
     // Private utility functions
     /////////////////////////////////////
-
     private static ArrayList<String> readReaderAndClose(BufferedReader reader) throws IOException {
-        ArrayList<String> lines = readReader(reader);
+        var lines = readReader(reader);
         reader.close();
         return lines;
     }
 
     private static ArrayList<String> readReader(BufferedReader reader) throws IOException {
-        ArrayList<String> lines = new ArrayList<>();
+        var lines = new ArrayList<String>();
         reader.lines().forEach(lines::add);
         return lines;
     }

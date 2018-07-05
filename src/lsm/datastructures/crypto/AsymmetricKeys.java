@@ -7,18 +7,18 @@ import java.security.KeyPairGenerator;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+import static lsm.datastructures.crypto.Constants.asymmetricKeyAlgorithm;
+import static lsm.datastructures.crypto.Constants.asymmetricKeySize;
 import static lsm.datastructures.crypto.Utils.*;
 
 @SuppressWarnings("WeakerAccess")
 public class AsymmetricKeys extends AbstractKey {
-    private static final String asymmetricKeyAlgorithm = "RSA";
-    private static final int keySize = 2048; // 2^11
     private Key privateKey, publicKey;
 
     public AsymmetricKeys() throws Exception {
         super(asymmetricKeyAlgorithm);
         KeyPairGenerator keygen = KeyPairGenerator.getInstance(asymmetricKeyAlgorithm);
-        keygen.initialize(keySize);
+        keygen.initialize(asymmetricKeySize);
         KeyPair pair = keygen.generateKeyPair();
         publicKey = pair.getPublic();
         privateKey = pair.getPrivate();
@@ -62,8 +62,8 @@ public class AsymmetricKeys extends AbstractKey {
     public String encrypt(String data) throws Exception {
         SymmetricKey symmetricKey = new SymmetricKey();
         return joinStrings(
-            encrypt(symmetricKey.keyString(), publicKey),
-            symmetricKey.encrypt(data)
+                encrypt(symmetricKey.keyString(), publicKey),
+                symmetricKey.encrypt(data)
         );
     }
 

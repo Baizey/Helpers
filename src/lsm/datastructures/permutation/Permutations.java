@@ -15,47 +15,60 @@ import java.util.stream.Stream;
  * @param <T>
  */
 
-@SuppressWarnings("WeakerAccess")
 public class Permutations<T> implements Iterator<T[]> {
 
     private final int length;
-    private final T[] array;
+    private final T[] original;
+    private T[] array;
     private int[] perm, next, dirs;
 
-    @SafeVarargs
-    public Permutations(T... original) {
-        length = original.length;
-        if(length > 20) throw new ArrayStoreException("Permutation count exceeds long values at more than 20 elements");
-        array = Arrays.copyOf(original, length);
+    public Permutations(Collection<T> collection) {
+        this((T[]) collection.toArray());
+    }
+
+    public Permutations(T[] array) {
+        length = array.length;
+        if (length > 20) throw new ArrayStoreException("Permutation count exceeds long values at more than 20 elements");
+        this.original = Arrays.copyOf(array, length);
         reset();
     }
 
-    @SafeVarargs
-    public static <T> Stream<T[]> stream(T... array) {
+    public static <T> Stream<T[]> stream(Collection<T> array) {
         return new Permutations<>(array).stream();
     }
 
-    public Stream<T[]> stream() { return Stream.generate(this::next).takeWhile(Objects::nonNull); }
+    public static <T> Stream<T[]> stream(T[] array) {
+        return new Permutations<>(array).stream();
+    }
+
+    public Stream<T[]> stream() {
+        return Stream.generate(this::next).takeWhile(Objects::nonNull);
+    }
 
     public void reset() {
         perm = IntStream.range(0, length).toArray();
-        dirs = IntStream.iterate(0, (i) -> -1).limit(length).toArray();
+        dirs = IntStream.iterate(0, i -> -1).limit(length).toArray();
         next = perm;
+        array = Arrays.copyOf(original, length);
     }
 
     public T[] next() {
-        if (!hasNext()) return null;
+        if (!hasNext())
+            return null;
         next = null;
         return array;
     }
 
     public boolean hasNext() {
-        if (next != null) return true;
+        if (next != null)
+            return true;
 
         var i = IntStream.range(0, length).boxed()
                 .filter(index -> dirs[index] != 0)
                 .max(Comparator.comparingInt(index -> perm[index])).orElse(-1);
-        if (i < 0) return false;
+
+        if (i < 0)
+            return false;
 
         var j = i + dirs[i];
         swap(i, j, dirs);

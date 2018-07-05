@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Time.init()  will take current time
  * Time.write() will write the difference since last initialize call
  * Time.reset() will attempt target write time since last init and then re-initialize
- * Time.using(int) defines if the write() act tells in seconds, millis, micros or nano-seconds
+ * Time.using(int) defines if the write() act tells in seconds, millis, micros or nano-seconds, or if it uses the most appropriate
  * A name can be given target take time on multiple things at once
  * 'Program' is default name if none is given
  */
@@ -61,16 +61,16 @@ public class Time {
     }
 
     public static double get(String name) {
-        long end = System.nanoTime();
-        Timestamp stamp = times.getOrDefault(name, null);
+        var end = System.nanoTime();
+        var stamp = times.getOrDefault(name, null);
         if (stamp != null)
             return stamp.asValue(end, using);
         return -1D;
     }
 
     public static void write(String name) {
-        long end = System.nanoTime();
-        Timestamp stamp = times.getOrDefault(name, null);
+        var end = System.nanoTime();
+        var stamp = times.getOrDefault(name, null);
         if (stamp != null)
             Note.write(name).write(" took ").writenl(stamp.asDisplay(end, using));
     }

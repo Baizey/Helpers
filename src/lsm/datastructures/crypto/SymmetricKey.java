@@ -4,18 +4,19 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 
+import static lsm.datastructures.crypto.Constants.symmetricKeyAlgorithm;
+import static lsm.datastructures.crypto.Constants.symmetricKeySize;
 import static lsm.datastructures.crypto.Utils.*;
 
 @SuppressWarnings("WeakerAccess")
 public class SymmetricKey extends AbstractKey {
-    private static final String symmetricKeyAlgorithm = "AES";
-    private static final int keySize = 256; // 2^9
+
     private Key key;
 
     public SymmetricKey() throws Exception {
         super(symmetricKeyAlgorithm);
         KeyGenerator generator = KeyGenerator.getInstance(symmetricKeyAlgorithm);
-        generator.init(keySize);
+        generator.init(symmetricKeySize);
         this.key = generator.generateKey();
     }
 
@@ -41,7 +42,7 @@ public class SymmetricKey extends AbstractKey {
     public Key key() {
         return key;
     }
-    public String keyString() throws Exception {
+    public String keyString() {
         return toBase64(key.getEncoded());
     }
 }

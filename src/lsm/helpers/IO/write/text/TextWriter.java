@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class TextWriter {
 
-    public static BufferedWriter getWriter(String filename, String filetype, boolean overwrite) throws IOException {
-        return new BufferedWriter(new FileWriter(filename + "." + filetype, !overwrite));
+    public static BufferedWriter getWriter(String filename, boolean overwrite) throws IOException {
+        return new BufferedWriter(new FileWriter(filename, !overwrite));
     }
-
+    
 }

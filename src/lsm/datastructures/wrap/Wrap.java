@@ -19,12 +19,6 @@ public class Wrap<T> {
         return value;
     }
 
-    public boolean isSame(T value) {
-        if (this.value == null)
-            return value == null;
-        return this.value.equals(value);
-    }
-
     public String toString() {
         return String.valueOf(value);
     }
