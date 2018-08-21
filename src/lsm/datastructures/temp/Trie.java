@@ -1,11 +1,11 @@
-package lsm.datastructures.trie;
+package lsm.datastructures.temp;
 
 import lsm.datastructures.permutation.Permutations;
 
 import java.util.Collection;
 
 /**
- * @param <Step>  each step in the trie, fx a character, so ['a', 'b', 'c'] is a list of steps
+ * @param <Step>  each step in the temp, fx a character, so ['a', 'b', 'c'] is a list of steps
  * @param <Thing> some possibly non-array version of the steps, fx a string so that "abc" is a 'Thing' of steps
  */
 public class Trie<Step, Thing> {
