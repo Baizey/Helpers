@@ -1,4 +1,4 @@
-package lsm.datastructures.temp;
+package lsm.datastructures.trie;
 
 import java.util.HashMap;
 import java.util.HashSet;
