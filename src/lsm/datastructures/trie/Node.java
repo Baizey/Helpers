@@ -27,12 +27,24 @@ public class Node<Step, Thing> {
         return children.get(step);
     }
 
-    public Node get(Step[] steps) {
+    public Node<Step, Thing> get(Step[] steps) {
+        return get(steps, 0);
+    }
+
+    public Node<Step, Thing> get(Step[] steps, int start) {
         var at = this;
-        for (Step step : steps)
+        for (int i = start; i < steps.length; i++)
             if (at == null) return null;
-            else at = at.children.get(step);
+            else at = at.children.get(steps[i]);
         return at;
+    }
+
+    public boolean hasThing(Thing thing) {
+        return things.contains(thing);
+    }
+
+    public boolean hasThings() {
+        return things.size() > 0;
     }
 
     private boolean contains(Step[] steps, Thing thing) {

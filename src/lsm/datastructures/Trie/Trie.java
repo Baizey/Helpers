@@ -39,6 +39,11 @@ public class Trie<Step, Thing> {
             add(thing);
     }
 
+    public boolean contains(Thing thing) {
+        var result = root.get(itemizer.split(thing));
+        return result != null && result.hasThing(thing);
+    }
+
     public void remove(Thing thing) {
         Step[] steps = itemizer.split(thing);
         if (allPermutations)
@@ -59,11 +64,11 @@ public class Trie<Step, Thing> {
             root.add(steps, thing);
     }
 
-    public Node get(Thing thing) {
+    public Node<Step, Thing> get(Thing thing) {
         return get(itemizer.split(thing));
     }
 
-    public Node get(Step[] steps) {
+    public Node<Step, Thing> get(Step[] steps) {
         return root.get(steps);
     }
 
