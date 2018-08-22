@@ -12,16 +12,18 @@ import java.util.Set;
 public class Note {
 
     public static void main(String... args){
-        Note.setTags("<", ">").setPadding(Padding.CENTER_RIGHTWEIGHT, Padding.VERTICAL);
+        Note.tags("<", ">").padding(Padding.CENTER_RIGHTWEIGHT, Padding.VERTICAL);
     }
 
     private static final Printer printer = new Printer();
 
-    public static Printer setSeperator(String seperator) { return printer.setSeperator(seperator); }
+    public static Printer mapKeySeparator(String separator) { return printer.mapKeySeparator(separator); }
 
-    public static Printer setTags(String startTag, String endTag) { return printer.setTags(startTag, endTag); }
+    public static Printer separator(String separator) { return printer.separator(separator); }
 
-    public static Printer setPadding(int mode, int compare) { return printer.setPadding(mode, compare); }
+    public static Printer tags(String startTag, String endTag) { return printer.tags(startTag, endTag); }
+
+    public static Printer padding(int mode, int compare) { return printer.padding(mode, compare); }
 
     public static Printer nl() { return printer.nl(); }
 

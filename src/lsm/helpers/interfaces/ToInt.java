@@ -1,5 +1,5 @@
 package lsm.helpers.interfaces;
 
-public interface ToInt<T> {
-    int convert(T var);
+public interface ToInt<T> extends Convert<T, Integer> {
+
 }

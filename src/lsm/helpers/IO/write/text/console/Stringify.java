@@ -1,6 +1,8 @@
 package lsm.helpers.IO.write.text.console;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 public class Stringify {
@@ -79,9 +81,20 @@ public class Stringify {
         StringBuilder sb = new StringBuilder(settings.startTag);
         if (toWrite.length > 0) sb.append(padding.pad(toWrite[0], 0));
         for (int i = 1; i < toWrite.length; i++)
-            sb.append(settings.separator).append(padding.pad(toWrite[i], i));
+            sb.append(settings.elementSeparator).append(padding.pad(toWrite[i], i));
         sb.append(settings.endTag);
         return sb;
+    }
+
+    public <T> StringBuilder asString(Set<T> toWrite) {
+        if (toWrite == null) return new StringBuilder("null");
+        return asString(toWrite.toArray());
+    }
+
+    public <T, K> StringBuilder asString(Map<T, K> toWrite) {
+        if (toWrite == null) return new StringBuilder("null");
+        return asString(toWrite.entrySet().stream()
+                .map(e -> e.getKey() + settings.mapKeySeparator + e.getValue()).toArray());
     }
 
     public <T> StringBuilder asString(List<T> toWrite) {
@@ -93,23 +106,23 @@ public class Stringify {
         return new StringBuilder(String.valueOf(toWrite));
     }
 
-    public Stringify setSeparator(String seperator) {
-        this.settings.separator = seperator;
+    public Stringify separator(String separator) {
+        this.settings.elementSeparator = separator;
         return this;
     }
 
-    public Stringify setMapKeyValue(String mapKeyValue) {
-        this.settings.mapKeyValue = mapKeyValue;
+    public Stringify mapKeySeparator(String mapKeySeparator) {
+        this.settings.mapKeySeparator = mapKeySeparator;
         return this;
     }
 
-    public Stringify setTags(String startTag, String endTag) {
+    public Stringify tags(String startTag, String endTag) {
         this.settings.startTag = startTag;
         this.settings.endTag = endTag;
         return this;
     }
 
-    public Stringify setPadding(int mode, int compare) {
+    public Stringify padding(int mode, int compare) {
         this.settings.paddingMode = mode;
         this.settings.compareMode = compare;
         return this;
@@ -118,16 +131,16 @@ public class Stringify {
 
 @SuppressWarnings("WeakerAccess")
 class Settings {
-    String startTag, endTag, separator, mapKeyValue;
+    String startTag, endTag, elementSeparator, mapKeySeparator;
     int paddingMode;
     public int compareMode;
 
     Settings() {
-        this.compareMode = 0;
-        this.paddingMode = -1;
+        this.compareMode = Padding.VERTICAL;
+        this.paddingMode = Padding.NONE;
         this.startTag = "[";
         this.endTag = "]";
-        this.separator = ", ";
-        this.mapKeyValue = " = ";
+        this.elementSeparator = ", ";
+        this.mapKeySeparator = " = ";
     }
 }

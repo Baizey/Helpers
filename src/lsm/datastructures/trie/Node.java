@@ -57,7 +57,7 @@ public class Node<Step, Thing> {
         return children;
     }
 
-    public Thing getFirstThing() {
+    public Thing getFirst() {
         return things.stream().findFirst().orElse(null);
     }
 

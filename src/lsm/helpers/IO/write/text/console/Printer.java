@@ -1,28 +1,34 @@
 package lsm.helpers.IO.write.text.console;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @SuppressWarnings({"unused", "UnusedReturnValue", "WeakerAccess"})
 public class Printer {
     public static void main(String... args) {
-        Note.setTags("[", "]")
-                .setSeperator(", ")
-                .setPadding(Padding.RIGHT, Padding.VERTICAL)
+        Note.tags("[", "]")
+                .separator(", ")
+                .padding(Padding.RIGHT, Padding.VERTICAL)
                 .writenl(new int[][]{{1, 2, 3},{11, 22222, 33},{111, 222, 33}});
     }
     private final Stringify stringify = new Stringify();
 
-    public Printer setSeperator(String seperator) {
-        this.stringify.setSeparator(seperator);
+    public Printer mapKeySeparator(String separator) {
+        this.stringify.mapKeySeparator(separator);
         return this;
     }
-    public Printer setTags(String startTag, String endTag) {
-        this.stringify.setTags(startTag, endTag);
+
+    public Printer separator(String separator) {
+        this.stringify.separator(separator);
         return this;
     }
-    public Printer setPadding(int mode, int compare) {
-        this.stringify.setPadding(mode, compare);
+    public Printer tags(String startTag, String endTag) {
+        this.stringify.tags(startTag, endTag);
+        return this;
+    }
+    public Printer padding(int mode, int compare) {
+        this.stringify.padding(mode, compare);
         return this;
     }
     public Printer nl() {
@@ -75,6 +81,9 @@ public class Printer {
     public <T> Printer writenl(Set<T> toWrite) {
         return writenl(stringify.asString(toWrite));
     }
+    public <T, K> Printer writenl(Map<T, K> toWrite) {
+        return writenl(stringify.asString(toWrite));
+    }
     public <T> Printer writenl(T toWrite) {
         System.out.println(toWrite);
         return this;
@@ -123,6 +132,9 @@ public class Printer {
     }
     public <T> Printer write(List<T> toWrite) { return write(stringify.asString(toWrite)); }
     public <T> Printer write(Set<T> toWrite) {
+        return write(stringify.asString(toWrite));
+    }
+    public <T, K> Printer write(Map<T, K> toWrite) {
         return write(stringify.asString(toWrite));
     }
     public <T> Printer write(T toWrite) {

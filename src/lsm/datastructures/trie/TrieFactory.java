@@ -1,6 +1,12 @@
 package lsm.datastructures.trie;
 
+import lsm.helpers.interfaces.ToString;
+
 public class TrieFactory {
+
+    public static <T> Trie<Character, T> string(ToString<T> converter) {
+        return new Trie<>(Itemizers.charsInString(converter));
+    }
 
     public static Trie<Character, String> string() {
         return new Trie<>(Itemizers.charsInString());
