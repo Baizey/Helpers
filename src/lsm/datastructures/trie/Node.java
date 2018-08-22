@@ -1,5 +1,6 @@
 package lsm.datastructures.trie;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,6 +57,10 @@ public class Node<Step, Thing> {
         return children;
     }
 
+    public Thing getFirstThing() {
+        return things.stream().findFirst().orElse(null);
+    }
+
     public Set<Thing> getThings() {
         return things;
     }
@@ -95,5 +100,25 @@ public class Node<Step, Thing> {
                 thingsFromThisNode += other.get(key).thingsFromThisNode;
             }
         }
+    }
+
+    public String toString() {
+        return toString(0, '\t');
+    }
+
+    public String toString(char prefix) {
+        return toString(0, prefix);
+    }
+
+    private String toString(int depth, char prefix) {
+        var indent = new char[depth];
+        Arrays.fill(indent, prefix);
+        StringBuilder sb = new StringBuilder();
+        children.forEach((key, value) -> sb.append(new String(indent))
+                .append(key)
+                .append('\n')
+                .append(value.toString(depth + 1, prefix))
+                .append('\n'));
+        return sb.toString();
     }
 }

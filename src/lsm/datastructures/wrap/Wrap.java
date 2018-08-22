@@ -11,8 +11,9 @@ public class Wrap<T> {
         this.value = value;
     }
 
-    public void set(T value) {
+    public Wrap<T> set(T value) {
         this.value = value;
+        return this;
     }
 
     public T get() {

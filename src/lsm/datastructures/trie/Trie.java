@@ -84,5 +84,13 @@ public class Trie<Step, Thing> {
         return itemizer;
     }
 
+    public String toString(char prefix) {
+        return root.toString(prefix);
+    }
+
+    public String toString() {
+        return root.toString();
+    }
+
 }
 

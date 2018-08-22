@@ -3,12 +3,12 @@ package lsm.datastructures.wrap;
 public class SafeWrap<T> extends Wrap<T> {
 
     @Override
-    public void set(T value) {
-        setSync(value);
+    public Wrap<T> set(T value) {
+        return setSync(value);
     }
 
-    private synchronized void setSync(T value) {
-        super.set(value);
+    private synchronized Wrap<T> setSync(T value) {
+        return super.set(value);
     }
 
     @Override

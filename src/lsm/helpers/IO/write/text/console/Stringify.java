@@ -93,22 +93,26 @@ public class Stringify {
         return new StringBuilder(String.valueOf(toWrite));
     }
 
-    public void setSeparator(String seperator) {
+    public Stringify setSeparator(String seperator) {
         this.settings.separator = seperator;
+        return this;
     }
 
-    public void setMapKeyValue(String mapKeyValue) {
+    public Stringify setMapKeyValue(String mapKeyValue) {
         this.settings.mapKeyValue = mapKeyValue;
+        return this;
     }
 
-    public void setTags(String startTag, String endTag) {
+    public Stringify setTags(String startTag, String endTag) {
         this.settings.startTag = startTag;
         this.settings.endTag = endTag;
+        return this;
     }
 
-    public void setPadding(int mode, int compare) {
+    public Stringify setPadding(int mode, int compare) {
         this.settings.paddingMode = mode;
         this.settings.compareMode = compare;
+        return this;
     }
 }
 
