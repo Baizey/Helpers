@@ -1,7 +1,7 @@
 package lsm.datastructures.trie;
 
-public interface Itemizer<Step, Thing> {
+public interface Itemizer<Step, Item> {
 
-    Step[] split(Thing thing);
+    Step[] split(Item item);
 
 }

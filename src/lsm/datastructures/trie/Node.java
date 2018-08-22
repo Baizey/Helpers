@@ -5,34 +5,34 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Node<Step, Thing> {
+public class Node<Step, Item> {
 
-    private final HashMap<Step, Node<Step, Thing>> children = new HashMap<>();
-    private int thingsFromThisNode = 0;
-    private Set<Thing> things = new HashSet<>();
+    private final HashMap<Step, Node<Step, Item>> children = new HashMap<>();
+    private int totalChildItems = 0;
+    private Set<Item> items = new HashSet<>();
 
-    public void add(Step[] steps, Thing thing) {
-        if (contains(steps, thing))
+    public void add(Step[] steps, Item item) {
+        if (contains(steps, item))
             return;
         var at = this;
-        at.thingsFromThisNode++;
+        at.totalChildItems++;
         for (var step : steps) {
             at.children.putIfAbsent(step, new Node<>());
             at = at.children.get(step);
-            at.thingsFromThisNode++;
+            at.totalChildItems++;
         }
-        at.things.add(thing);
+        at.items.add(item);
     }
 
-    public Node<Step, Thing> get(Step step) {
+    public Node<Step, Item> get(Step step) {
         return children.get(step);
     }
 
-    public Node<Step, Thing> get(Step[] steps) {
+    public Node<Step, Item> get(Step[] steps) {
         return get(steps, 0);
     }
 
-    public Node<Step, Thing> get(Step[] steps, int start) {
+    public Node<Step, Item> get(Step[] steps, int start) {
         var at = this;
         for (int i = start; i < steps.length; i++)
             if (at == null) return null;
@@ -40,70 +40,88 @@ public class Node<Step, Thing> {
         return at;
     }
 
-    public boolean hasThing(Thing thing) {
-        return things.contains(thing);
+    public boolean hasItem(Item item) {
+        return items.contains(item);
     }
 
-    public boolean hasThings() {
-        return things.size() > 0;
+    public boolean hasItems() {
+        return items.size() > 0;
     }
 
-    private boolean contains(Step[] steps, Thing thing) {
-        var goal = get(steps);
-        return goal != null && goal.things.contains(thing);
+    public boolean isEndpoint() {
+        return items.size() > 0;
     }
 
-    public HashMap<Step, Node<Step, Thing>> getChildren() {
+    public boolean contains(Step[] steps, Item item) {
+        return contains(steps, item, 0);
+    }
+
+    public boolean contains(Step[] steps, Item item, int start) {
+        var goal = get(steps, start);
+        return goal != null && goal.hasItem(item);
+    }
+
+    public HashMap<Step, Node<Step, Item>> getChildren() {
         return children;
     }
 
-    public Thing getFirst() {
-        return things.stream().findFirst().orElse(null);
+    public Item getFirst() {
+        return items.stream().findFirst().orElse(null);
     }
 
-    public Set<Thing> getThings() {
-        return things;
+    public Set<Item> getItems() {
+        return items;
     }
 
     /**
-     * @return count of things source this node (including itself, if it has a things)
+     * @return count of items source this node (including itself, if it has a items)
      */
-    public int getThingsFromThisNode() {
-        return thingsFromThisNode;
+    public int getTotalChildItems() {
+        return totalChildItems;
     }
 
-    public void remove(Step[] steps, Thing thing) {
-        if (!contains(steps, thing)) return;
-        remove(steps, 0);
-    }
-
-    private void remove(Step[] steps, int i) {
-        thingsFromThisNode--;
-        if (i == steps.length)
+    /**
+     * Only meant to be called from Trie (cannot change item count of parent(s))
+     * @param steps
+     * @param item
+     */
+    void remove(Step[] steps, Item item) {
+        if (!contains(steps, item))
             return;
-        children.get(steps[i]).remove(steps, i + 1);
-        if (children.get(steps[i]).thingsFromThisNode <= 0)
-            children.remove(steps[i]);
+        var at = this;
+        for(var step : steps) {
+            at.totalChildItems--;
+            var child = at.children.get(step);
+            if (child.totalChildItems == 1) {
+                at.children.remove(step);
+                return;
+            }
+            at = child;
+        }
     }
 
-    public void merge(Node<Step, Thing> other) {
-        thingsFromThisNode -= things.size();
-        things.addAll(other.things);
-        thingsFromThisNode += things.size();
+    /**
+     * Only meant to be called from Trie (cannot change item count of parent(s))
+     * @param other
+     */
+    void merge(Node<Step, Item> other) {
+        totalChildItems -= items.size();
+        items.addAll(other.items);
+        totalChildItems += items.size();
         for (var key : other.children.keySet()) {
             if (children.containsKey(key)) {
-                thingsFromThisNode -= get(key).thingsFromThisNode;
+                totalChildItems -= get(key).totalChildItems;
                 get(key).merge(other.get(key));
-                thingsFromThisNode += get(key).thingsFromThisNode;
+                totalChildItems += get(key).totalChildItems;
             } else {
                 children.put(key, other.get(key));
-                thingsFromThisNode += other.get(key).thingsFromThisNode;
+                totalChildItems += other.get(key).totalChildItems;
             }
         }
     }
 
     public String toString() {
-        return toString(0, '\t');
+        return toString(0, '-');
     }
 
     public String toString(char prefix) {
