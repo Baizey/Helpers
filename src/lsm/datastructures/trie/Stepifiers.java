@@ -2,14 +2,14 @@ package lsm.datastructures.trie;
 
 import lsm.helpers.interfaces.ToString;
 
-public class Itemizers {
+public class Stepifiers {
 
 
-    public static Stepifier<Character, String> charsInString() {
-        return charsInString(str -> str);
+    public static Stepifier<Character, String> charsFromString() {
+        return charsFromString(str -> str);
     }
 
-    public static <T> Stepifier<Character, T> charsInString(ToString<T> converter) {
+    public static <T> Stepifier<Character, T> charsFromString(ToString<T> converter) {
         return obj -> converter.convert(obj).chars().mapToObj(c -> (char) c).toArray(Character[]::new);
     }
 

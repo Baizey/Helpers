@@ -59,6 +59,12 @@ public class Node<Step, Item> {
         return getAllItems(new ArrayList<>());
     }
 
+    private ArrayList<Item> getAllItems(ArrayList<Item> result) {
+        result.addAll(items);
+        children.values().forEach(c -> c.getAllItems(result));
+        return result;
+    }
+
     public Item getFirst() {
         return items.stream().findFirst().orElse(null);
     }
@@ -114,9 +120,4 @@ public class Node<Step, Item> {
         }
     }
 
-    ArrayList<Item> getAllItems(ArrayList<Item> result) {
-        result.addAll(items);
-        children.values().forEach(c -> c.getAllItems(result));
-        return result;
-    }
 }
