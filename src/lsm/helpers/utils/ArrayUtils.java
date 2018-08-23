@@ -2,7 +2,7 @@ package lsm.helpers.utils;
 
 import lsm.helpers.IO.write.text.console.Note;
 import lsm.helpers.interfaces.Comparator;
-import lsm.helpers.interfaces.Identifier;
+import lsm.helpers.interfaces.ToBool;
 
 import java.util.Arrays;
 
@@ -16,10 +16,10 @@ public class ArrayUtils {
         Note.writenl(getIndexBy(array, (a, b) -> a - b));
     }
 
-    public static <T> int getIndexByValue(T[] array, Identifier<T> identifier) {
+    public static <T> int getIndexByValue(T[] array, ToBool<T> identifier) {
         if (array == null) return -1;
         for (int i = 0; i < array.length; i++)
-            if (identifier.identify(array[i]))
+            if (identifier.convert(array[i]))
                 return i;
         return -1;
     }

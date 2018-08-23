@@ -2,56 +2,55 @@ package lsm.datastructures.trie;
 
 import lsm.datastructures.permutation.Permutations;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @param <Step>  each step in the trie, fx a character, so ['a', 'b', 'c'] is a list of steps
+ * @param <Step> each step in the trie, fx a character, so ['a', 'b', 'c'] is a list of steps
  * @param <Item> some possibly non-array version of the steps, fx a string so that "abc" is a 'Item' of steps
  */
 public class Trie<Step, Item> {
 
-    private final Node<Step, Item> root = new Node<>();
-    private final Itemizer<Step, Item> itemizer;
+    private final Node<Step, Item> root;
+    private final Stepifier<Step, Item> stepifier;
     private final boolean useAllPermutations;
 
-    public Trie(Itemizer<Step, Item> itemizer) {
-        this(itemizer, false);
+    public Trie(Stepifier<Step, Item> stepifier) {
+        this(stepifier, false);
     }
 
-    /**
-     * @param itemizer        lambda act target turn an 'tem into an array of steps
-     *                        A common Trie item would be a string, a common step would be a character
-     * @param useAllPermutations tells if all permutations of a thing should be added.
-     */
-    public Trie(Itemizer<Step, Item> itemizer, boolean useAllPermutations) {
+    public Trie(Stepifier<Step, Item> stepifier, boolean useAllPermutations) {
+        this(stepifier, useAllPermutations, new Node<>());
+    }
+
+    public Trie(Stepifier<Step, Item> stepifier, boolean useAllPermutations, Node<Step, Item> root) {
+        this.root = root;
         this.useAllPermutations = useAllPermutations;
-        this.itemizer = itemizer;
+        this.stepifier = stepifier;
     }
 
     public void addAll(Collection<Item> items) {
-        for (var item : items)
-            add(item);
+        items.forEach(this::add);
     }
 
     public boolean contains(Item item) {
-        var result = root.get(itemizer.split(item));
-        return result != null && result.hasItem(item);
+        return root.contains(item);
     }
 
     public void remove(Item item) {
-        Step[] steps = itemizer.split(item);
+        var steps = stepifier.convert(item);
         if (useAllPermutations)
             Permutations.stream(steps).forEach(p -> root.remove(p, item));
         else
             root.remove(steps, item);
     }
 
-    public void add(Item item) {
-        add(itemizer.split(item), item);
+    public ArrayList<Item> getItems() {
+        return root.getAllItems();
     }
 
-
-    public void add(Step[] steps, Item item) {
+    public void add(Item item) {
+        var steps = stepifier.convert(item);
         if (useAllPermutations)
             Permutations.stream(steps).forEach(p -> root.add(p, item));
         else
@@ -59,11 +58,7 @@ public class Trie<Step, Item> {
     }
 
     public Node<Step, Item> get(Item item) {
-        return get(itemizer.split(item));
-    }
-
-    public Node<Step, Item> get(Step[] steps) {
-        return root.get(steps);
+        return root.get(stepifier.convert(item));
     }
 
     public void merge(Trie<Step, Item> other) {
@@ -74,17 +69,12 @@ public class Trie<Step, Item> {
         return root;
     }
 
-    public Itemizer<Step, Item> getItemizer() {
-        return itemizer;
+    public Stepifier<Step, Item> getStepifier() {
+        return stepifier;
     }
 
-    public String toString(char prefix) {
-        return root.toString(prefix);
+    public boolean isUsingPermutations() {
+        return useAllPermutations;
     }
-
-    public String toString() {
-        return root.toString();
-    }
-
 }
 
