@@ -5,15 +5,15 @@ import lsm.helpers.interfaces.ToString;
 public class TrieFactory {
 
     public static <T> Trie<Character, T> string(ToString<T> converter) {
-        return new Trie<>(Itemizers.charsInString(converter));
+        return new Trie<>(Stepifiers.charsFromString(converter));
     }
 
     public static Trie<Character, String> string() {
-        return new Trie<>(Itemizers.charsInString());
+        return new Trie<>(Stepifiers.charsFromString());
     }
 
     public static Trie<Character, String> sortedString() {
-        return new Trie<>(Itemizers.sortedCharsInString());
+        return new Trie<>(Stepifiers.sortedCharsInString());
     }
 
     public static <T> Trie<T, T[]> generic() {
