@@ -8,8 +8,8 @@ import java.util.Set;
 public class Node<Step, Item> {
 
     private final HashMap<Step, Node<Step, Item>> children = new HashMap<>();
+    private final Set<Item> items = new HashSet<>();
     private int totalItems = 0;
-    private Set<Item> items = new HashSet<>();
 
     /**
      * Public functions
