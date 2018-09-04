@@ -78,9 +78,9 @@ public class Permutations<T> implements Iterator<T[]> {
         if (j == 0 || j == length - 1 || perm[j + dirs[j]] > perm[j])
             dirs[j] = 0;
 
-        IntStream.range(0, j)
-                .filter(index -> perm[index] > perm[j])
-                .forEach(index -> dirs[index] = (index < j) ? 1 : -1);
+        for(var k = 0; k < length; k++)
+            if (perm[k] > perm[j])
+                dirs[k] = (k < j) ? 1 : -1;
 
         next = perm;
         return true;
