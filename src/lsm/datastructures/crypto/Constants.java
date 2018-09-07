@@ -1,6 +1,6 @@
 package lsm.datastructures.crypto;
 
-public class Constants {
+class Constants {
 
     // Update these constants as higher security is needed
     // Do mind the asymmetric key do utilize the symmetric key

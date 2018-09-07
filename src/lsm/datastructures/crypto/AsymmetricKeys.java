@@ -2,7 +2,6 @@ package lsm.datastructures.crypto;
 
 import java.security.Key;
 import java.security.KeyFactory;
-import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -17,9 +16,9 @@ public class AsymmetricKeys extends AbstractKey {
 
     public AsymmetricKeys() throws Exception {
         super(asymmetricKeyAlgorithm);
-        KeyPairGenerator keygen = KeyPairGenerator.getInstance(asymmetricKeyAlgorithm);
+        var keygen = KeyPairGenerator.getInstance(asymmetricKeyAlgorithm);
         keygen.initialize(asymmetricKeySize);
-        KeyPair pair = keygen.generateKeyPair();
+        var pair = keygen.generateKeyPair();
         publicKey = pair.getPublic();
         privateKey = pair.getPrivate();
     }
@@ -52,8 +51,8 @@ public class AsymmetricKeys extends AbstractKey {
         this.privateKey = key;
     }
 
-    public void newKeySet() throws Exception {
-        AsymmetricKeys temp = new AsymmetricKeys();
+    public void newKeys() throws Exception {
+        var temp = new AsymmetricKeys();
         this.publicKey = temp.publicKey;
         this.privateKey = temp.privateKey;
     }
@@ -61,33 +60,24 @@ public class AsymmetricKeys extends AbstractKey {
     @Override
     public String encrypt(String data) throws Exception {
         SymmetricKey symmetricKey = new SymmetricKey();
-        return joinStrings(
-                encrypt(symmetricKey.keyString(), publicKey),
-                symmetricKey.encrypt(data)
-        );
+        var key = encrypt(symmetricKey.key(), publicKey);
+        var text = symmetricKey.encrypt(data);
+        return joinStrings(key, text);
     }
 
     @Override
     public String decrypt(String data) throws Exception {
-        String[] parts = splitStrings(data);
-        String encryptedKey = parts[0];
-        String msg = parts[1];
+        var parts = splitStrings(data);
+        var encryptedKey = parts[0];
+        var msg = parts[1];
         return new SymmetricKey(decrypt(encryptedKey, privateKey)).decrypt(msg);
     }
 
-    public Key publicKey() {
-        return publicKey;
-    }
-
-    public Key privateKey() {
-        return privateKey;
-    }
-
-    public String publicKeyString() {
+    public String publicKey() {
         return toBase64(publicKey.getEncoded());
     }
 
-    public String privateKeyString() {
+    public String privateKey() {
         return toBase64(privateKey.getEncoded());
     }
 }

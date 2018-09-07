@@ -6,7 +6,8 @@ import java.security.Key;
 
 import static lsm.datastructures.crypto.Constants.symmetricKeyAlgorithm;
 import static lsm.datastructures.crypto.Constants.symmetricKeySize;
-import static lsm.datastructures.crypto.Utils.*;
+import static lsm.datastructures.crypto.Utils.fromBase64;
+import static lsm.datastructures.crypto.Utils.toBase64;
 
 @SuppressWarnings("WeakerAccess")
 public class SymmetricKey extends AbstractKey {
@@ -17,7 +18,7 @@ public class SymmetricKey extends AbstractKey {
         super(symmetricKeyAlgorithm);
         KeyGenerator generator = KeyGenerator.getInstance(symmetricKeyAlgorithm);
         generator.init(symmetricKeySize);
-        this.key = generator.generateKey();
+        key = generator.generateKey();
     }
 
     public SymmetricKey(String key) throws Exception {
@@ -39,10 +40,7 @@ public class SymmetricKey extends AbstractKey {
         return decrypt(data, key);
     }
 
-    public Key key() {
-        return key;
-    }
-    public String keyString() {
+    public String key() {
         return toBase64(key.getEncoded());
     }
 }

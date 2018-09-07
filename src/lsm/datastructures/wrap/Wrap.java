@@ -1,7 +1,7 @@
 package lsm.datastructures.wrap;
 
 public class Wrap<T> {
-    T value;
+    public T value;
 
     public Wrap() {
         this(null);
