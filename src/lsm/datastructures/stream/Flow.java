@@ -8,153 +8,144 @@ import static lsm.helpers.utils.StreamUtils.distinctBy;
 import static lsm.helpers.utils.StreamUtils.listsOfSize;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
-public class BetterStream<E> {
+public class Flow<E> {
 
-    private Stream<E> stream;
+    private final Stream<E> stream;
 
-    private BetterStream(Stream<E> stream) {
+    private Flow(Stream<E> stream) {
         this.stream = stream;
     }
 
-    public static <E> BetterStream<E> of(Collection<E> collection) {
+    public static <E> Flow<E> of(Collection<E> collection) {
         return of(collection.stream());
     }
 
-    public static BetterStream<Integer> of(IntStream stream) {
+    public static Flow<Integer> of(IntStream stream) {
         return of(stream.boxed());
     }
 
-    public static BetterStream<Long> of(LongStream stream) {
+    public static Flow<Long> of(LongStream stream) {
         return of(stream.boxed());
     }
 
-    public static BetterStream<Double> of(DoubleStream stream) {
+    public static Flow<Double> of(DoubleStream stream) {
         return of(stream.boxed());
     }
 
-    public static <E> BetterStream<E> of(Stream<E> stream) {
-        return new BetterStream<>(stream);
+    public static <E> Flow<E> of(Stream<E> stream) {
+        return new Flow<>(stream);
     }
 
-    public static <E> BetterStream<E> iterate(E seed, Predicate<? super E> hasNext, UnaryOperator<E> next) {
+    public static <E> Flow<E> iterate(E seed, Predicate<? super E> hasNext, UnaryOperator<E> next) {
         return of(Stream.iterate(seed, hasNext, next));
     }
 
-    public static <E> BetterStream<E> iterate(E seed, UnaryOperator<E> function) {
+    public static <E> Flow<E> iterate(E seed, UnaryOperator<E> function) {
         return of(Stream.iterate(seed, function));
     }
 
-    public static <E> BetterStream<E> generate(Supplier<? extends E> supplier) {
+    public static <E> Flow<E> generate(Supplier<? extends E> supplier) {
         return of(Stream.generate(supplier));
     }
 
-    public static <E> BetterStream<E> empty() {
+    public static <E> Flow<E> empty() {
         return of(Stream.empty());
     }
 
-    public static <E> BetterStream<E> of(E element) {
+    public static <E> Flow<E> of(E element) {
         return of(Stream.of(element));
     }
 
-    public static <E> BetterStream<E> of(E... elements) {
+    public static <E> Flow<E> of(E... elements) {
         return of(Stream.of(elements));
     }
 
-    public BetterStream<E> concat(BetterStream<E> other) {
+    public Flow<E> concat(Flow<E> other) {
         return concat(other.stream);
     }
 
-    public BetterStream<E> concat(Stream<E> other) {
-        stream = Stream.concat(stream, other);
-        return this;
+    public Flow<E> concat(Stream<E> other) {
+        return Flow.of(Stream.concat(stream, other));
     }
 
-    public BetterStream<E> prefix(BetterStream<E> other) {
+    public Flow<E> prefix(Flow<E> other) {
         return prefix(other.stream);
     }
 
-    public BetterStream<E> prefix(Stream<E> other) {
-        stream = Stream.concat(other, stream);
-        return this;
+    public Flow<E> prefix(Stream<E> other) {
+        return Flow.of(Stream.concat(other, stream));
     }
 
-    public <O> BetterStream<O> alter(Function<? super E, ? extends O> mapper) {
-        return new BetterStream<>(stream.map(mapper));
+    public <O> Flow<O> modify(Function<? super E, ? extends O> mapper) {
+        return Flow.of(stream.map(mapper));
     }
 
-    public IntStream alterToInt() {
-        return alterToInt(i -> (int) i);
+    public IntStream asIntStream() {
+        return asIntStream(i -> (int) i);
     }
 
-    public IntStream alterToInt(ToIntFunction<? super E> mapper) {
+    public IntStream asIntStream(ToIntFunction<? super E> mapper) {
         return stream.mapToInt(mapper);
     }
 
-    public LongStream alterToLong() {
-        return alterToLong(i -> (long) i);
+    public LongStream asLongStream() {
+        return asLongStream(i -> (long) i);
     }
 
-    public LongStream alterToLong(ToLongFunction<? super E> mapper) {
+    public LongStream asLongStream(ToLongFunction<? super E> mapper) {
         return stream.mapToLong(mapper);
     }
 
-    public DoubleStream alterToDouble() {
-        return alterToDouble(i -> (double) i);
+    public DoubleStream asDoubleStream() {
+        return asDoubleStream(i -> (double) i);
     }
 
-    public DoubleStream alterToDouble(ToDoubleFunction<? super E> mapper) {
+    public DoubleStream asDoubleStream(ToDoubleFunction<? super E> mapper) {
         return stream.mapToDouble(mapper);
     }
 
-    public <O> BetterStream<O> flatMap(Function<? super E, ? extends Stream<? extends O>> mapper) {
-        return new BetterStream<>(stream.flatMap(mapper));
+    public <O> Flow<O> flatMap(Function<? super E, ? extends Stream<? extends O>> mapper) {
+        return new Flow<>(stream.flatMap(mapper));
     }
 
-    public BetterStream<E> distinct() {
-        stream = stream.distinct();
-        return this;
+    public Flow<E> distinct() {
+        return Flow.of(stream.distinct());
     }
 
-    public BetterStream<E> distinct(Function<? super E, ?> keyExtractor) {
+    public Flow<E> distinct(Function<? super E, ?> keyExtractor) {
         return distinct(keyExtractor, true);
     }
 
-    ;
-
-    public BetterStream<E> distinct(Function<? super E, ?> keyExtractor, boolean keepNull) {
+    public Flow<E> distinct(Function<? super E, ?> keyExtractor, boolean keepNull) {
         return keep(distinctBy(keyExtractor, keepNull));
     }
 
-    public BetterStream<E> keep(Predicate<E> predicate) {
-        stream = stream.filter(predicate);
-        return this;
+    public Flow<E> keep(Predicate<E> predicate) {
+        return Flow.of(stream.filter(predicate));
     }
 
-    public BetterStream<E> skip(Predicate<E> predicate) {
+    public Flow<E> skip(Predicate<E> predicate) {
         return keep(predicate.negate());
     }
 
-    public BetterStream<E> skipNull(Function<? super E, ?> keyExtractor) {
+    public Flow<E> skipNull(Function<? super E, ?> keyExtractor) {
         return keep(e -> Objects.nonNull(keyExtractor.apply(e)));
     }
 
-    public BetterStream<E> skipNull() {
+    public Flow<E> skipNull() {
         return keep(Objects::nonNull);
     }
 
-    public BetterStream<E> peek(Consumer<? super E> action) {
-        stream = stream.peek(action);
-        return this;
+    public Flow<E> peek(Consumer<? super E> action) {
+        return Flow.of(stream.peek(action));
     }
 
-    public BetterStream<E> limit(long maxSize) {
-        stream = stream.limit(maxSize);
-        return this;
+    public Flow<E> limit(long maxSize) {
+        return Flow.of(stream.limit(maxSize));
     }
 
-    public BetterStream<E> skip(long amount) {
-        stream = stream.skip(amount);
-        return this;
+    public Flow<E> skip(long amount) {
+        return Flow.of(stream.skip(amount));
     }
 
     /*
@@ -223,23 +214,20 @@ public class BetterStream<E> {
     /*
      * Sorting related functions
      */
-    public BetterStream<E> sorted() {
-        stream = stream.sorted();
-        return this;
+    public Flow<E> sorted() {
+        return Flow.of(stream.sorted());
     }
 
-    public BetterStream<E> sorted(Comparator<? super E> comparator) {
-        stream = stream.sorted(comparator);
-        return this;
+    public Flow<E> sorted(Comparator<? super E> comparator) {
+        return Flow.of(stream.sorted(comparator));
     }
 
-    public BetterStream<E> unordered() {
-        stream = stream.unordered();
-        return this;
+    public Flow<E> unordered() {
+        return Flow.of(stream.unordered());
     }
 
-    public BetterStream<List<E>> collectInLists(int listSizes) {
-        return BetterStream.of(collect(listsOfSize(listSizes)));
+    public Flow<List<E>> collectInLists(int listSizes) {
+        return Flow.of(collect(listsOfSize(listSizes)));
     }
 
     public String toString() {
@@ -303,7 +291,7 @@ public class BetterStream<E> {
         return collect(Collectors.toList());
     }
 
-    public Stream<E> getRaw() {
+    public Stream<E> asStream() {
         return stream;
     }
 
@@ -314,22 +302,19 @@ public class BetterStream<E> {
         return stream.isParallel();
     }
 
-    public BetterStream<E> sequential() {
-        stream = stream.sequential();
-        return this;
+    public Flow<E> sequential() {
+        return Flow.of(stream.sequential());
     }
 
-    public BetterStream<E> parallel() {
-        stream = stream.parallel();
-        return this;
+    public Flow<E> parallel() {
+        return Flow.of(stream.parallel());
     }
 
     /*
      * Close functionality
      */
-    public BetterStream<E> onClose(Runnable closeHandler) {
-        stream = stream.onClose(closeHandler);
-        return this;
+    public Flow<E> onClose(Runnable closeHandler) {
+        return Flow.of(stream.onClose(closeHandler));
     }
 
     public void close() {
