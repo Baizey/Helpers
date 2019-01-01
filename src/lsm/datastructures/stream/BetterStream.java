@@ -116,8 +116,10 @@ public class BetterStream<E> {
     }
 
     public BetterStream<E> distinct(Function<? super E, ?> keyExtractor) {
-        return keep(distinctBy(keyExtractor, true));
+        return distinct(keyExtractor, true);
     }
+
+    ;
 
     public BetterStream<E> distinct(Function<? super E, ?> keyExtractor, boolean keepNull) {
         return keep(distinctBy(keyExtractor, keepNull));
@@ -236,33 +238,25 @@ public class BetterStream<E> {
         return this;
     }
 
-    /*
-     * ToString functions
-     */
-
-    public String joinAsString() {
-        return joinAsString(", ");
-    }
-
-    public String joinAsString(CharSequence seperator) {
-        return joinAsString(seperator, "", "");
-    }
-
-    public String joinAsString(CharSequence seperator, CharSequence prefix, CharSequence suffix) {
-        return stream.map(String::valueOf).collect(Collectors.joining(seperator, prefix, suffix));
+    public BetterStream<List<E>> collectInLists(int listSizes) {
+        return BetterStream.of(collect(listsOfSize(listSizes)));
     }
 
     public String toString() {
-        return stream.toString();
+        return toString(", ");
+    }
+
+    public String toString(CharSequence seperator) {
+        return toString(seperator, "", "");
+    }
+
+    public String toString(CharSequence seperator, CharSequence prefix, CharSequence suffix) {
+        return stream.map(String::valueOf).collect(Collectors.joining(seperator, prefix, suffix));
     }
 
     /*
      * Transformations to other structures
      */
-    public List<List<E>> toListsOfSize(int size) {
-        return collect(listsOfSize(size));
-    }
-
     public E[] toArray(IntFunction<E[]> function) {
         return stream.toArray(function);
     }
@@ -277,6 +271,28 @@ public class BetterStream<E> {
 
     public Spliterator<E> spliterator() {
         return stream.spliterator();
+    }
+
+    public <K> Map<? extends K, List<E>> groupBy(Function<? super E, ? extends K> keyMapper) {
+        return collect(Collectors.groupingBy(keyMapper));
+    }
+
+    public <K> Map<K, E> toMap(Function<? super E, ? extends K> keyMapper) {
+        return toMap(keyMapper, e -> e);
+    }
+
+    public <K, V> Map<K, V> toMap(Function<? super E, ? extends K> keyMapper,
+                                  Function<? super E, ? extends V> valueMapper) {
+        return collect(Collectors.toMap(keyMapper, valueMapper));
+    }
+
+    public <K> Map<K, E> toConcurrentMap(Function<? super E, ? extends K> keyMapper) {
+        return toConcurrentMap(keyMapper, e -> e);
+    }
+
+    public <K, V> Map<K, V> toConcurrentMap(Function<? super E, ? extends K> keyMapper,
+                                            Function<? super E, ? extends V> valueMapper) {
+        return collect(Collectors.toConcurrentMap(keyMapper, valueMapper));
     }
 
     public Set<E> toSet() {
