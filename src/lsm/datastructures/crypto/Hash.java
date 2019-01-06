@@ -6,27 +6,39 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
-import static lsm.datastructures.crypto.Constants.*;
 import static lsm.datastructures.crypto.Utils.*;
 
-@SuppressWarnings({"WeakerAccess", "unused"})
+@SuppressWarnings({"unused"})
 public class Hash {
 
+    private static int hashingIterations = Constants.defaultHashingIterations;
     private static SecureRandom random = null;
     private static SecretKeyFactory secret = null;
-    private static int hashSizeInBits = hashingHashSize * 8;
+    private static int hashSizeInBits = Constants.hashingHashSize * 8;
 
     static {
         try {
-            secret = SecretKeyFactory.getInstance(hashingAlgorithm);
-            random = SecureRandom.getInstance(PRNGAlgorithm);
+            secret = SecretKeyFactory.getInstance(Constants.hashingAlgorithm);
+            random = SecureRandom.getInstance(Constants.PRNGAlgorithm);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
 
+    public static void setDefaultHashingIterations(int iterations) {
+        hashingIterations = iterations;
+    }
+
+    public static int getDefaultHashingIterations() {
+        return hashingIterations;
+    }
+
     public static String hash(String toHash) throws Exception {
-        var salt = new byte[hashingSaltSize];
+        return hash(toHash, hashingIterations);
+    }
+
+    public static String hash(String toHash, int hashingIterations) throws Exception {
+        var salt = new byte[Constants.hashingSaltSize];
         random.nextBytes(salt);
         var hash = secret.generateSecret(new PBEKeySpec(toHash.toCharArray(), salt, hashingIterations, hashSizeInBits)).getEncoded();
         return join(Integer.toString(hashingIterations), encodeToString(salt), encodeToString(hash));

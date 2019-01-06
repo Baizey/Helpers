@@ -81,8 +81,8 @@ class AsymmetricKeyBuilder {
 
     public AsymmetricKeyBuilder generateKeys() {
         var pair = keygen.generateKeyPair();
-        setPublic(pair.getPublic());
-        return setPrivate(pair.getPrivate());
+        return setPublic(pair.getPublic())
+                .setPrivate(pair.getPrivate());
     }
 
     public AsymmetricKeyBuilder setPublic(String publicKey) throws InvalidKeySpecException {

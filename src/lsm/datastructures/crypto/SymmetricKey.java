@@ -13,7 +13,7 @@ import static lsm.datastructures.crypto.Utils.encodeToString;
 @SuppressWarnings("WeakerAccess")
 public class SymmetricKey extends AbstractKey {
 
-    private Key key;
+    private final Key key;
 
     private static KeyGenerator generator = null;
 

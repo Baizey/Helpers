@@ -63,8 +63,9 @@ public class Permutations<T> implements Iterator<T[]> {
         if (next != null)
             return true;
 
-        var i = IntStream.range(0, length).boxed()
+        var i = IntStream.range(0, length)
                 .filter(index -> dirs[index] != 0)
+                .boxed()
                 .max(Comparator.comparingInt(index -> perm[index])).orElse(-1);
 
         if (i < 0)
