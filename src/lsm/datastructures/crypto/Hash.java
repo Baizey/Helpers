@@ -6,8 +6,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
-import static lsm.datastructures.crypto.Utils.*;
-
 @SuppressWarnings({"unused"})
 public class Hash {
 
@@ -41,14 +39,14 @@ public class Hash {
         var salt = new byte[Constants.hashingSaltSize];
         random.nextBytes(salt);
         var hash = secret.generateSecret(new PBEKeySpec(toHash.toCharArray(), salt, hashingIterations, hashSizeInBits)).getEncoded();
-        return join(Integer.toString(hashingIterations), encodeToString(salt), encodeToString(hash));
+        return Utils.join(Integer.toString(hashingIterations), Utils.encodeToString(salt), Utils.encodeToString(hash));
     }
 
     public static boolean validate(String toTest, String fullHash) throws Exception {
-        var parts = split(fullHash);
+        var parts = Utils.split(fullHash);
         var iterations = Integer.parseInt(parts[0]);
-        var salt = decode(parts[1]);
-        var hash = decode(parts[2]);
+        var salt = Utils.decode(parts[1]);
+        var hash = Utils.decode(parts[2]);
         var testHash = secret.generateSecret(new PBEKeySpec(toTest.toCharArray(), salt, iterations, hashSizeInBits)).getEncoded();
         return Arrays.equals(testHash, hash);
     }

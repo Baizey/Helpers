@@ -11,9 +11,8 @@ import static lsm.datastructures.crypto.Utils.*;
 
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class AsymmetricKeys extends AbstractKey {
-    private Key privateKey, publicKey;
+    private final Key privateKey, publicKey;
 
-    private static KeyFactory factory = null;
     private static KeyPairGenerator keygen = null;
     static {
         try {
