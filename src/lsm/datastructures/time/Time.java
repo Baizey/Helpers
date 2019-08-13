@@ -2,86 +2,86 @@ package lsm.datastructures.time;
 
 import lsm.helpers.IO.write.text.console.Note;
 import lsm.helpers.interfaces.Action;
-import lsm.helpers.utils.Numbers;
 
-import java.util.HashMap;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Usage:
- * Time.takeTime(Action) given source lambda act initiates time, runs act and then writes time
- * Time.init()  will take current time
- * Time.write() will write the difference since last initialize call
- * Time.reset() will attempt target write time since last init and then re-initialize
- * Time.using(int) defines if the write() act tells in seconds, millis, micros or nano-seconds, or if it uses the most appropriate
- * A name can be given target take time on multiple things at once
- * 'Program' is default name if none is given
- */
+import static lsm.datastructures.time.TimeUnit.SECONDS;
 
 public class Time {
-    public static final int
-            AUTO = -2,
-            MINUTES = -1,
-            SECONDS = 0,
-            MILLIS = 1,
-            MICRO = 2,
-            NANO = 3;
-    private static int using = SECONDS;
     private static final String defaultName = "Program";
-    private static final HashMap<String, Timestamp> times = new HashMap<>();
+    private static final Map<String, Long> times = new ConcurrentHashMap<>();
+    private static TimeUnit using = SECONDS;
+
+    private Time() {
+    }
 
     public static void takeTime(Action action) throws Exception {
         takeTime(defaultName, action);
     }
 
     public static void takeTime(String name, Action action) throws Exception {
-        Time.init(name);
+        Time.start(name);
         action.act();
         Time.write(name);
     }
 
-    public static void using(int unit) {
-        if (Numbers.inRange(unit, AUTO, NANO))
-            Time.using = unit;
+    public static void using(TimeUnit unit) {
+        using = unit;
     }
 
-    public static void init() {
-        init(defaultName);
+    public static void start() {
+        start(defaultName);
     }
 
-    public static void init(String name) {
-        times.put(name, new Timestamp(System.nanoTime()));
+    public static void start(String name) {
+        times.put(name, (System.nanoTime()));
     }
 
     public static void write() {
         write(defaultName);
     }
 
-    public static double get() {
+    public static BigDecimal get() {
         return get(defaultName);
     }
 
-    public static double get(String name) {
+    public static BigDecimal get(String name) {
         var end = System.nanoTime();
-        var stamp = times.getOrDefault(name, null);
-        if (stamp != null)
-            return stamp.asValue(end, using);
-        return -1D;
+        var start = times.getOrDefault(name, null);
+        if (start != null)
+            return asValue(start, end, using);
+        return null;
     }
 
     public static void write(String name) {
         var end = System.nanoTime();
-        var stamp = times.getOrDefault(name, null);
-        if (stamp != null)
-            Note.write(name).write(" took ").writenl(stamp.asDisplay(end, using));
+        var start = times.getOrDefault(name, null);
+        if (start != null)
+            Note.write(name).write(" took ").writenl(asDisplay(start, end, using));
     }
 
-    public static void reset() {
-        reset(defaultName);
+    public static void writeAndReset() {
+        writeAndReset(defaultName);
     }
 
-    public static void reset(String name) {
+    public static void writeAndReset(String name) {
         write(name);
-        init(name);
+        start(name);
+    }
+
+    private static BigDecimal asValue(long startTime, long endTime, TimeUnit timeUnit) {
+        var time = BigDecimal.valueOf(endTime - startTime);
+        return time.divide(timeUnit.getDivisor(time), 3, RoundingMode.HALF_UP);
+    }
+
+    private static String asDisplay(long startTime, long endTime, TimeUnit timeUnit) {
+        var time = BigDecimal.valueOf(endTime - startTime);
+        timeUnit = timeUnit.resolve(time);
+        time = time.divide(timeUnit.getDivisor(), 3, RoundingMode.HALF_UP);
+        return time + " " + timeUnit.getName();
     }
 }
 

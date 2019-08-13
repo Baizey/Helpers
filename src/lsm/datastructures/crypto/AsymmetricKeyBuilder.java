@@ -10,10 +10,6 @@ import static lsm.datastructures.crypto.Constants.asymmetricKeySize;
 
 @SuppressWarnings("unused")
 public class AsymmetricKeyBuilder {
-    private Key
-            privateKey = null,
-            publicKey = null;
-
     private static KeyFactory factory = null;
     private static KeyPairGenerator keygen = null;
 
@@ -27,10 +23,18 @@ public class AsymmetricKeyBuilder {
         }
     }
 
+    private Key
+            privateKey = null,
+            publicKey = null;
+
+    public static AsymmetricKeyBuilder create() {
+        return new AsymmetricKeyBuilder();
+    }
+
     public AsymmetricKeyBuilder generateKeys() {
         var pair = keygen.generateKeyPair();
         return withPublic(pair.getPublic())
-                .withPrivate(pair.getPrivate());
+                       .withPrivate(pair.getPrivate());
     }
 
     public AsymmetricKeyBuilder withPublic(String publicKey) throws InvalidKeySpecException {

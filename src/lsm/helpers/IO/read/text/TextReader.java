@@ -6,8 +6,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static lsm.helpers.IO.Utils.isWebsite;
 
@@ -18,17 +19,15 @@ public class TextReader {
     /////////////////////////////////////
     // Reader functions
     /////////////////////////////////////
-    public static ArrayList<String> read(String from) throws IOException {
-        if (isWebsite(from))
-            return readWebsite(from);
-        return readFile(from);
+    public static List<String> read(String from) throws IOException {
+        return isWebsite(from) ? readWebsite(from) : readFile(from);
     }
 
-    public static ArrayList<String> readFile(String path) throws IOException {
+    public static List<String> readFile(String path) throws IOException {
         return readReaderAndClose(getTextReader(path));
     }
 
-    public static ArrayList<String> readWebsite(String link) throws IOException {
+    public static List<String> readWebsite(String link) throws IOException {
         return readReaderAndClose(getWebsiteReader(link));
     }
 
@@ -69,9 +68,7 @@ public class TextReader {
     }
 
     public static BufferedReader getReader(String what) throws IOException {
-        if (isWebsite(what))
-            return getWebsiteReader(what);
-        return getTextReader(what);
+        return isWebsite(what) ? getWebsiteReader(what) : getTextReader(what);
     }
     
     public static BufferedReader getTextReader(String path) throws IOException {
@@ -88,16 +85,14 @@ public class TextReader {
     /////////////////////////////////////
     // Private utility functions
     /////////////////////////////////////
-    private static ArrayList<String> readReaderAndClose(BufferedReader reader) throws IOException {
+    private static List<String> readReaderAndClose(BufferedReader reader) throws IOException {
         var lines = readReader(reader);
         reader.close();
         return lines;
     }
 
-    private static ArrayList<String> readReader(BufferedReader reader) throws IOException {
-        var lines = new ArrayList<String>();
-        reader.lines().forEach(lines::add);
-        return lines;
+    private static List<String> readReader(BufferedReader reader) {
+        return reader.lines().collect(Collectors.toList());
     }
     
 }
