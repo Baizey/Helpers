@@ -1,6 +1,5 @@
 package lsm.datastructures.Interpreter;
 
-import lsm.helpers.IO.read.text.TextReader;
 import lsm.helpers.IO.write.text.console.Note;
 import lsm.helpers.utils.Numbers;
 
@@ -38,7 +37,7 @@ public class Interpreter {
         for (String test : tests)
             Note.writenl(test + " -> " + interpreter.eval(test));
 
-        Scanner console = TextReader.getConsoleReader();
+        Scanner console = new Scanner(System.in);
         while (true) {
             Note.write("Input: ");
             Note.writenl(interpreter.eval(console.nextLine()));

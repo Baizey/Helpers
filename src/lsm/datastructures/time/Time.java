@@ -1,7 +1,6 @@
 package lsm.datastructures.time;
 
 import lsm.helpers.IO.write.text.console.Note;
-import lsm.helpers.interfaces.Action;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,13 +17,13 @@ public class Time {
     private Time() {
     }
 
-    public static void takeTime(Action action) throws Exception {
-        takeTime(defaultName, action);
+    public static void takeTime(Runnable runnable) throws Exception {
+        takeTime(defaultName, runnable);
     }
 
-    public static void takeTime(String name, Action action) throws Exception {
+    public static void takeTime(String name, Runnable runnable) throws Exception {
         Time.start(name);
-        action.act();
+        runnable.run();
         Time.write(name);
     }
 

@@ -38,7 +38,7 @@ public class Trie<Step, Item> {
     }
 
     public void remove(Item item) {
-        var steps = stepifier.convert(item);
+        var steps = stepifier.apply(item);
         if (useAllPermutations)
             Permutations.stream(steps).forEach(p -> root.remove(p, item));
         else
@@ -50,7 +50,7 @@ public class Trie<Step, Item> {
     }
 
     public void add(Item item) {
-        var steps = stepifier.convert(item);
+        var steps = stepifier.apply(item);
         if (useAllPermutations)
             Permutations.stream(steps).forEach(p -> root.add(p, item));
         else
@@ -58,7 +58,7 @@ public class Trie<Step, Item> {
     }
 
     public Node<Step, Item> get(Item item) {
-        return root.get(stepifier.convert(item));
+        return root.get(stepifier.apply(item));
     }
 
     public void merge(Trie<Step, Item> other) {

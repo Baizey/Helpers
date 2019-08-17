@@ -1,9 +1,8 @@
 package lsm.datastructures.graph;
 
-import lsm.helpers.interfaces.Merger;
-
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.*;
 
 public class Graph {
 
@@ -26,7 +25,7 @@ public class Graph {
         edges.add(edge);
     }
 
-    public void createEdges(Merger<Node, Double> costCalculator) {
+    public void createEdges(BiFunction<Node, Node, Double> costCalculator) {
         for (int i = 0; i < nodes.size(); i++) {
             var a = nodes.get(i);
             for (int j = i + 1; j < nodes.size(); j++) {

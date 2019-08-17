@@ -1,10 +1,10 @@
 package lsm.datastructures.trie;
 
-import lsm.helpers.interfaces.ToString;
+import java.util.function.Function;
 
 public class TrieFactory {
 
-    public static <T> Trie<Character, T> string(ToString<T> converter) {
+    public static <T> Trie<Character, T> string(Function<T, String> converter) {
         return new Trie<>(Stepifiers.charsFromString(converter));
     }
 

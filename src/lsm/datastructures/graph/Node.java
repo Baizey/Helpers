@@ -1,8 +1,7 @@
 package lsm.datastructures.graph;
 
-import lsm.helpers.interfaces.Merger;
-
 import java.util.HashMap;
+import java.util.function.BiFunction;
 
 public class Node {
     public final HashMap<Node, Edge> edges = new HashMap<>();
@@ -30,8 +29,8 @@ public class Node {
         edges.put(edge.target, edge);
     }
 
-    public Edge addEdge(Node other, Merger<Node, Double> costCalculator) {
-        var edge = new Edge(this, other, costCalculator.convert(this, other));
+    public Edge addEdge(Node other, BiFunction<Node, Node, Double> costCalculator) {
+        var edge = new Edge(this, other, costCalculator.apply(this, other));
         addEdge(edge);
         return edge;
     }
